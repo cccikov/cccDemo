@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>行业选择</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" href="index.css" />
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$(".industry-item").on("click",function(){
+					if($(this).attr("class").indexOf("active")==-1){
+						$(".industry-item").removeClass("active");
+						$(this).addClass("active");
+						var fid = $(this).attr("data-fid");
+						$(".industry-second-list[data-fid='"+fid+"']").addClass("active").siblings(".industry-second-list").removeClass("active");
+					}else{
+						$(this).removeClass("active");
+						$(".industry-second-list").removeClass("active");
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="industry">
+			
+			<!-- 一级 -->
+			<ul class="industry-list clearfix">
+				<li class="industry-item" data-fid="100">
+					<p>餐饮服务<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item" data-fid="101">
+					<p>餐饮服务2<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item"data-fid="102">
+					<p>餐饮服务3<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item" data-fid="103">
+					<p>餐饮服务4<i class="arrow"></i></p>
+				</li>
+			</ul>
+			<!-- 二级 -->
+			<ul class="industry-second-list clearfix" data-fid="100">
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="101">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="102">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="103">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<!-- 一级 -->
+			<ul class="industry-list clearfix">
+				<li class="industry-item" data-fid="104">
+					<p>餐饮服务5<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item" data-fid="105">
+					<p>餐饮服务6<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item" data-fid="106">
+					<p>餐饮服务7<i class="arrow"></i></p>
+				</li>
+				<li class="industry-item" data-fid="107">
+					<p>餐饮服务8<i class="arrow"></i></p>
+				</li>
+			</ul>
+			<!-- 二级 -->
+			<ul class="industry-second-list clearfix" data-fid="104">
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+				<li class="industry-second-item">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="105">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="106">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			<ul class="industry-second-list clearfix" data-fid="107">
+				<li class="industry-second-item chosen">全部</li>
+				<li class="industry-second-item">厨师长</li>
+				<li class="industry-second-item">学徒	</li>
+				<li class="industry-second-item">杂工	</li>
+				<li class="industry-second-item">洗碗阿姨</li>
+			</ul>
+			
+			
+			
+		</div>
+	</body>
+
+</html>
