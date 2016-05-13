@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.shadow-cave{
+				width: 50%;
+				margin:10px auto;
+			}
+		
+			/*凹陷主要代码 begin*/
+			.shadow-cave {
+				/*float: left;*/
+				position: relative;
+				box-shadow: 0 10px 5px rgba(0, 0, 0, .3);
+			}
+			
+			.shadow-cave:after {
+				position: absolute;
+				bottom: -29px;
+				left: 0;
+				overflow: hidden;
+				background: #fff;
+				width: 100%;
+				height: 15px;
+				content: '';
+				border-radius: 50%;
+				box-shadow: 0 -10px 5px #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="shadow-cave">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam aut voluptates minus alias et saepe dolore nostrum magnam tempora quo doloribus fugiat quis consequuntur consequatur fuga aliquam quam expedita molestiae?
+		</div>
+	</body>
+
+</html>
