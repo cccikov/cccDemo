@@ -5,6 +5,22 @@ body {
 .industry {
   text-align: center;
 }
+.industry .chosen-list {
+  margin: 0 0 1% 1%;
+}
+.industry .chosen-list li {
+  box-sizing: border-box;
+  overflow: hidden;
+  float: left;
+  width: 24%;
+  padding: 10px 15px 10px 0;
+  margin: 1% 1% 0 0;
+  background: #fff url(del.png) right center no-repeat;
+  background-size: 15px;
+}
+.industry .chosen-list li:nth-of-type(4n) {
+  margin: 1% 0 0 0;
+}
 .industry .industry-list {
   background: #fff;
 }

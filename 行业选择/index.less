@@ -3,6 +3,23 @@ html,body{
 }
 .industry{
     text-align: center;
+    //已选择
+    .chosen-list{
+        margin: 0 0 1% 1%;
+        li{
+            box-sizing: border-box;
+            overflow: hidden;
+            float: left;
+            width: 24%;
+            padding:10px 15px 10px 0;
+            margin:1% 1% 0 0;
+            background: #fff url(del.png) right center no-repeat;            
+            background-size: 15px;
+            &:nth-of-type(4n){
+                margin:1% 0 0 0;
+            }
+        }
+    }
     //一级
     .industry-list{
         background: #fff;
