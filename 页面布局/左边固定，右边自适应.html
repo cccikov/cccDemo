@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="index.css"/>
+		<title>左边固定，右边自适应</title>
+	</head>
+	<body>
+		<div id="demo1">
+			<div class="left">左边固定 float:left</div>
+			<div class="right">右边自适应 overflow:hidden</div>
+		</div>
+		<div id="demo2">
+			<div class="right">右边固定 float:right在文档在overflow:hidden的元素前面</div>
+			<div class="left">左边自适应 overflow:hidden</div>
+		</div>
+		<div id="demo3">
+			<div class="left">左边固定 float: left;</div>
+			<div class="right">右边自适应  margin-left:200px</div>
+		</div>
+		<div id="demo4">
+			<div class="left">左边固定 </div>
+			<div class="right">右边自适应  margin-left:200px</div>
+		</div>
+		<p><strong>总结：</strong>让固定宽度的元素脱离文档流,自适应宽度用触发BFC方法或者margin，padding去补固定的宽度</p>
+	</body>
+</html>

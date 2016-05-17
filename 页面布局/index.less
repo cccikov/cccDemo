@@ -1,0 +1,66 @@
+*{
+    padding:0;
+    margin:0;
+}
+body{
+    color:#eee;
+}
+.left{
+    height: 100px;
+    background: darkred;
+}
+.right{
+    height: 110px;
+    margin:10px 0 0;
+    text-align: right;
+    background: darkblue;
+}
+#demo1{
+    overflow: hidden;
+    .left{
+        float: left;
+        width: 200px;
+    }
+    .right{
+        overflow: hidden;
+    }
+}
+#demo2{
+    overflow: hidden;
+    margin:10px 0 0;
+    .left{
+        overflow: hidden;
+    }
+    .right{
+        float: right;
+        width: 200px;
+    }
+}
+#demo3{
+    overflow: hidden;
+    margin:10px 0 0;
+    .left{
+        float: left;
+        width: 200px;
+    }
+    .right{
+        margin-left:200px
+    }
+}
+#demo4{
+    position: relative;
+    margin:10px 0 0;
+    .left{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 200px;
+    }
+    .right{
+        margin-left:200px
+    }
+}
+p{
+    margin:10px 0 0;
+    color:#111;
+}

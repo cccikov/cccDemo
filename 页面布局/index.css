@@ -1,0 +1,67 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  color: #eee;
+}
+.left {
+  height: 100px;
+  background: darkred;
+}
+.right {
+  height: 110px;
+  margin: 10px 0 0;
+  text-align: right;
+  background: darkblue;
+}
+#demo1 {
+  overflow: hidden;
+}
+#demo1 .left {
+  float: left;
+  width: 200px;
+}
+#demo1 .right {
+  overflow: hidden;
+}
+#demo2 {
+  overflow: hidden;
+  margin: 10px 0 0;
+}
+#demo2 .left {
+  overflow: hidden;
+}
+#demo2 .right {
+  float: right;
+  width: 200px;
+}
+#demo3 {
+  overflow: hidden;
+  margin: 10px 0 0;
+}
+#demo3 .left {
+  float: left;
+  width: 200px;
+}
+#demo3 .right {
+  margin-left: 200px;
+}
+#demo4 {
+  position: relative;
+  margin: 10px 0 0;
+}
+#demo4 .left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+}
+#demo4 .right {
+  margin-left: 200px;
+}
+p {
+  margin: 10px 0 0;
+  color: #111;
+}
+/*# sourceMappingURL=index.css.map */
