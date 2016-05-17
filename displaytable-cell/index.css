@@ -1,0 +1,70 @@
+/*display table-cell*/
+#demo1 {
+  margin: 10px;
+}
+#demo1 p {
+  min-height: 200px;
+  line-height: 200px;
+  /*重点*/
+  background: #efefef;
+}
+#demo1 p span {
+  display: inline-block;
+  /*重点*/
+  vertical-align: middle;
+  /*重点*/
+  line-height: 1.5;
+}
+#demo2 {
+  margin: 10px;
+}
+#demo2 p {
+  display: table-cell;
+  /*重点*/
+  height: 200px;
+  background: #efefef;
+  vertical-align: middle;/*重点*/
+}
+#demo3 {
+  margin: 10px;
+  color: #eee;
+}
+#demo3 .left {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background: darkblue;
+}
+#demo3 .right {
+  display: table-cell;
+  /*重点*/
+  width: 10000px;
+  /*重点*/
+  height: 110px;
+  background: darkred;
+  text-align: right;
+}
+#demo4 {
+  margin: 10px;
+}
+#demo4 .col {
+  display: table-cell;
+  width: 33.3333333333%;
+  padding: 10px;
+  background: #efefef;
+  vertical-align: middle;
+}
+#demo4 .col:nth-of-type(2) {
+  background: #ccc;
+}
+#demo4 .col span {
+  display: inline-block;
+  vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+}
+table td {
+  width: 0.2%;
+}
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>display:table-cell</title>
+		<link rel="stylesheet" type="text/css" href="index.css" />
+	</head>
+
+	<body>
+		<!--demo1-->
+		<div id="demo1">
+			<h5>多行文字居中</h5>
+			<p>
+				<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit omnis ratione optio sed officia mollitia obcaecati doloremque quae culpa deserunt. Neque odio quis velit totam sunt provident pariatur perspiciatis ipsum!<br />用span包裹着，并在span设置成行内块元素，设置vertical-align：middle</span>
+			</p>
+		</div>
+		<div id="demo2">
+			<h5>多行文字居中</h5>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit omnis ratione optio sed officia mollitia obcaecati doloremque quae culpa deserunt. Neque odio quis velit totam sunt provident pariatur perspiciatis ipsum!
+				<br />p设置display:table-cell;vertical-align:middle;
+			</p>
+		</div>
+		<!--左边固定,右边自适应-->
+		<div id="demo3">
+			<div class="left">
+				左边固定
+			</div>
+			<div class="right">
+				右边自适应
+			</div>
+		</div>
+		<!--等高-->
+		<div id="demo4">
+			<div class="col">
+				<span>Lorem ipsum dolor sit amet.</span>
+			</div>
+			<div class="col">
+				<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam animi impedit incidunt optio iure non ab ipsa error suscipit eius voluptatibus voluptates illum delectus dolorum enim autem omnis cupiditate quod ratione magni ipsam ipsum soluta velit minima adipisci tempora praesentium quo illo ea sit natus culpa iusto sint accusamus molestias obcaecati maiores. Hic temporibus nostrum praesentium ex officiis voluptas molestias dignissimos odit earum quisquam iste ea possimus maxime magnam repudiandae eos nobis ab eum nisi doloribus! Vero amet quos maxime saepe. Officia repellendus culpa atque libero porro cum id delectus dolore fugit at velit voluptatum sint quo ab magnam inventore!</span>
+			</div>
+			<div class="col">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione quis facere harum consectetur atque incidunt cumque! Commodi sit ad minima?
+			</div>
+		</div>
+		<table border="1" cellspacing="" cellpadding="">
+			<tr>
+				<td>01 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et consectetur hic facere voluptatum molestiae nam quibusdam qui rem numquam sequi ad nobis adipisci consequatur repudiandae quos sunt fuga voluptatem reprehenderit fugiat corporis ipsum. Deserunt optio hic architecto amet recusandae in totam tempore repellendus soluta assumenda! Dolor explicabo vitae officiis ab impedit dolore blanditiis deserunt unde necessitatibus iusto corporis quas nam architecto molestias facere dolorem iste fugiat laudantium. Culpa non quam necessitatibus amet aperiam dicta officia blanditiis esse deserunt ad iste praesentium tenetur corrupti ipsum perferendis cumque debitis ab eos impedit sequi voluptatem provident illum nihil neque saepe dignissimos quibusdam. Incidunt.</td>
+				<td>02</td>
+				<td>03</td>
+				<td>04</td>
+				<td>05</td>
+				<td>06</td>
+				<td>07</td>
+				<td>08</td>
+				<td>09</td>
+				<td>10</td>
+				<td>11</td>
+				<td>12</td>
+			</tr>
+		</table>
+
+	</body>
+
+</html>
