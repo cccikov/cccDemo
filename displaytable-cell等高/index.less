@@ -47,6 +47,7 @@
 }
 #demo4 {
     margin: 10px;
+    display: table-row;//有时候需要这个
     .col {
         display: table-cell;
         width: 33.3333333333%;
@@ -66,5 +67,18 @@ table {
     border-collapse: collapse;
     td {
         width: 0.2%;
+    }
+}
+
+.img-wrap{
+    width: 128px;
+    height: 128px;
+    line-height: 128px;
+    text-align: center;
+    border: 1px solid #ccc;
+    img{
+        max-width: 128px;
+        max-height: 128px;
+        vertical-align: middle;
     }
 }

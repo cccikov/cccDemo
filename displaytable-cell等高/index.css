@@ -46,6 +46,7 @@
 }
 #demo4 {
   margin: 10px;
+  display: table-row;
 }
 #demo4 .col {
   display: table-cell;
@@ -66,5 +67,17 @@ table {
 }
 table td {
   width: 0.2%;
+}
+.img-wrap {
+  width: 128px;
+  height: 128px;
+  line-height: 128px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+.img-wrap img {
+  max-width: 128px;
+  max-height: 128px;
+  vertical-align: middle;
 }
 /*# sourceMappingURL=index.css.map */
