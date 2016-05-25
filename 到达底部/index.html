@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>到达底部</title>
+		<style type="text/css">
+			#wrap{
+				height: 500000px;
+				overflow: auto;
+			}
+			#inner{
+				height: 1000px;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#wrap").on("scroll",function(){
+					console.log($("#wrap")[0].scrollTop);
+				});
+			})
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="inner">
+				
+			</div>
+		</div>
+		
+	</body>
+</html>
