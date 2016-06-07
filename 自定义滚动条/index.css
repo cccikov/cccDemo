@@ -1,0 +1,31 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+#wrap {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  overflow: hidden;
+  outline: 1px solid #ccc;
+  word-break: break-all;
+}
+#wrap .outBox {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 10px auto;
+  overflow: hidden;
+  outline: 1px solid #ccc;
+  word-break: break-all;
+}
+#wrap .outBox2 {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 10px auto;
+  overflow: hidden;
+  outline: 1px solid #ccc;
+  word-break: break-all;
+}
+/*# sourceMappingURL=index.css.map */
