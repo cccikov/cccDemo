@@ -10,11 +10,20 @@
 		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function() {
+				//进入页面时
+	  			$(".chosen-list li").each(function(index,key){
+	  				var chosenFid = $(key).attr("data-fid");
+	  				$(".industry-second-list [data-fid='"+chosenFid+"']").addClass("chosen");
+	  			});
+				
+				
 				//一级菜单点击
 				$(".industry-item").on("click", function() {
-					if ($(this).attr("class").indexOf("active") == -1) {
-						$(".industry-item").removeClass("active");
+					if (!$(this).is(".active")) {
+						//只有当前一级菜单出现
+						$(".industry-item").removeClass("active");// 将全部一级菜单去除active，下面给当前点击的一级菜单添加active
 						$(this).addClass("active");
+						//对应的二级菜单出现						
 						var fid = $(this).attr("data-fid");
 						$(".industry-second-list[data-fid='" + fid + "']").addClass("active").siblings(".industry-second-list").removeClass("active");
 					} else {
@@ -26,7 +35,7 @@
 				$(".industry-second-item").on("click",function(){
 					var that = $(this);
 					var secondFid = that.attr("data-fid");
-					if(that.attr("class").indexOf("chosen") == -1){
+					if(!that.is(".chosen")){
 						var secondText = that.text();
 						console.log(secondFid,secondText);
 						that.addClass("chosen");

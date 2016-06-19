@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>tab切换按钮组</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			body{
+				padding:10px 0;
+			}
+			ul,li{
+				list-style: none;
+			}
+			#nav-tabs{
+				padding:0 10px;
+				border-bottom: 1px solid #ccc;
+			}
+			#nav-tabs>span{
+				display: inline-block;
+				padding:10px;
+				background: #fff;
+				cursor: pointer;
+			}
+			#nav-tabs>span.active{
+				border: 1px solid #ccc;
+				border-bottom: 1px solid transparent;
+				margin-bottom:-1px;
+			}
+			
+			
+			#tabs-wrap>li{
+				display: none;
+				padding:10px;
+			}
+			#tabs-wrap>li.active{
+				display: block;
+			}
+			
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#nav-tabs>span").on("click",function(){
+					var _index = $(this).index();
+					$(this).addClass("active").siblings().removeClass("active");
+					$("#tabs-wrap>li").eq(_index).addClass("active").siblings().removeClass("active");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="nav-tabs" class="clearfix">
+			<span class="active">tab1</span>
+			<span>tab2</span>
+			<span>tab3</span>
+			<span>tab4</span>
+		</div>
+		<ul id="tabs-wrap">
+			<li class="active">内容01</li>
+			<li>内容02</li>
+			<li>内容03</li>
+			<li>内容04</li>		
+		</ul>
+	</body>
+</html>
