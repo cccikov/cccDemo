@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery 大图滚动</title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+				-webkit-user-select: none;
+			}
+			#wrap {
+				position: relative;
+				width: 510px;
+				height: 286px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			#inner {
+				position: relative;
+				left: 0;
+				top: 0;
+				width: 9999px;
+				overflow: hidden;
+				/*transition: all 1s;*/
+			}
+			img {
+				float: left;
+				width: 510px;
+				height: 286px;
+			}
+			#button {
+				overflow: hidden;
+				position: absolute;
+				bottom: 0;
+				left: 172px;
+			}
+			#button span {
+				float: left;
+				width: 10px;
+				height: 10px;
+				/*border: 1px solid black;*/
+				
+				margin: 5px;
+				border-radius: 50%;
+				background: #CCCCCC;
+			}
+			#button .active {
+				background: greenyellow;
+			}
+			a {
+				text-decoration: none;
+				text-align: center;
+				background: #000;
+				opacity: 0.3;
+				color: #FFFFFF;
+				line-height: 50px;
+				width: 50px;
+				font-weight: bold;
+				font-size: 40px;
+			}
+			#leftBut {
+				position: absolute;
+				top: 100px;
+				left: 0;
+			}
+			#rightBut {
+				position: absolute;
+				top: 100px;
+				right: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="inner">
+				<img src="img/1.jpg" alt="" />
+				<img src="img/2.jpg" alt="" />
+				<img src="img/3.jpg" alt="" />
+				<img src="img/4.jpg" alt="" />
+				<img src="img/5.jpg" alt="" />
+				<img src="img/6.jpg" alt="" />
+				<img src="img/7.jpg" alt="" />
+				<img src="img/8.jpg" alt="" />
+				<img src="img/9.jpg" alt="" />
+			</div>
+			<div id="button">
+				<span class="active"></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<a id="leftBut" href="javascript:void(0);">&lt;</a>
+			<a id="rightBut" href="javascript:void(0);">&gt;</a>
+		</div>
+		<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			var perWidth = $("img:eq(0)").width();
+			var spanList = $("#button span");
+			var inner = $("#inner");
+			var prev = $("#leftBut");
+			var next = $("#rightBut");
+			var innerLeft = 0;
+			var index = 0;
+			//tab切换function
+			function tab() {
+				innerLeft = -index * perWidth;
+				spanList.eq(index).addClass("active").siblings().removeClass("active");
+				//spanList.removeClass("active").eq(index).addClass("active");
+				
+				//inner.css({"left": innerLeft});
+				//inner.css("left",innerLeft);
+				inner.stop().animate({"left":innerLeft},400);
+				//stop() 为了避免按多了的时候多个动画同时执行
+			}
+			//下一张function
+			function nextPic(){
+				index++;
+				if(index>$("#inner img").length - 1)
+				index = 0;				
+				tab();
+			}
+			//上一张function
+			function prevPic(){
+				index--;
+				if(index<0)
+				index=$("#inner img").length - 1;
+				tab();				
+			}
+			
+			spanList.click(function() {
+				index = $(this).index();
+				tab();
+			})			
+			next.click(nextPic);
+			prev.click(prevPic)
+			
+		</script>
+	</body>
+
+</html>
