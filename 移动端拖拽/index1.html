@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>移动端拖拽</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			#box{
+				position: fixed;
+				top:10px;
+				left:10px;
+				width: 50px;
+				height: 50px;
+				background: red;
+				border-radius: 50px;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#box").on("touchstart",function(e){
+					var that = $(this);
+					//块的位置
+					var Eleft = that.offset().left;
+					var Etop = that.offset().top;
+					
+					var newPX = oldPX = e.originalEvent.touches[0].clientX;
+					var newPY = oldPY = e.originalEvent.touches[0].clientY;
+					var deltaX = deltaY = 0;
+					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
+						//块的位置
+						Eleft = that.offset().left;
+						Etop = that.offset().top;
+						
+						newPX = e.originalEvent.touches[0].clientX;
+						deltaX = newPX - oldPX;//这个相当于速度
+						that.css("left",Eleft+deltaX);
+						oldPX = newPX;
+						
+						
+						newPY = e.originalEvent.touches[0].clientY;
+						deltaY = newPY - oldPY;
+						that.css("top",Etop+deltaY);
+						oldPY = newPY;
+						
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			
+		</div>
+	</body>
+</html>

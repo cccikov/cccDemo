@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>移动端拖拽</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			#box{
+				position: fixed;
+				top:10px;
+				left:10px;
+				width: 50px;
+				height: 50px;
+				border-radius: 50px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//块的位置
+				var Eleft = Etop =  newPX = oldPX =  newPY = oldPY =  deltaX = deltaY = null;
+				var winW = $(window).width();
+				var winH = $(window).height();
+				var eW = $("#box").innerWidth();
+				var eH = $("#box").innerHeight();
+				
+				$("#box").on("touchstart",function(e){
+					var that = $(this);
+					//块的位置
+					Eleft = that.offset().left;
+					Etop = that.offset().top;
+					
+					newPX = oldPX = e.originalEvent.touches[0].clientX;
+					newPY = oldPY = e.originalEvent.touches[0].clientY;
+					deltaX = deltaY = 0;
+					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
+						e.preventDefault();
+						/*
+						 * 水平方向
+						 */
+						newPX = e.originalEvent.touches[0].clientX;
+						deltaX = newPX-oldPX;//这是距离
+						that.css("left",Eleft+deltaX);
+									
+									
+						
+						/*
+						 * 竖直方向
+						 */
+						newPY = e.originalEvent.touches[0].clientY;
+						deltaY = newPY-oldPY;//这是距离
+						that.css("top",Etop+deltaY);
+						
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<div class="inner"></div>
+		</div>
+	</body>
+</html>
