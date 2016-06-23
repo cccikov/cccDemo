@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>移动端拖拽 添加缓冲</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			html,body{
+				height: 100%;
+			}
+			body{
+				background: url(img.png) center/contain no-repeat ;
+			}
+			#box{
+				position: fixed;
+				top:10px;
+				left:10px;
+				width: 50px;
+				height: 50px;
+				border-radius: 50px;
+				background: red;
+				opacity: .3;
+			}
+			#box.trans{
+				transition:	top .5s cubic-bezier(0.2, 0.95, 0.63, 1.04),left .5s cubic-bezier(0.2, 0.95, 0.63, 1.04);
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script type="text/javascript">
+			$(function(){
+				var Eleft = Etop = null;
+				$("#box").on("click",function(){
+					Eleft = $(this).offset().left;
+					Etop = $(this).offset().top;
+					
+					$(this).css({
+						"left":Eleft+100,
+						"top":Etop+100
+					});
+				});
+			});
+		</script>-->
+		<script type="text/javascript">
+			$(function(){
+				//块的位置
+				var Eleft = Etop =  newPX = oldPX =  newPY = oldPY =  deltaX = deltaY = null;
+				var winW = $(window).width();
+				var winH = $(window).height();
+				var eW = $("#box").innerWidth();
+				var eH = $("#box").innerHeight();
+				
+				$("#box").on("touchstart",function(e){
+					var that = $(this).removeClass("trans");
+					//块的位置
+					Eleft = that.offset().left;
+					Etop = that.offset().top;
+					
+					newPX = oldPX = e.originalEvent.touches[0].clientX;
+					newPY = oldPY = e.originalEvent.touches[0].clientY;
+					deltaX = deltaY = 0;
+					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
+						e.preventDefault();
+						/*
+						 * 水平方向
+						 */
+						//块的水平位置
+						Eleft = that.offset().left;
+						
+						newPX = e.originalEvent.touches[0].clientX;
+						deltaX = newPX - oldPX;
+						//添加限制
+						if(Eleft+deltaX<0){
+							that.css("left",0);
+						}else if(Eleft+deltaX>winW-eW){
+							that.css("left",winW-eW);
+						}else{
+							that.css("left",Eleft+deltaX);
+						}
+						oldPX = newPX;
+						
+						/*
+						 * 竖直方向
+						 */
+						//块的竖直位置
+						Etop = that.offset().top;
+						
+						newPY = e.originalEvent.touches[0].clientY;
+						deltaY = newPY - oldPY;
+						//限制
+						if(Etop+deltaY<0){
+							that.css("top",0);
+						}else if(Etop+deltaY>winH-eH){
+							that.css("top",winH-eH);
+						}else{
+							that.css("top",Etop+deltaY);
+						}
+						
+						oldPY = newPY;
+						
+						
+					});
+				});
+				$("#box").on("touchend",function(){
+					var that = $(this).addClass("trans");
+					Eleft = that.offset().left;
+					//限制
+					if(deltaX*10+Eleft<0){
+						that.css("left",0);
+					}else if(deltaX*10+Eleft>winW-eW){
+						that.css("left",winW-eW);
+					}else{
+						that.css("left",deltaX*10+Eleft);
+					}
+					//that.css("left",Eleft+deltaX*10); 没有限制的时候
+					
+					Etop = that.offset().top;
+					//限制
+					if(Etop+deltaY*10<0){
+						that.css("top",0);
+					}else if(Etop+deltaY*10>winH-eH){
+						that.css("top",winH-eH);
+					}else{
+						that.css("top",Etop+deltaY*10);
+					}
+					//that.css("top",Etop+deltaY*10);  没有限制的时候
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="" id="box">
+			<div class="inner"></div>
+		</div>
+		<p>
+			但是现在这种缓冲方式只适合单方向的，因为这个是通过最终缓冲结束的点与松手时的点来确定缓冲路径的，但是由于设置了限制，所以最终缓冲结束的点不会在同一条直线上.<br />
+			如背景的例子，本来结束点是绿色位置的，但是由于有限制，所以结束点就变成蓝色位置了，所以缓冲路径就成折线了。（解决方法：用纯js去做那个缓冲，不要用css3的transition，参考用原生js写大图滚动的方法，通过那种方法来运动，并且在运动过程中检测是否到达边界）
+		</p>
+		<p>
+			但是性能好差啊！！！！只有在旗舰手机的chrome浏览器上效果才好一点
+		</p>
+	</body>
+</html>
