@@ -24,6 +24,7 @@
 			$(function(){
 				//块的位置
 				var Eleft = Etop =  newPX = oldPX =  newPY = oldPY =  deltaX = deltaY = null;
+
 				var winW = $(window).width();
 				var winH = $(window).height();
 				var eW = $("#box").innerWidth();
@@ -31,13 +32,15 @@
 				
 				$("#box").on("touchstart",function(e){
 					var that = $(this);
+					
 					//块的位置
 					Eleft = that.offset().left;
 					Etop = that.offset().top;
 					
 					newPX = oldPX = e.originalEvent.touches[0].clientX;
 					newPY = oldPY = e.originalEvent.touches[0].clientY;
-					deltaX = deltaY = 0;
+					// deltaX = deltaY = 0;
+					
 					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
 						e.preventDefault();
 						/*

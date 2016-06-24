@@ -23,51 +23,57 @@
 		<script type="text/javascript">
 			$(function(){
 				//块的位置
-				var newPX = oldPX =  newPY = oldPY =  deltaX = deltaY = moveX =moveY = null;
-
+				var newPX = oldPX =  newPY = oldPY = null , deltaX = deltaY = moveX = moveY = oldMoveX = oldMoveY = 0;
+				
 				var winW = $(window).width();
 				var winH = $(window).height();
 				var eW = $("#box").innerWidth();
 				var eH = $("#box").innerHeight();
+				var originL = $("#box").offset().left;
+				var originT = $("#box").offset().top;
 
 				$("#box").on("touchstart",function(e){
-					var that = $(this);
-
-					// 获取已经偏移的位置
-					if(that.attr("data-moveX")){
-						moveX = Number(that.attr("data-moveX"));
-					}else{
-						moveX = 0;
-						that.attr("data-moveX",0);
-					}
+					var that = $(this);					
 					
 					newPX = oldPX = e.originalEvent.touches[0].clientX;
 					newPY = oldPY = e.originalEvent.touches[0].clientY;
-					// deltaX = deltaY = 0;
+
+					oldMoveX = moveX;
+					oldMoveY = moveY;
 
 					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
 						e.preventDefault();
 						/*
 						 * 水平方向
 						 */
-
-						//当前偏移量
-						moveX = Number(that.attr("data-moveX"));
-
 						newPX = e.originalEvent.touches[0].clientX;
-						deltaX = newPX - oldPX;
-						moveX += deltaX;//偏移量更新
+						deltaX = newPX-oldPX;//这是距离
+						moveX = deltaX+oldMoveX; //距离叠加
 
-						that.css("transform","translate3d("+moveX+"px,0,0)");
-						that.attr("data-moveX",moveX);//储存偏移量
+						/*
+						 * 竖直方向
+						 */
+						newPY = e.originalEvent.touches[0].clientY;
+						deltaY = newPY-oldPY;//这是距离
+						moveY = deltaY+oldMoveY; //距离叠加
 
-						oldPX = newPX;
+						// 添加限制
+						if(moveX<-originL){
+							moveX = -originL;
+						}else if(moveX>winW-eW-originL){
+							moveX=winW-eW-originL;
+						}
+						if(moveY<-originT){
+							moveY = -originT;
+						}else if(moveY>winH-eH-originT){
+							moveY=winH-eH-originT;
+						}
+
+						that.css("transform","translate3d("+moveX+"px,"+moveY+"px,0)");
+
 						
 					});
 				});
-
-
-				
 			});
 		</script>
 	</head>
@@ -75,7 +81,5 @@
 		<div id="box">
 			<div class="inner"></div>
 		</div>
-		<p>性能优化用的transform,与left、top的区别在于；一个是要读取偏移最初原点的位置（进入页面时的位置），一个是读取position位置</p>
-		<p id="num">这种方法是将moveX储存在元素的 data-moveX属性里面</p>
 	</body>
 </html>
