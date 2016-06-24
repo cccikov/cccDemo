@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>碰壁反弹 多变</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+				-webkit-user-select: none;
+			}
+			html,body{
+				height: 100%;
+				overflow: hidden;
+			}
+			#ball{
+				position: fixed;
+				top:0px;
+				left:0px;
+				width: 50px;
+				height: 50px;
+				border-radius: 25px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var ball = $("#ball");
+				var moveX = speedX = directX = null;
+				var moveY = speedY = directY = null;
+				
+				var eW = ball.width();
+				var eH = ball.height();
+				var winW = $(window).width();
+				var winH = $(window).height();
+				
+				directX = 1;
+				directY = 1; //用来表示方向 1，-1
+				speedX = speedY = 1; //速度
+				
+				var hitNum = 0;
+				
+				/*//这是用setInterval方法，觉得不太好,换requestAnimationFrame
+				var timer = setInterval(function(){
+					speedX++;
+					speedY++;
+				},1000);*/
+				
+				var stopFlag = false;
+				
+				function change(){
+					if(speedX>100 || speedX<-100){
+						speedX = Math.random()>0.5 ? 5 : -5;
+					}else{
+						Math.random()>0.5 ? speedX+=Math.random()*5 : speedX-=Math.random()*5;
+					}
+					if(speedY>100 || speedY<-100){
+						speedY = Math.random()>0.5 ? 5 : -5;
+					}else{
+						Math.random()>0.5 ? speedY+=Math.random()*5 : speedY-=Math.random()*5;
+					}
+					Math.random()>0.8 ? directX *= -1 : directX *= 1;
+					Math.random()>0.8 ? directY *= -1 : directY *= 1;
+					$("#speed").text("speedX:"+Math.round(speedX)+",speedY:"+Math.round(speedY));
+				}
+				
+				function move(){
+					moveX+=speedX*directX;
+					moveY+=speedY*directY;
+
+					if(moveX>=winW-eW){
+						moveX = winW-eW;
+						directX*=-1;
+						change();
+					}else if(moveX<0){
+						moveX = 0;
+						directX*=-1;
+						change();
+					}
+					if(moveY>=winH-eH){
+						moveY = winH-eH;
+						directY*=-1;
+						change();
+					}else if(moveY<0){
+						moveY = 0;
+						directY*=-1;
+						change();
+					}
+					
+					ball.css("transform","translate3d("+moveX+"px,"+moveY+"px,0)");
+					var timer = window.requestAnimationFrame(move);
+					if(stopFlag){
+						window.cancelAnimationFrame(timer);
+					}
+				}
+				window.requestAnimationFrame(move);
+				
+				$("#pause").on("click",function(){
+					stopFlag = !stopFlag;
+					if(!stopFlag){
+						window.requestAnimationFrame(move);
+					}
+				});
+				
+				$("#reset").on("click",function(){
+					window.location.reload();
+				});
+				
+				$(window).on("touchmove",function(e){
+					e.preventDefault();
+				});
+				
+				ball.on("mousedown touchstart",function(){
+					hitNum++;
+					change();
+					$("#hit").html(hitNum);
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<div id="ball"></div>
+		<!-- <button id="pause">暂停</button> -->
+		<button id="reset">reset</button>
+		<p id="hit"></p>
+		<p id="speed"></p>
+	</body>
+</html>

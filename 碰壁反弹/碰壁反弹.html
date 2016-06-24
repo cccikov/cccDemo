@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>碰壁反弹</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			html,body{
+				height: 100%;
+				overflow: hidden;
+			}
+			#ball{
+				position: fixed;
+				top:0px;
+				left:0px;
+				width: 50px;
+				height: 50px;
+				border-radius: 25px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var ball = $("#ball");
+				var moveX = speedX = directX = null;
+				var moveY = speedY = directY = null;
+				
+				var eW = ball.width();
+				var eH = ball.height();
+				var winW = $(window).width();
+				var winH = $(window).height();
+				
+				directX = 1;
+				directY = 1; //用来表示方向 1，-1
+				speedX = speedY = 1; //速度
+				
+				/* //这是用setInterval方法，觉得不太好,换requestAnimationFrame
+				var timer = setInterval(function(){
+					moveX+=speedX*directX;
+					if(moveX>winW-eW || moveX<0){
+						directX*=-1;
+					}
+					ball.css("transform","translate3d("+moveX+"px,0,0)");
+				},20);*/
+				
+				var stopFlag = false;
+				
+				function move(){
+					if(moveX>=winW-eW || moveX<0){
+						directX*=-1;
+					}
+					if(moveY>=winH-eH || moveY<0){
+						directY*=-1;
+					}
+					
+					moveX+=speedX*directX;
+					moveY+=speedY*directY;
+					
+					ball.css("transform","translate3d("+moveX+"px,"+moveY+"px,0)");
+					var timer = window.requestAnimationFrame(move);
+					if(stopFlag){
+						window.cancelAnimationFrame(timer);
+					}
+				}
+				window.requestAnimationFrame(move);
+				
+				$("#pause").on("click",function(){
+					stopFlag = !stopFlag;
+					if(!stopFlag){
+						window.requestAnimationFrame(move);
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="ball"></div>
+		<button id="pause">暂停</button>
+	</body>
+</html>

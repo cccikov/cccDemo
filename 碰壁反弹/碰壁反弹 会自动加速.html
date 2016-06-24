@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<title>碰壁反弹 会自动加速</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+				-webkit-user-select: none;
+			}
+			html,body{
+				height: 100%;
+				overflow: hidden;
+			}
+			#ball{
+				position: fixed;
+				top:0px;
+				left:0px;
+				width: 50px;
+				height: 50px;
+				border-radius: 25px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var ball = $("#ball");
+				var moveX = speedX = directX = null;
+				var moveY = speedY = directY = null;
+				
+				var eW = ball.width();
+				var eH = ball.height();
+				var winW = $(window).width();
+				var winH = $(window).height();
+				
+				directX = 1;
+				directY = 1; //用来表示方向 1，-1
+				speedX = speedY = 1; //速度
+				
+				var hitNum = 0;
+				
+				/*//这是用setInterval方法，觉得不太好,换requestAnimationFrame
+				var timer = setInterval(function(){
+					speedX++;
+					speedY++;
+				},1000);*/
+				
+				var stopFlag = false;
+				
+				function fast(){
+					speedX+=.1;
+					speedY+=.1;
+				}
+				function move(){
+					if(moveX>=winW-eW || moveX<0){
+						directX*=-1;
+						fast();
+					}
+					if(moveY>=winH-eH || moveY<0){
+						directY*=-1;
+						fast();
+					}
+					
+					moveX+=speedX*directX;
+					moveY+=speedY*directY;
+					
+					ball.css("transform","translate3d("+moveX+"px,"+moveY+"px,0)");
+					var timer = window.requestAnimationFrame(move);
+					if(stopFlag){
+						window.cancelAnimationFrame(timer);
+					}
+				}
+				window.requestAnimationFrame(move);
+				
+				$("#pause").on("click",function(){
+					stopFlag = !stopFlag;
+					if(!stopFlag){
+						window.requestAnimationFrame(move);
+					}
+				});
+				
+				$("#reset").on("click",function(){
+					window.location.reload();
+				});
+				
+				$(window).on("touchmove",function(e){
+					e.preventDefault();
+				});
+				
+				ball.on("mousedown touchstart",function(){
+					hitNum++;
+					fast();
+					$("#hit").html(hitNum);
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<div id="ball"></div>
+		<button id="pause">暂停</button>
+		<button id="reset">reset</button>
+		<p id="hit"></p>
+	</body>
+</html>
