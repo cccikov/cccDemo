@@ -25,16 +25,16 @@
 				$("#box").on("touchstart",function(e){
 					var that = $(this);
 					//块的位置
-					var Eleft = that.offset().left;
-					var Etop = that.offset().top;
+					var Eleft = that.position().left;
+					var Etop = that.position().top;
 					
 					var newPX = oldPX = e.originalEvent.touches[0].clientX;
 					var newPY = oldPY = e.originalEvent.touches[0].clientY;
 					var deltaX = deltaY = 0;
 					that.off("touchmove").on("touchmove",function(e){ //要注意添加事件的对象
 						//块的位置
-						Eleft = that.offset().left;
-						Etop = that.offset().top;
+						Eleft = that.position().left;
+						Etop = that.position().top;
 						
 						newPX = e.originalEvent.touches[0].clientX;
 						deltaX = newPX - oldPX;//这个相当于速度

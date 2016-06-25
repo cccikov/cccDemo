@@ -32,8 +32,8 @@
 				$("#box").on("touchstart",function(e){
 					var that = $(this);
 					//块的位置
-					Eleft = that.offset().left;
-					Etop = that.offset().top;
+					Eleft = that.position().left;
+					Etop = that.position().top;
 					
 					newPX = oldPX = e.originalEvent.touches[0].clientX;
 					newPY = oldPY = e.originalEvent.touches[0].clientY;
@@ -44,7 +44,7 @@
 						 * 水平方向
 						 */
 						//块的水平位置
-						Eleft = that.offset().left;
+						Eleft = that.position().left;
 						
 						newPX = e.originalEvent.touches[0].clientX;
 						deltaX = newPX - oldPX;
@@ -62,7 +62,7 @@
 						 * 竖直方向
 						 */
 						//块的竖直位置
-						Etop = that.offset().top;
+						Etop = that.position().top;
 						
 						newPY = e.originalEvent.touches[0].clientY;
 						deltaY = newPY - oldPY;

@@ -32,8 +32,8 @@
 				$("#box").on("touchstart",function(e){
 					var that = $(this);
 					//块的位置
-					Eleft = that.offset().left;
-					Etop = that.offset().top;
+					Eleft = that.position().left;
+					Etop = that.position().top;
 					
 					newPX = oldPX = e.originalEvent.touches[0].clientX;
 					newPY = oldPY = e.originalEvent.touches[0].clientY;

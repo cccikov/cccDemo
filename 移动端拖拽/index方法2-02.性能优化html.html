@@ -29,8 +29,8 @@
 				var winH = $(window).height();
 				var eW = $("#box").innerWidth();
 				var eH = $("#box").innerHeight();
-				var originL = $("#box").offset().left;
-				var originT = $("#box").offset().top;
+				var originL = $("#box").position().left;
+				var originT = $("#box").position().top;
 
 				$("#box").on("touchstart",function(e){
 					var that = $(this);					

@@ -34,8 +34,8 @@
 			$(function(){
 				var Eleft = Etop = null;
 				$("#box").on("click",function(){
-					Eleft = $(this).offset().left;
-					Etop = $(this).offset().top;
+					Eleft = $(this).position().left;
+					Etop = $(this).position().top;
 					
 					$(this).css({
 						"left":Eleft+100,
@@ -56,8 +56,8 @@
 				$("#box").on("touchstart",function(e){
 					var that = $(this).removeClass("trans");
 					//块的位置
-					Eleft = that.offset().left;
-					Etop = that.offset().top;
+					Eleft = that.position().left;
+					Etop = that.position().top;
 					
 					newPX = oldPX = e.originalEvent.touches[0].clientX;
 					newPY = oldPY = e.originalEvent.touches[0].clientY;
@@ -68,7 +68,7 @@
 						 * 水平方向
 						 */
 						//块的水平位置
-						Eleft = that.offset().left;
+						Eleft = that.position().left;
 						
 						newPX = e.originalEvent.touches[0].clientX;
 						deltaX = newPX - oldPX;
@@ -86,7 +86,7 @@
 						 * 竖直方向
 						 */
 						//块的竖直位置
-						Etop = that.offset().top;
+						Etop = that.position().top;
 						
 						newPY = e.originalEvent.touches[0].clientY;
 						deltaY = newPY - oldPY;
@@ -106,7 +106,7 @@
 				});
 				$("#box").on("touchend",function(){
 					var that = $(this).addClass("trans");
-					Eleft = that.offset().left;
+					Eleft = that.position().left;
 					//限制
 					if(deltaX*10+Eleft<0){
 						that.css("left",0);
@@ -117,7 +117,7 @@
 					}
 					//that.css("left",Eleft+deltaX*10); 没有限制的时候
 					
-					Etop = that.offset().top;
+					Etop = that.position().top;
 					//限制
 					if(Etop+deltaY*10<0){
 						that.css("top",0);
