@@ -1,5 +1,6 @@
 $(function(){
 	var winW  = $(window).width();
+	console.log(winW)
 	var imgItem = $(".img-item").css("width",winW);
 	var imgList = $(".img-list").css("width",imgItem.length*winW);
 
@@ -34,6 +35,9 @@ $(function(){
 		// 	return c*t/d + b;
 		// }
 		,tween:Tween.Quart.easeOut
+	});
+	ccc.swiper({
+		obj:$("#two")
 	});
 });
 
