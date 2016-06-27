@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>直线运动</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			#point{
+				position: fixed;
+				top: 100px;
+				left: 100px;
+				width: 10px;
+				height: 10px;
+				border-radius: 5px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var point = $("#point");
+				var x = y = null;
+				
+				var t = 0;
+				var maxT = 50;
+				var timer = null;
+				var v0 = -50;//决定抛物线弧度，因为两点的坐标决定了，时间决定，v0决定了初速度，同时也会影响加速度
+				
+				function move(){
+					t+=.5;
+					//由（0，0） 到 （800，0）
+					x = 800*t/maxT + 0;
+					//由（0，600） 到 （0，400）
+					y = t*t*(-200/maxT/maxT-v0/maxT)+v0*t+600;
+					
+					point.css("transform","translate3d("+x+"px,"+y+"px,0)");
+					
+					timer = window.requestAnimationFrame(move);
+					if(t>=maxT){
+						t=0;
+						// window.cancelAnimationFrame(timer);
+					}
+				}
+				timer = window.requestAnimationFrame(move);
+			});
+		</script>
+	</head>
+	<body>
+		<div id="point"></div>
+	</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>直线运动</title>
+		<style type="text/css">
+			*{
+				padding:0;
+				margin:0;
+			}
+			#point{
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 10px;
+				height: 10px;
+				border-radius: 5px;
+				background: red;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var point = $("#point");
+				var x = y = null;
+				
+				var t = 0;
+				var maxT = 30;
+				var timer = null;
+				
+				function move(){
+					t+=.5;
+					//由（0，0） 到 （100，0）
+					x = 100*t/maxT + 0;
+					//由（0，10） 到 （0，200）
+					y = 200*t/maxT + 10;
+					
+					point.css("transform","translate3d("+x+"px,"+y+"px,0)");
+					
+					timer = window.requestAnimationFrame(move);
+					if(t>=maxT){
+						window.cancelAnimationFrame(timer);
+					}
+				}
+				timer = window.requestAnimationFrame(move);
+			});
+		</script>
+	</head>
+	<body>
+		<div id="point"></div>
+	</body>
+</html>
