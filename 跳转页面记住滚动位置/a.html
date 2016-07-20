@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>页面a</title>
+		<style type="text/css">
+			a{
+				display: block;
+				padding:0 12px;
+				margin:20px 0;
+			}
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ccc.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				function setTop(top){
+					ccc.setStorage("atop",top);
+				}
+				function getTop(){
+					return ccc.getStorage("atop");
+				}
+				
+				$("body").scrollTop(getTop());
+				
+				$("a").on("touchstart",function(e){
+					e.preventDefault();
+					
+					setTop($("body").scrollTop());
+					window.location.href = $(this).attr("href");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+			<a href="b.html">跳转到页面b</a>
+		</div>
+	</body>
+</html>

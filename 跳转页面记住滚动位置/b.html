@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>页面b</title>
+		<style type="text/css">
+			a{
+				display: block;
+				padding: 0 12px;
+				margin:20px;
+				text-align: right;
+			}
+			
+		</style>
+		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ccc.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				function setTop(top){
+					ccc.setStorage("btop",top);
+				}
+				function getTop(){
+					return ccc.getStorage("btop");
+				}
+				
+				$("body").scrollTop(getTop());
+				
+				$("a").on("click",function(e){
+					e.preventDefault();
+					
+					setTop($("body").scrollTop());
+					window.location.href = $(this).attr("href");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+			<a href="a.html">跳转回页面a</a>
+		</div>
+	</body>
+</html>
