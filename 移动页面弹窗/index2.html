@@ -1,0 +1,819 @@
+<!-- 
+	****
+	这个方法是用跳转去看图片，返回的时候利用localStorage记录的数据去判断弹窗是否出现，
+	读取localStorage保存的弹窗内容
+	以及滚动条高度
+	为了避免有个明显的跳转，页面进入的时候body的opacity为0，等完成好全部操作之后再用js设回为1
+
+	后面想想，好像用sessionStorage会好一点吧
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<title>Document</title>
+		<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+		<script src="../js/ccc.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="../css/base.css">
+		<style type="text/css">
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				font: 0.95rem "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			}
+			body{
+				opacity: 0;
+				/*先不显示内容，等判断好localStorage之后，用js恢复为1*/
+			}
+			
+			a {
+				text-decoration: none;
+				color: inherit;
+			}
+			
+			.wrap {
+				box-sizing: border-box;
+				width: 100%;
+				/*fixed的时候*/
+				padding: 12px;
+			}
+			
+			.head h1 {
+				float: left;
+				padding:5px 0 0 0;
+				font: 700 1rem "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+				;
+			}
+			
+			.head a {
+				float: right;
+				padding: 3px 5px 1px;
+				border: 1px solid #57B4F0;
+				border-radius: 5px;
+				color: #57B4F0;
+			}
+			
+			.head a:after {
+				content: '';
+				position: relative;
+				left: 3px;
+				display: inline-block;
+				height: .6rem;
+				width: .5rem;
+				vertical-align: middle;
+				margin: -3px 0 0 0;
+				background: #000 center/contain no-repeat;
+			}
+			
+			.main {
+				color: #555;
+			}
+			
+			.main .top {
+				padding: 8px 12px;
+				margin: 15px -6px 10px;
+				background: #ebebeb;
+			}
+			
+			.main .top span:first-of-type {
+				float: left;
+			}
+			
+			.main .top span:last-of-type {
+				float: right;
+			}
+			
+			.ivo-list {
+				display: table;
+				width: 100%;
+			}
+			
+			.ivo-item {
+				display: table-row;
+			}
+			
+			.ivo-item:active {
+				background: #f0f0f0;
+			}
+			
+			.ivo-item span {
+				display: table-cell;
+				padding: 8px 0;
+				border-bottom: 1px solid #ccc;
+				vertical-align: middle;
+			}
+			
+			.ivo-item span:nth-of-type(1) {}
+			
+			.ivo-item span:nth-of-type(2) {
+				width: 5rem;
+				text-align: center;
+			}
+			
+			.ivo-item span:nth-of-type(3) {
+				width: 0.5rem;
+				background: #000 center/0.5rem no-repeat;
+			}
+			/*弹窗*/
+			
+			.floating {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.3);
+				color: #565656;
+				font-size: 0.85rem;
+				opacity: 0;
+				transition: opacity cubic-bezier(0, 1.12, 1, 1.01) .3s;
+			}
+			.floating.in{
+				opacity:1;
+			}
+			
+			.f-main {
+				box-sizing: border-box;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: auto;
+				width: 85%;
+				height: 82%;
+				padding: 12px 15px;
+				border-radius: 8px;
+				background: #fff;
+				transform: scale(0.7);
+				opacity: 0;
+				transition:transform cubic-bezier(0, 1.1, 1, 1) 0.3s,opacity cubic-bezier(0, 1.1, 1, 1) 0.2s;
+			}
+			.f-main.in{
+				transform: scale(1);
+				opacity: 1;
+			}
+			
+			.f-wrap {
+				box-sizing: border-box;
+				height: 100%;
+				overflow: auto;
+				padding:0 0 20px 0;
+			}
+			
+			.f-wrap h2 {
+				margin: 5px 12px 10px;
+				font-size: 1rem;
+				font-weight: 700;
+				text-align: center;
+				color: #666;
+			}
+			
+			.f-wrap ul {
+				display: table;
+				width: 100%;
+			}
+			
+			.f-wrap li {
+				display: table-row;
+			}
+			
+			.f-wrap span {
+				display: table-cell;
+				padding: 8px 0;
+				vertical-align: middle;
+			}
+			
+			.f-wrap span:nth-of-type(1) {
+				width: 42%;
+			}
+			
+			.f-wrap span:nth-of-type(2) {
+				text-align: right;
+			}
+			
+			.f-a {
+				display: block;
+				margin: 15px 0 20px;
+				text-align: center;
+				color: #57B4F0;
+				font-size: 0.9rem;
+			}
+			
+			.f-a:active {
+				text-decoration: underline;
+			}
+			
+			.f-btn {
+				padding: 0 2rem;
+				color: #fff;
+			}
+			
+			.f-btn a {
+				width: 45%;
+				padding: 8px 0;
+				border-radius: 5px;
+				text-align: center;
+				font-size: 1.2rem;
+			}
+			
+			.f-btn a:nth-of-type(1) {
+				float: left;
+				background: #2DA1F7;
+			}
+			
+			.f-btn a:nth-of-type(1):active {
+				background: #1b8ee2;
+			}
+			
+			.f-btn a:nth-of-type(2) {
+				float: right;
+				background: #E84B4C;
+			}
+			
+			.f-btn a:nth-of-type(2):active {
+				background: #ad3030;
+			}
+
+			/*pic*/
+			.pic{
+				display: none;
+				position: fixed;
+				top:0;
+				left:0;
+				width: 100%;
+				height:100%;
+				background: #000;
+				text-align: center;
+				transform: scale(0.3);
+				opacity: 0;
+				transition:transform cubic-bezier(0, 1.1, 1, 1) 0.3s,opacity cubic-bezier(0, 1.1, 1, 1) 0.3s;
+			}
+			.pic.in{
+				transform: scale(1);
+				opacity: 1;
+			}
+			.pic img{
+				max-height: 90%;
+				max-width: 90%;
+				vertical-align: middle;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			$(function() {
+				var f = {};//floating 悬浮窗
+				f.wrap = $(".wrap");
+				f.fl = $(".floating");
+				f.main = $(".f-main");
+				f.top = null; //记录滚动高度
+				f.localContent = function(str){
+					ccc.setStorage("content",str);
+				}
+				f.localOpenFlag = function(boolean){
+					ccc.setStorage("openFlag",boolean);
+				}
+				f.localTop = function(top){
+					ccc.setStorage("top",top);
+				}
+				f.in = function(obj) {
+					f.localOpenFlag(true);
+					f.main.find("h2").html(obj.find(".name").text());
+					$(".taxR").html(obj.attr("data-taxR"));
+					$(".bankN").html(obj.attr("data-bankN"));
+					$(".bankA").html(obj.attr("data-bankA"));
+					$(".area").html(obj.attr("data-area"));
+					$(".address").html(obj.attr("data-address"));
+					$(".tel").html(obj.attr("data-tel"));
+
+					$(".checkL").attr("href",obj.attr("data-checkL"));
+					$(".checkTR").attr("href",obj.attr("data-checkTR"));
+					$(".checkT").attr("href",obj.attr("data-checkT"));
+					$(".checkC").attr("href",obj.attr("data-checkC"));
+					$(".edit").attr("href",obj.attr("data-edit"));
+
+					f.localContent(f.main.html());
+
+					f.fl.show();
+					setTimeout(function(){
+						f.fl.addClass("in");
+						f.main.addClass("in");
+					})
+					f.top = $("body").scrollTop();
+					f.wrap.css({
+						"position": "fixed",
+						"top": -f.top
+					});
+					f.localTop(f.top);
+				}
+				f.out = function() {
+					f.localOpenFlag(false);
+					f.wrap.css({
+						"position": "static"
+					});
+					f.fl.removeClass("in");
+					f.main.removeClass("in");
+					setTimeout(function(){
+						f.fl.hide();
+					},300);
+					$("body").scrollTop(f.top);
+				}
+
+				$(".ivo-item").on("click", function() {
+					var that = $(this);
+					f.in(that);
+				});
+
+				f.fl.on("click", function() {
+					f.out();
+				}).find(f.main).on("click",function(e){
+					e.stopPropagation();
+				}).on("click",".closeBtn",function(){
+					f.out();
+				});
+
+				function enter(){
+					// $("body").css("opacity",0);
+					f.top = ccc.getStorage("top");
+					if(ccc.getStorage("openFlag")=="true"){
+						f.main.html(ccc.getStorage("content"));
+						f.main.addClass("in");
+						f.wrap.css({
+							"position": "fixed",
+							"top": -f.top
+						});
+						f.fl.addClass("in").show(function(){
+							$("body").css("opacity",1);
+						});
+
+					}else{
+						$("body").css("opacity",1);
+					}
+				}
+				enter();
+
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="head clearfix">
+				<h1>发票列表</h1>
+				<a href="javascript:void(0)">添加</a>
+			</div>
+			<div class="main">
+				<p class="top clearfix">
+					<span>抬头</span>
+					<span>审核状态</span>
+				</p>
+				<div class="ivo-list">
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item"
+						data-taxR = "6354654654654"
+						data-bankN = "广发银行"
+						data-bankA = "392000100100594024"
+						data-area = "云南省保定市"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园"
+						data-tel = "0757-26667666"
+						data-checkL = "../大图滚动/img/1.jpg"
+						data-checkTR = "../大图滚动/img/2.jpg"
+						data-checkT = "../大图滚动/img/3.jpg"
+						data-checkC = "../大图滚动/img/4.jpg"
+						data-edit = "http://www.jd.com"
+						href="javascript:void(0)">
+						<span class="name">快啲啦公司</span>
+						<span>待审核</span>
+						<span></span>
+					</a>
+					<a class="ivo-item" 
+						data-taxR = "6354654654652"
+						data-bankN = "广发银行2"
+						data-bankA = "392000100100594022"
+						data-area = "云南省保定市2"
+						data-address = "广东省佛山市顺德区北滘镇深业城（国际）幼儿园2"
+						data-tel = "0757-26667662"
+						data-checkL = "../大图滚动/img/2.jpg"
+						data-checkTR = "../大图滚动/img/3.jpg"
+						data-checkT = "../大图滚动/img/4.jpg"
+						data-checkC = "../大图滚动/img/5.jpg"
+						data-edit = "http://xuan.3g.cn"
+						href="javascript:void(0)">
+						<span class="name">我系个名超长超长嘅鬼死甘无聊嘅唔知做乜嘢公司</span>
+						<span>审核通过</span>
+						<span></span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- 浮窗 -->
+		<div class="floating">
+			<div class="f-main">
+				<div class="f-wrap">
+					<h2>公司名</h2>
+					<ul>
+						<li>
+							<span>税务登记证号：</span>
+							<span class="taxR">123456</span>
+						</li>
+						<li>
+							<span>开户银行：</span>
+							<span class="bankN">XX银行</span>
+						</li>
+						<li>
+							<span>开户帐号：</span>
+							<span class="bankA">123123123123123123123</span>
+						</li>
+						<li>
+							<span>所在地区：</span>
+							<span class="area">xxx地区</span>
+						</li>
+						<li>
+							<span>注册地址：</span>
+							<span class="address">Lorem ipsum dolor sit amet.</span>
+						</li>
+						<li>
+							<span>固定电话：</span>
+							<span class="tel">XXXX-XXXXXXXX</span>
+						</li>
+
+					</ul>
+					<a class="f-a checkL" href="javascript:void(0)">查看营业执照</a>
+					<a class="f-a checkTR" href="javascript:void(0)">查看税务登记证</a>
+					<a class="f-a checkT" href="javascript:void(0)">查看税务认证</a>
+					<a class="f-a checkC" href="javascript:void(0)">查看开票资料</a>
+					<div class="f-btn clearfix">
+						<a class="edit" href="###">修改</a>
+						<a class="closeBtn" href="javascript:void(0)">关闭</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+</html>
