@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义滚动条</title>
+		<link rel="stylesheet" type="text/css" href="../../css/base.css">
+		<style type="text/css">
+			html,body{
+				background: ##ccc;
+			}
+			.scroll-demo{
+				width: 540px;
+				border:1px solid #e5e5e5;
+				background: #fff;
+				margin: 30px auto
+			}
+			/*标签切换区*/
+			.scroll-tab{
+				height: 34px;
+				border-bottom:1px solid #e5e5e5;
+				color:#666;
+				background: #f8f8f8;
+			}
+			.scroll-tab .tab-item{
+				float: left;
+				font:14px/34px "microsoft yahei";
+				height: 34px;
+				text-align: center;
+				border-right: 1px solid #e5e5e5;
+				padding:0 20px;
+			}
+			.scroll-tab .tab-active{
+				color:#00be3c;
+				background: #fff;
+				border-top:2px solid #00BE3C;
+				margin:-1px 0;
+				/*为了减去多出来的2px border-top*/
+			}
+			/*滚动内容区样式*/
+			.scroll-wrap{
+				position: relative;
+				width: 100%;
+				height: 300px;
+			}
+			/*滚动内容*/
+			.scroll-wrap .scroll-cont{
+				height: 100%;
+				padding: 0 15px;
+				overflow: hidden;
+			}
+			.scroll-wrap .scroll-cont h3{
+				font:16px/3 "microsoft yahei";
+				text-align: center;
+			}
+			.scroll-wrap .scroll-bar{
+				position: absolute;
+				top:0;
+				right:0;
+				height: 100%;
+				background: #eaeaea;
+				width: 10px;
+			}
+			/*滑块*/
+			.scroll-wrap .scroll-slider{
+				position: absolute;
+				top:0px;
+				left:1px;
+				width: 8px;
+				height:30px;
+				background: #fff;
+			}
+		</style>
+		<script src="../../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var Scroll = {};
+			(function(win,doc,$){
+				function CusScrollBar(options){
+					this._init(options);	
+				}
+				CusScrollBar.prototype._init = function(){
+					console.log("test");
+				}
+				Scroll.CusScrollBar = CusScrollBar;
+			})(window,document,jQuery);
+			
+			new Scroll.CusScrollBar();
+		</script>
+	</head>
+	<body>
+		<!-- 示例容器 -->
+		<div class="scroll-demo">
+			<!-- 标签切换区 -->
+			<ul class="scroll-tab clearfix">
+				<li class="tab-item tab-active">第一篇</li>
+				<li class="tab-item">第二篇</li>
+				<li class="tab-item">第三篇</li>
+				<li class="tab-item">第四篇</li>
+			</ul>
+
+			<!-- 滚动内容区 -->
+			<div class="scroll-wrap">
+				<!-- 滚动内容 -->
+				<div class="scroll-cont">
+					<h3>1</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+				<!-- 滚动条 -->
+				<div class="scroll-bar">
+					<!-- 滚动滑块 -->
+					<div class="scroll-slider"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
