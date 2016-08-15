@@ -1,120 +1,220 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>自定义滚动条</title>
-		<link rel="stylesheet" type="text/css" href="../../css/base.css">
-		<style type="text/css">
-			html,body{
-				background: ##ccc;
-			}
-			.scroll-demo{
-				width: 540px;
-				border:1px solid #e5e5e5;
-				background: #fff;
-				margin: 30px auto
-			}
-			/*标签切换区*/
-			.scroll-tab{
-				height: 34px;
-				border-bottom:1px solid #e5e5e5;
-				color:#666;
-				background: #f8f8f8;
-			}
-			.scroll-tab .tab-item{
-				float: left;
-				font:14px/34px "microsoft yahei";
-				height: 34px;
-				text-align: center;
-				border-right: 1px solid #e5e5e5;
-				padding:0 20px;
-			}
-			.scroll-tab .tab-active{
-				color:#00be3c;
-				background: #fff;
-				border-top:2px solid #00BE3C;
-				margin:-1px 0;
-				/*为了减去多出来的2px border-top*/
-			}
-			/*滚动内容区样式*/
-			.scroll-wrap{
-				position: relative;
-				width: 100%;
-				height: 300px;
-			}
-			/*滚动内容*/
-			.scroll-wrap .scroll-cont{
-				height: 100%;
-				padding: 0 15px;
-				overflow: hidden;
-			}
-			.scroll-wrap .scroll-cont h3{
-				font:16px/3 "microsoft yahei";
-				text-align: center;
-			}
-			.scroll-wrap .scroll-bar{
-				position: absolute;
-				top:0;
-				right:0;
-				height: 100%;
-				background: #eaeaea;
-				width: 10px;
-			}
-			/*滑块*/
-			.scroll-wrap .scroll-slider{
-				position: absolute;
-				top:0px;
-				left:1px;
-				width: 8px;
-				height:30px;
-				background: #fff;
-			}
-		</style>
-		<script src="../../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			var Scroll = {};
-			(function(win,doc,$){
-				function CusScrollBar(options){
-					this._init(options);	
-				}
-				CusScrollBar.prototype._init = function(){
-					console.log("test");
-				}
-				Scroll.CusScrollBar = CusScrollBar;
-			})(window,document,jQuery);
-			
-			new Scroll.CusScrollBar();
-		</script>
-	</head>
-	<body>
-		<!-- 示例容器 -->
-		<div class="scroll-demo">
-			<!-- 标签切换区 -->
-			<ul class="scroll-tab clearfix">
-				<li class="tab-item tab-active">第一篇</li>
-				<li class="tab-item">第二篇</li>
-				<li class="tab-item">第三篇</li>
-				<li class="tab-item">第四篇</li>
-			</ul>
 
-			<!-- 滚动内容区 -->
-			<div class="scroll-wrap">
-				<!-- 滚动内容 -->
-				<div class="scroll-cont">
-					<h3>1</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				</div>
-				<!-- 滚动条 -->
-				<div class="scroll-bar">
-					<!-- 滚动滑块 -->
-					<div class="scroll-slider"></div>
-				</div>
-			</div>
-		</div>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <title>自定义滚动条</title>
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <style type="text/css">
+    html,
+    body {
+        background: ##ccc;
+    }
+    
+    .scroll-demo {
+        width: 540px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        margin: 30px auto
+    }
+    /*标签切换区*/
+    
+    .scroll-tab {
+        height: 34px;
+        border-bottom: 1px solid #e5e5e5;
+        color: #666;
+        background: #f8f8f8;
+    }
+    
+    .scroll-tab .tab-item {
+        float: left;
+        font: 14px/34px "microsoft yahei";
+        height: 34px;
+        text-align: center;
+        border-right: 1px solid #e5e5e5;
+        padding: 0 20px;
+    }
+    
+    .scroll-tab .tab-active {
+        color: #00be3c;
+        background: #fff;
+        border-top: 2px solid #00BE3C;
+        margin: -1px 0;
+        /*为了减去多出来的2px border-top*/
+    }
+    /*滚动内容区样式*/
+    
+    .scroll-wrap {
+        position: relative;
+        width: 100%;
+        height: 300px;
+    }
+    /*滚动内容*/
+    
+    .scroll-wrap .scroll-cont {
+        height: 100%;
+        padding: 0 15px;
+        overflow: hidden;
+    }
+    
+    .scroll-wrap .scroll-cont h3 {
+        font: 16px/3 "microsoft yahei";
+        text-align: center;
+    }
+    
+    .scroll-wrap .scroll-bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        background: #eaeaea;
+        width: 10px;
+    }
+    /*滑块*/
+    
+    .scroll-wrap .scroll-slider {
+        position: absolute;
+        top: 0px;
+        left: 1px;
+        width: 8px;
+        height: 30px;
+        background: #fff;
+    }
+    </style>
+    <script src="../../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- <script type="text/javascript">
+    	    var Scroll = {};
+    	    (function(win, doc, $) {
+    	        function CusScrollBar(options) {
+    	            this._init(options);
+    	        }
+    	        CusScrollBar.prototype._init = function() {
+    	            console.log("test");
+    	        }
+    	        Scroll.CusScrollBar = CusScrollBar;
+    	    })(window, document, jQuery);
+    	    new Scroll.CusScrollBar();
+    </script> -->
+
+    <script type="text/javascript">
+	    (function(win, doc, $) {
+
+	        function CusScrollBar(options) {
+	            this._init(options);
+	        }
+
+	        // 原型上创建初始化函数 _init
+	        /*CusScrollBar.prototype._init = function(){
+	        	console.log("test");
+	        }*/
+	        $.extend(CusScrollBar.prototype, {
+	            _init: function(options) { //虽然_init是写在原型中，只是每个实例都共用这个_init方法，但是这个方法是在构造函数中调用用来创建实例属性(options)的，所以每一个实例的options属性都是独立的
+	                var self = this;
+	                self.options = {
+	                    scrollDir: "y", //滚动的方向
+	                    contSelector: "", //滚动内容区选择器
+	                    barSelector: "", //滚动条选择器
+	                    sliderSelector: "" //滚动滑块选择器
+	                }
+	                $.extend(true, self.options, options || {});
+	                console.log(self.options);
+	                this._initDomEvent();
+	            },
+	            /**
+	             *  初始化DOM引用
+	             *  @method _initDomEvent
+	             *  @return {CusScorllBar}
+	             */
+	            _initDomEvent: function() {
+	                var opts = this.options;
+
+	                // 滚动内容区对象，必填项
+	                this.$cont = $(opts.contSelector);
+
+	                // 滚动条滑块对象，必填项
+	                this.$slider = $(opts.sliderSelector);
+	                // 滚动条对象
+	                this.$bar = opts.barSelector ? $(opts.barSelector) : self.$slider.parent();
+
+	                // 获取文档对象
+	                this.$doc = $(doc);
+	                this._initSliderDragEvent();
+	            },
+	            /**
+	             * 初始化滑块拖动功能
+	             * @return {[Object]} [this]
+	             */
+	            _initSliderDragEvent: function() {
+	                var slider = this.$slider,
+	                    sliderEl = slider[0];
+	                if (sliderEl) {
+	                    var doc = this.$doc,
+	                        dragStartPagePosition,
+	                        dragstartScrollPosition,
+	                        dragContBarRate;
+
+	                    // mousedown
+	                    slider.on("mousedown", function(e) {
+	                        e.preventDefault();
+	                        console.log("mousedown");
+
+	                        // mousemove
+	                        doc.on("mousemove", function(e) {
+
+	                        // mouseup
+	                        }).on("mouseup", function(e) {
+
+	                        	// 解绑事件
+	                            doc.off("mousemove mouseup");
+	                        });
+	                    });
+
+
+
+	                }
+	            }
+	        });
+	        win.CusScrollBar = CusScrollBar;
+
+	        $(function() {
+	            // 滚动比率 :  滑块移动距离/滑块可移动距离 = 内容滚动高度/内容可滚动高度
+	            var scroll = new CusScrollBar({
+	                contSelector: ".scroll-wrap", //滚动内容区选择器
+	                barSelector: ".scroll-bar", //滚动条选择器
+	                sliderSelector: ".scroll-slider" //滚动滑块选择器
+	            });
+	            console.log(scroll);
+	        });
+
+	    })(window, document, jQuery);
+    </script>
+</head>
+
+<body>
+    <!-- 示例容器 -->
+    <div class="scroll-demo">
+        <!-- 标签切换区 -->
+        <ul class="scroll-tab clearfix">
+            <li class="tab-item tab-active">第一篇</li>
+            <li class="tab-item">第二篇</li>
+            <li class="tab-item">第三篇</li>
+            <li class="tab-item">第四篇</li>
+        </ul>
+        <!-- 滚动内容区 -->
+        <div class="scroll-wrap">
+            <!-- 滚动内容 -->
+            <div class="scroll-cont">
+                <h3>1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <!-- 滚动条 -->
+            <div class="scroll-bar">
+                <!-- 滚动滑块 -->
+                <div class="scroll-slider"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
