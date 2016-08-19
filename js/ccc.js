@@ -10,6 +10,26 @@ ccc.trim = function(str) {
 ccc.trimAll = function(str) {
     return str.replace(/\s*/g, '');
 };
+// 获取样式
+ccc.getStyle = function(element,StyleName){
+    if(window.getComputedStyle){
+        return window.getComputedStyle(element)[StyleName]
+    }else if(element.currentStyle){
+        return element.currentStyle[StyleName]
+    }
+    return
+}
+ccc.getStyleList = function(element){
+    if(window.getComputedStyle){
+        return window.getComputedStyle(element)
+    }else if(element.currentStyle){
+        return element.currentStyle
+    }
+    return
+}
+ccc.setStyle = function(element,StyleName,val){
+    element.style[StyleName] = val
+}
 
 //判断是否数字（或者转型后为数字）
 ccc.isNumber = function(str) {
@@ -63,30 +83,51 @@ ccc.isElement = function(obj) {
 
 // 判断是否空对象
 ccc.isEmptyObject = function(obj) {
-    if (JSON.stringify(obj) === '{}') {
-        return true;
-    }
-    return false;
+    var t;  
+    for (t in obj)  
+        return !1;  
+    return !0
+    // if (JSON.stringify(obj) === '{}') {
+    //     return true;
+    // }
+    // return false;//这种方式如果实例全是函数也会判断为空
 };
+/*var isEmptyValue = function(value) {
+ var type;
+ if(value == null) { // 等同于 value === undefined || value === null
+     return true;
+ }
+ type = Object.prototype.toString.call(value).slice(8, -1);
+ switch(type) {
+ case 'String':
+     return !$.trim(value);
+ case 'Array':
+     return !value.length;
+ case 'Object':
+     return $.isEmptyObject(value); // 普通对象使用 for...in 判断，有 key 即为 false
+ default:
+     return false; // 其他对象均视作非空
+ }
+};*/
 
-//判断是否为纯粹对象 错的
+//判断是否为纯粹对象 错的,这个只是判断是否obj
 ccc.isPlainObject = function(obj) {
     return (typeof(obj) === "object" && obj != null && obj != undefined);
 }
 
-// isPlainObject: function(a) {
-// 	var b;
-// 	if(!a || "object" !== m.type(a) || a.nodeType || m.isWindow(a)) return !1;
-// 	try {
-// 		if(a.constructor && !j.call(a, "constructor") && !j.call(a.constructor.prototype, "isPrototypeOf")) return !1
-// 	} catch(c) {
-// 		return !1
-// 	}
-// 	if(k.ownLast)
-// 		for(b in a) return j.call(a, b);
-// 	for(b in a);
-// 	return void 0 === b || j.call(a, b)
-// }
+/*isPlainObject: function(a) {
+	var b;
+	if(!a || "object" !== m.type(a) || a.nodeType || m.isWindow(a)) return !1;
+	try {
+		if(a.constructor && !j.call(a, "constructor") && !j.call(a.constructor.prototype, "isPrototypeOf")) return !1
+	} catch(c) {
+		return !1
+	}
+	if(k.ownLast)
+		for(b in a) return j.call(a, b);
+	for(b in a);
+	return void 0 === b || j.call(a, b)
+}*/
 
 ccc.isAndroid = function() {
     return (/android/gi).test(navigator.appVersion.toLowerCase());
@@ -94,6 +135,10 @@ ccc.isAndroid = function() {
 
 ccc.isIphone = function() {
     return (/iphone/gi).test(navigator.appVersion.toLowerCase());
+}
+ccc.isXBrowser = function(name){//msie(或者trident) chrome firefox
+    var reg = new RegExp(name,"gi");
+    return reg.test(navigator.userAgent.toLowerCase());
 }
 
 ccc.isObject = function(obj) {
@@ -242,3 +287,43 @@ ccc.clearCookie = function(cname) {
 ccc.hasPrototypeProperty = function(object,name){
     return !object.hasOwnProperty(name) && (name in object);
 }
+
+// URL API
+// 创建一个url指向上传的file
+ccc.getFileUrl = function(fileObj){
+    var URL = window.URL || window.webkitURL; //URL兼容写法
+    return URL.createObjectURL(fileObj);
+}
+// 取消将这个url指向file
+ccc.cancelFileUrl = function(objectURL){
+    var URL = window.URL || window.webkitURL; //URL兼容写法
+    URL.revokeObjectURL(objectURL);
+}
+
+// FileReader API
+ccc.fileReader = function(fileObj,callback){
+    var fileReader = new FileReader();//创建fileReader对象
+    fileReader.readAsDataURL(fileObj);
+    fileReader.onload = function(e){
+        src = e.target.result//一个base64的url，若是图片，可以直接写在url上
+        callback(src);//callback函数的第一个参数是src
+    }
+}
+/*e.g.  
+input.on("change",function(){
+    var fileObj = $(this)[0].files[0];
+    ccc.fileReader(fileObj,function(e){
+        console.log(e);
+    });
+});*/
+
+// 获取url参数
+ccc.getUrlParam = function(name){
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");//以 name 开头或者以 "&"+name 开头，中间是 "=" + 若干个非&的字符 ,后面是结尾 或者 以 "&"结尾
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+}
+
