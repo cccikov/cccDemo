@@ -8,60 +8,61 @@
     <style type="text/css">
     html,
     body {
-        background: ##ccc;
+        background: #ccc;
     }
-    
+
     .scroll-demo {
         width: 540px;
         border: 1px solid #e5e5e5;
+        margin: 30px auto;
         background: #fff;
-        margin: 30px auto
     }
     /*标签切换区*/
-    
+
     .scroll-tab {
         height: 34px;
         border-bottom: 1px solid #e5e5e5;
         color: #666;
         background: #f8f8f8;
     }
-    
+
     .scroll-tab .tab-item {
         float: left;
-        font: 14px/34px "microsoft yahei";
-        height: 34px;
-        text-align: center;
-        border-right: 1px solid #e5e5e5;
         padding: 0 20px;
+        height: 34px;
+        font: 14px/34px "microsoft yahei";
+        text-align: center;
+        line-height: 30px;
+        border-right: 1px solid #e5e5e5;
     }
-    
+
     .scroll-tab .tab-active {
+        margin: -1px 0;
         color: #00be3c;
         background: #fff;
         border-top: 2px solid #00BE3C;
-        margin: -1px 0;
         /*为了减去多出来的2px border-top*/
     }
     /*滚动内容区样式*/
-    
+
     .scroll-wrap {
         position: relative;
         width: 100%;
         height: 300px;
     }
     /*滚动内容*/
-    
+
     .scroll-wrap .scroll-cont {
         height: 100%;
         padding: 0 15px;
         overflow: hidden;
     }
-    
+
     .scroll-wrap .scroll-cont h3 {
         font: 16px/3 "microsoft yahei";
         text-align: center;
     }
-    
+
     .scroll-wrap .scroll-bar {
         position: absolute;
         top: 0;
@@ -71,7 +72,7 @@
         width: 10px;
     }
     /*滑块*/
-    
+
     .scroll-wrap .scroll-slider {
         position: absolute;
         top: 0px;
@@ -80,122 +81,233 @@
         height: 30px;
         background: #fff;
     }
+
+    .scroll-wrap .scroll-cont p {
+        margin-bottom: 10px;
+        font-size: 14px;
+        line-height: 30px;
+        text-indent: 2em;
+    }
     </style>
     <script src="../../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-
     <!-- <script type="text/javascript">
-    	    var Scroll = {};
-    	    (function(win, doc, $) {
-    	        function CusScrollBar(options) {
-    	            this._init(options);
-    	        }
-    	        CusScrollBar.prototype._init = function() {
-    	            console.log("test");
-    	        }
-    	        Scroll.CusScrollBar = CusScrollBar;
-    	    })(window, document, jQuery);
-    	    new Scroll.CusScrollBar();
+            var Scroll = {};
+            (function(win, doc, $) {
+                function CusScrollBar(options) {
+                    this._init(options);
+                }
+                CusScrollBar.prototype._init = function() {
+                    console.log("test");
+                }
+                Scroll.CusScrollBar = CusScrollBar;
+            })(window, document, jQuery);
+            new Scroll.CusScrollBar();
     </script> -->
-
     <script type="text/javascript">
-	    (function(win, doc, $) {
+    /*
+     * create by jiangzhaojin on 2016/07/19
+     *一个自定义滑块的插件
+     */
 
-	        function CusScrollBar(options) {
-	            this._init(options);
-	        }
+    var Scroll = {};
+    (function(win, doc, $) {
+        function CusScrollBar(options) {
+            // 初始化
+            this._init(options);
+        }
+        // 在原型上添加方法
+        $.extend(CusScrollBar.prototype, {
+            _init: function(options) {
+                var self = this;
+                self.options = {
+                    contSelector: "", // 滑动内容区选择器
+                    barSelector: "", // 滑动条选择器
+                    sliderSelector: "", // 滑动块选择器
+                    tabItemSelector: "", // 标签选择器
+                    tabActiveClass: "", // 选中的标签样式
+                    anchorSelector: "", // 苗点选择器
+                    wheelStep: 15 // 滚动步幅
+                };
+                $.extend(true, self.options, options || {});
+                // Dom选择函数
+                self._initDomEvent();
+                // 绑定滑块点击拖动事件
+                self._initSliderDragEvent();
+                // 绑定滚轮事件
+                self._bandMouseWheel();
+                // 监听内容滚动，同步滑块移动
+                self._bandContScroll();
+                // 点击切换标签
+                self._initTabEvent();
+                return self;
+            },
+            /*
+             * 初始化DOM引用
+             * @method _initDomEvent
+             * @return {CusScrollBar}
+             */
+            _initDomEvent: function() {
+                var opts = this.options;
+                // 滑动内容区对象，必须填
+                this.$cont = $(opts.contSelector);
+                // 滑动条滑块对象，必须填
+                this.$slider = $(opts.sliderSelector);
+                // 滑动条对象
+                this.$bar = opts.barSelector ? $(opts.barSelector) : this.$slider.parent();
+                // 文档对象
+                this.$doc = $(doc);
+                // 标签对象
+                this.$tabItem = $(opts.tabItemSelector);
+                // 苗点对象
+                this.$anchor = $(opts.anchorSelector);
+            },
+            /*
+             * 初始化滑动块滑动功能
+             * @return {[object]} [this]
+             */
+            _initSliderDragEvent: function() {
+                var self = this;
+                var slider = self.$slider;
+                var cont = self.$cont;
+                var doc = self.$doc,
+                    dragStartPagePosition,
+                    dragStartScrollPosition,
+                    dragContBarRate;
 
-	        // 原型上创建初始化函数 _init
-	        /*CusScrollBar.prototype._init = function(){
-	        	console.log("test");
-	        }*/
-	        $.extend(CusScrollBar.prototype, {
-	            _init: function(options) { //虽然_init是写在原型中，只是每个实例都共用这个_init方法，但是这个方法是在构造函数中调用用来创建实例属性(options)的，所以每一个实例的options属性都是独立的
-	                var self = this;
-	                self.options = {
-	                    scrollDir: "y", //滚动的方向
-	                    contSelector: "", //滚动内容区选择器
-	                    barSelector: "", //滚动条选择器
-	                    sliderSelector: "" //滚动滑块选择器
-	                }
-	                $.extend(true, self.options, options || {});
-	                console.log(self.options);
-	                this._initDomEvent();
-	            },
-	            /**
-	             *  初始化DOM引用
-	             *  @method _initDomEvent
-	             *  @return {CusScorllBar}
-	             */
-	            _initDomEvent: function() {
-	                var opts = this.options;
+                function mousemoveHandler(e) {
+                    if (dragStartPagePosition == null) {
+                        return;
+                    }
+                    self.scrollContTo(dragStartScrollPosition + (e.pageY - dragStartPagePosition) * dragContBarRate);
+                }
 
-	                // 滚动内容区对象，必填项
-	                this.$cont = $(opts.contSelector);
+                slider.on("mousedown", function(event) {
+                    event.preventDefault();
+                    dragStartPagePosition = event.pageY;
+                    dragStartScrollPosition = cont[0].scrollTop;
+                    dragContBarRate = self.getMaxScrollPosition() / self.getMaxSliderPosition();
 
-	                // 滚动条滑块对象，必填项
-	                this.$slider = $(opts.sliderSelector);
-	                // 滚动条对象
-	                this.$bar = opts.barSelector ? $(opts.barSelector) : self.$slider.parent();
+                    doc.on("mousemove.scroll", function(event) {
+                        event.preventDefault();
+                        mousemoveHandler(event);
+                    }).on("mouseup.scroll", function(event) {
+                        event.preventDefault();
+                        doc.off(".scroll");
+                    });
+                });
+            },
 
-	                // 获取文档对象
-	                this.$doc = $(doc);
-	                this._initSliderDragEvent();
-	            },
-	            /**
-	             * 初始化滑块拖动功能
-	             * @return {[Object]} [this]
-	             */
-	            _initSliderDragEvent: function() {
-	                var slider = this.$slider,
-	                    sliderEl = slider[0];
-	                if (sliderEl) {
-	                    var doc = this.$doc,
-	                        dragStartPagePosition,
-	                        dragstartScrollPosition,
-	                        dragContBarRate;
+            // 监听内容滚动事件，同步滑块位置
+            _bandContScroll: function() {
+                var self = this;
+                self.$cont.on("scroll", function(e) {
+                    e.preventDefault();
+                    self.$slider.css('top', self.getSliderPosition() + 'px');
+                });
+            },
 
-	                    // mousedown
-	                    slider.on("mousedown", function(e) {
-	                        e.preventDefault();
-	                        console.log("mousedown");
+            // 绑定鼠标滚轮事件
+            _bandMouseWheel: function() {
+                var self = this;
+                self.$cont.on("mousewheel DOMMouseScroll", function(e) {
+                    e.preventDefault();
+                    var oEv = e.originalEvent;
+                    var wheelRange = oEv.wheelDelta ? -oEv.wheelDelta / 120 : (oEv.detail || 0) / 3;
+                    self.scrollContTo(self.$cont[0].scrollTop + wheelRange * self.options.wheelStep);
+                });
+                return self;
+            },
+            /*
+             *初始化标签切换功能
+             * @return {[object]} [this]
+             */
+            _initTabEvent: function() {
+                var self = this;
+                self.$tabItem.on("click", function(e) {
+                    e.preventDefault();
+                    var index = $(this).index();
+                    self.changeTabSelect(index);
+                    // 切换标签后同步内容
+                    self.scrollContTo(self.$cont[0].scrollTop + self.getAnchorPosition(index));
+                });
+            },
+            // 切换标签
+            changeTabSelect: function(index) {
+                var self = this;
+                var active = self.options.tabActiveClass;
+                self.$tabItem.eq(index).addClass(active).siblings().removeClass(active);
+                return self;
+            },
 
-	                        // mousemove
-	                        doc.on("mousemove", function(e) {
+            // 获取每个苗点位置信息的数据
+            getAllAnchorPosition: function() {
+                var self = this;
+                var allAnchor = [];
+                for (var i = 0; i < self.$anchor.length; i++) {
+                    allAnchor.push(self.$cont[0].scrollTop + self.getAnchorPosition(i));
+                }
+                return allAnchor;
+            },
 
-	                        // mouseup
-	                        }).on("mouseup", function(e) {
+            // 获取指定苗点到容器上边界的位置
+            getAnchorPosition: function(index) {
+                var self = this;
+                return self.$anchor.eq(index).position().top;
+            },
 
-	                        	// 解绑事件
-	                            doc.off("mousemove mouseup");
-	                        });
-	                    });
+            // 获取滑块位置
+            getSliderPosition: function() {
+                var self = this;
+                return self.$cont[0].scrollTop / (self.getMaxScrollPosition() / self.getMaxSliderPosition());
+            },
 
+            // 文档可滚动最大距离
+            getMaxScrollPosition: function() {
+                var self = this;
+                return Math.max(self.$cont.height(), self.$cont[0].scrollHeight) - self.$cont.height();
+            },
 
+            // 滑块可移动最大距离
+            getMaxSliderPosition: function() {
+                var self = this;
+                return self.$bar.height() - self.$slider.height();
+            },
 
-	                }
-	            }
-	        });
-	        win.CusScrollBar = CusScrollBar;
+            // 滚动文档内容
+            scrollContTo: function(positionVal) {
+                var self = this;
+                var anchorArr = self.getAllAnchorPosition();
 
-	        $(function() {
-	            // 滚动比率 :  滑块移动距离/滑块可移动距离 = 内容滚动高度/内容可滚动高度
-	            var scroll = new CusScrollBar({
-	                contSelector: ".scroll-wrap", //滚动内容区选择器
-	                barSelector: ".scroll-bar", //滚动条选择器
-	                sliderSelector: ".scroll-slider" //滚动滑块选择器
-	            });
-	            console.log(scroll);
-	        });
-
-	    })(window, document, jQuery);
+                function getIndex(positionVal) {
+                    for (var i = anchorArr.length; i >= 0; i--) {
+                        if (positionVal >= anchorArr[i]) return i;
+                    }
+                }
+                // 苗点数与标签数一样的话
+                if (self.$tabItem.length == anchorArr.length) self.changeTabSelect(getIndex(positionVal));
+                self.$cont.scrollTop(positionVal);
+            }
+        });
+        Scroll.CusScrollBar = CusScrollBar;
+    })(window, document, jQuery);
+    $(function() {
+        var scroll_1 = new Scroll.CusScrollBar({
+            contSelector: ".scroll-cont", // 滑动内容区选择器(必须)
+            barSelector: ".scroll-bar", // 滑动条选择器（必须）
+            sliderSelector: ".scroll-slider", // 滑动快选择器
+            tabItemSelector: ".tab-item", // 标签选择器（必须）
+            tabActiveClass: "tab-active", // 选中标签样式
+            anchorSelector: ".anchor" // 苗点选择器（必须）
+        });
+    });
     </script>
 </head>
 
 <body>
-    <!-- 示例容器 -->
+    <!-- 容器 -->
     <div class="scroll-demo">
         <!-- 标签切换区 -->
-        <ul class="scroll-tab clearfix">
+        <ul class="scroll-tab">
             <li class="tab-item tab-active">第一篇</li>
             <li class="tab-item">第二篇</li>
             <li class="tab-item">第三篇</li>
@@ -205,8 +317,28 @@
         <div class="scroll-wrap">
             <!-- 滚动内容 -->
             <div class="scroll-cont">
-                <h3>1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <h3 class="anchor">吻火</h3>
+                <div class="scroll-ol">
+                    <p>回想起志摩先生，我记得最清楚的是他那双银灰色的眸子。其实他的眸子当然不是银灰色的，可是我每次看见他那种惊奇的眼神，好像正在猜人生的谜，又好像正在一叶一叶揭开宇宙的神秘，我就觉得他的眼睛真带了一些银灰色。他的眼睛又有点像希腊雕像那两片光滑的，仿佛含有无穷情调的眼睛，我所说银灰色的感觉也就是这个意思罢。 </p>
+                    <p>三年前，在上海的时候，有一天晚上，他拿着一根纸烟向一位朋友点燃的纸烟取火，他说道：“Kissing the fire”。这句话真可以代表他对于人生的态度。人世的经验好比是一团火，许多人都是敬鬼神而远之，隔江观火，拿出冷酷的心境去估量一切，不敢投身到轰轰烈烈的火焰里去，因此过个暗淡的生活，简直没有一点的光辉，数十年的光阴就在计算怎么样才会不上当里面消逝去了，结果上了个大当。他却肯亲自吻着这团生龙活虎般的烈火，火光一照，化腐臭为神奇，遍地开满了春花，难怪他天天惊异着，难怪他的眼睛跟希腊雕像的眼睛相似，希腊人的生活就是像他这样吻着人生的火，歌唱出人生的神奇。这一回在半空中他对于人世的火焰作最后的一吻了。</p>
+                </div>
+                <h3 class="anchor">背影</h3>
+                <div class="scroll-ol">
+                    <p>我与父亲不相见已二年余了，我最不能忘记的是他的背影。那年冬天，祖母死了，父亲的差使也交卸了，正是祸不单行的日子，我从北京到徐州，打算跟着父亲奔丧回家。到徐州见着父亲，看见满院狼藉的东西，又想起祖母，不禁簌簌地流下眼泪。父亲说，“事已如此，不必难过，好在天无绝人之路！”回家变卖典质，父亲还了亏空；又借钱办了丧事。
+                        <p> 到南京时，有朋友约去游逛，勾留了一日；第二日上午便须渡江到浦口，下午上车北去。父亲因为事忙，本已说定不送我，叫旅馆里一个熟识的茶房陪我同去。他再三嘱咐茶房，甚是仔细。但他终于不放心，怕茶房不妥帖；颇踌躇了一会。其实我那年已二十岁，北京已来往过两三次，是没有甚么要紧的了。他踌躇了一会，终于决定还是自己送我去。我两三回劝他不必去；他只说，“不要紧，他们去不好！” </p>　　</p>
+                </div>
+                <h3 class="anchor">荷塘</h3>
+                <div class="scroll-ol">
+                    <p>月光如流水一般，静静地泻在这一片叶子和花上。薄薄的青雾浮起在荷塘里。叶子和花仿佛在牛乳中洗过一样；又像笼着轻纱的梦。虽然是满月，天上却有一层淡淡的云，所以不能朗照；但我以为这恰是到了好处——酣眠固不可少，小睡也别有风味的。月光是隔了树照过来的，高处丛生的灌木，落下参差的斑驳的黑影，峭楞楞如鬼一般；弯弯的杨柳的稀疏的倩影，却又像是画在荷叶上。塘中的月色并不均匀；但光与影有着和谐的旋律，如梵婀玲⑼上奏着的名曲。</p>
+                    <p>这几天心里颇不宁静。今晚在院子里坐着乘凉，忽然想起日日走过的荷塘，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高了，墙外马路上孩子们的欢笑，已经听不见了；妻在屋里拍着闰儿⑴，迷迷糊糊地哼着眠歌。我悄悄地披了大衫，带上门出去。 沿着荷塘，是一条曲折的小煤屑路。这是一条幽僻的路；白天也少人走，夜晚更加寂寞。荷塘四面，长着许多树，蓊蓊郁郁⑵的。路的一旁，是些杨柳，和一些不知道名字的树。没有月光的晚上，这路上阴森森的，有些怕人。今晚却很好，虽然月光也还是淡淡的。
+                    </p>
+                </div>
+                <h3 class="anchor">野草</h3>
+                <div class="scroll-ol">
+                    <p>这几天心里颇不宁静。今晚在院子里坐着乘凉，忽然想起日日走过的荷塘，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高了，墙外马路上孩子们的欢笑，已经听不见了；妻在屋里拍着闰儿⑴，迷迷糊糊地哼着眠歌。我悄悄地披了大衫，带上门出去。 沿着荷塘，是一条曲折的小煤屑路。这是一条幽僻的路；白天也少人走，夜晚更加寂寞。荷塘四面，长着许多树，蓊蓊郁郁⑵的。路的一旁，是些杨柳，和一些不知道名字的树。没有月光的晚上，这路上阴森森的，有些怕人。今晚却很好，虽然月光也还是淡淡的。
+                    </p>
+                    <p>本书于于年1927年4月由作者亲自编定，同年7月由上海北新书局初版印行列为作者所编的《乌合丛书》之一。此后印行的版本，除个别字和标点有所不同外，各篇文字大都和初版相同。《题辞》在本书最初的几次印刷都曾印入；后来被国民党zheng府书报检查机关抽去〔鲁迅在1935年11月23日致邱遇信和1936年2月19日致夏传经信中，均提及此事〕，至1941年上海鲁迅全集出版社出版《鲁迅三十年集》时才重新收入。《野草》的封面画系孙福熙所作，初版封面题字署“鲁迅先生”，后按鲁迅意思改为“鲁迅著”，鲁迅在1927年12月9日夜致章廷谦信中曾提及此事。</p>
+                </div>
             </div>
             <!-- 滚动条 -->
             <div class="scroll-bar">
