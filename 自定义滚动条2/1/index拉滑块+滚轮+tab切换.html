@@ -216,6 +216,8 @@
             // 滚动文档内容
             scrollContTo: function(positionVal) {
                 var self = this;
+
+                // 在滑轮或者滚动鼠标的时候，用于切换上面的tab
                 var anchorArr = self.getAllAnchorPosition();
                 function getIndex(positionVal) {
                     for (var i = anchorArr.length; i >= 0; i--) {
@@ -224,6 +226,9 @@
                 }
                 // 锚点数与标签数一样的话
                 if (self.$tabItem.length == anchorArr.length) self.changeTabSelect(getIndex(positionVal));
+                //
+
+
                 self.$cont.scrollTop(positionVal);
             },
 
@@ -239,7 +244,7 @@
             getSliderPosition: function() {
                 var self = this;
                 var dragContBarRate = self.getMaxScrollPosition() / self.getMaxSliderPosition();
-                return (self.$cont[0].scrollTop / dragContBarRate);//内容滚动距离rate
+                return (self.$cont[0].scrollTop / dragContBarRate);//内容滚动距离/rate
             },
 
             // 绑定鼠标滚轮事件
@@ -265,8 +270,8 @@
                 var self = this;
                 self.$tabItem.on("click", function(e) {
                     e.preventDefault();
-                    var index = $(this).index();
-                    self.changeTabSelect(index);
+                    var index = $(this).index();//记录点击按钮的序号
+                    self.changeTabSelect(index);//调用切换tab函数
                     // 切换标签后同步内容
                     self.scrollContTo(self.$cont[0].scrollTop + self.getAnchorPosition(index));
                 });
@@ -275,18 +280,8 @@
             changeTabSelect: function(index) {
                 var self = this;
                 var active = self.options.tabActiveClass;
-                self.$tabItem.eq(index).addClass(active).siblings().removeClass(active);
+                self.$tabItem.eq(index).addClass(active).siblings().removeClass(active);//根据传入的序号，使相对应的按钮改变样式？？问什么不直接点哪个就改变哪个呢？？
                 return self;
-            },
-
-            // 获取每个锚点位置信息的数据
-            getAllAnchorPosition: function() {
-                var self = this;
-                var allAnchor = [];
-                for (var i = 0; i < self.$anchor.length; i++) {
-                    allAnchor.push(self.$cont[0].scrollTop + self.getAnchorPosition(i));
-                }
-                return allAnchor;
             },
 
             // 获取指定锚点到容器上边界的位置
@@ -295,6 +290,15 @@
                 return self.$anchor.eq(index).position().top;
             },
 
+            // 获取每个锚点位置信息的数据
+            getAllAnchorPosition: function() {
+                var self = this;
+                var allAnchor = [];
+                for (var i = 0; i < self.$anchor.length; i++) {
+                    allAnchor.push(self.$cont[0].scrollTop + self.getAnchorPosition(i));//由于position().top是会减去scrollTop，加上就相当于是原生js offsetTop，就是锚点的位置
+                }
+                return allAnchor;
+            },
         });
         Scroll.CusScrollBar = CusScrollBar;
     })(window, document, jQuery);
