@@ -20,12 +20,12 @@
 				function getTop(){
 					return ccc.getStorage("atop");
 				}
-				
+
 				$("body").scrollTop(getTop());
-				
-				$("a").on("touchstart",function(e){
+
+				$("a").on("touchstart mousedown",function(e){
 					e.preventDefault();
-					
+
 					setTop($("body").scrollTop());
 					window.location.href = $(this).attr("href");
 				});
