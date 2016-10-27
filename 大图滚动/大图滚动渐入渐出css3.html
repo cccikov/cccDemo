@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery 大图滚动</title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+				-webkit-user-select: none;
+			}
+			#wrap {
+				position: relative;
+				width: 510px;
+				height: 286px;
+				margin: 0 auto;
+				/*overflow: hidden;*/
+			}
+			#inner {
+				position: relative;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				opacity: 0;
+				width: 510px;
+				height: 286px;
+				transition: opacity 1s;
+			}
+			img.active{
+				opacity: 1;
+			}
+			#button {
+				overflow: hidden;
+				position: absolute;
+				bottom: 0;
+				left: 172px;
+			}
+			#button span {
+				float: left;
+				width: 10px;
+				height: 10px;
+				margin: 5px;
+				border-radius: 50%;
+				background: #CCCCCC;
+			}
+			#button .active {
+				background: greenyellow;
+			}
+			a {
+				text-decoration: none;
+				text-align: center;
+				background: #000;
+				opacity: 0.3;
+				color: #FFFFFF;
+				line-height: 50px;
+				width: 50px;
+				font-weight: bold;
+				font-size: 40px;
+			}
+			#leftBut {
+				position: absolute;
+				top: 100px;
+				left: 0;
+			}
+			#rightBut {
+				position: absolute;
+				top: 100px;
+				right: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="inner">
+				<img src="img/1.jpg" alt="" class="active"/>
+				<img src="img/2.jpg" alt="" />
+				<img src="img/3.jpg" alt="" />
+				<img src="img/4.jpg" alt="" />
+				<img src="img/5.jpg" alt="" />
+				<img src="img/6.jpg" alt="" />
+				<img src="img/7.jpg" alt="" />
+				<img src="img/8.jpg" alt="" />
+				<img src="img/9.jpg" alt="" />
+			</div>
+			<div id="button">
+				<span class="active"></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<a id="leftBut" href="javascript:void(0);">&lt;</a>
+			<a id="rightBut" href="javascript:void(0);">&gt;</a>
+		</div>
+		<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+		<script>
+			var _index=0;
+			var spanBut = $("span");
+			var leftBut = $("#leftBut");
+			var rightBut = $("#rightBut");
+			var img = $("img");
+			var len = img.size();
+
+			function next(){
+				_index++;
+				if(_index>len-1){
+					_index=0;
+				}
+				$("img").eq(_index).add(spanBut.eq(_index)).addClass("active").siblings().removeClass("active");
+			}
+			function pre(){
+				_index--;
+				if(_index<0){
+					_index = len-1;
+				}
+				$("img").eq(_index).add(spanBut.eq(_index)).addClass("active").siblings().removeClass("active");
+			}
+
+
+			rightBut.on("click",function(){
+				next();
+			});
+
+			leftBut.on("click",function(){
+				pre();
+			})
+
+			var timer = setInterval(next,1000);
+		</script>
+	</body>
+
+</html>
