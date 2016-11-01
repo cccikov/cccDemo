@@ -1,24 +1,45 @@
-var ccc = {};
+var ccc = new Object();
+ccc.cst = new Object(); //constructor
 // 去除首尾空格
 ccc.trim = function(str) {
     if (str) {
-        return str.replace(/(^\s*)|(\s*$)/g, '');
+        if(str.trim){
+            return str.trim();
+        }
+        // return str.replace(/(^\s*)|(\s*$)/g, '');
+        return str.replace(/(^\s+)|(\s+$)/g, '');
     }
+    return ;
 };
 
-// 去除全部空格
-ccc.trimAll = function(str) {
-    return str.replace(/\s*/g, '');
+// 去除全部空格或者换行,第二个参数表示替换空格或者换行的字符串
+ccc.trimAll = function(str,toStr) {
+    // return str.replace(/\s*/g, '');
+    var toStr = toStr || "";
+    return str.replace(/\s+/g,toStr);
 };
-// 获取样式
+
+// 去除全部换行,第二个参数表示替换换行的字符串
+ccc.newLine = function(str,toStr){
+    var toStr = toStr || "";
+    return str.replace(/(\n+)|(\r+)|(\r\n)/g,toStr);
+}
+
+// 获取css样式
 ccc.getStyle = function(element,StyleName){
-    if(window.getComputedStyle){
-        return window.getComputedStyle(element)[StyleName]
-    }else if(element.currentStyle){
-        return element.currentStyle[StyleName]
+    if(!element.style[StyleName]){
+        if(window.getComputedStyle){
+            return window.getComputedStyle(element)[StyleName]
+        }else if(element.currentStyle){//读取样式表样式
+            return element.currentStyle[StyleName]
+        }
+    }else{
+        return element.style[StyleName];
     }
+
     return
 }
+
 ccc.getStyleList = function(element){
     if(window.getComputedStyle){
         return window.getComputedStyle(element)
@@ -27,9 +48,44 @@ ccc.getStyleList = function(element){
     }
     return
 }
+
 ccc.setStyle = function(element,StyleName,val){
     element.style[StyleName] = val
 }
+
+// 去除行内样式
+ccc.removeStyle = function(obj,styleStr){
+    if(obj.hasAttribute("style")){//有行内样式
+        var objStyle = obj.getAttribute("style").replace(/\s*/g, '');
+        objStyle = objStyle.replace(styleStr,"");
+        obj.setAttribute("style",objStyle);
+        return objStyle;
+    }else{
+        return null;
+    }
+}
+
+// 没有attrValue时为获取节点attrName属性的值, 有的时候设置attrName的值为attrValue
+ccc.attr = function(obj,attrName,attrValue){
+    if(obj.hasAttribute(attrName)){//有这个属性
+        if(!arguments[2]){//只有两个参数
+            return obj.getAttribute(attrName);
+        }else{
+            obj.setAttribute(attrName,attrValue);
+            return obj.getAttribute(attrName);
+        }
+    }
+    return null
+}
+
+// 去除节点属性
+ccc.removeAttr = function(obj,attrName){
+    if(obj.hasAttribute(attrName)){//有这个属性
+        obj.removeAttribute(attrName);
+        return null
+    }
+}
+
 
 //判断是否数字（或者转型后为数字）
 ccc.isNumber = function(str) {
@@ -83,14 +139,14 @@ ccc.isElement = function(obj) {
 
 // 判断是否空对象
 ccc.isEmptyObject = function(obj) {
-    var t;  
-    for (t in obj)  
-        return !1;  
+    var t;
+    for (t in obj)
+        return !1;
     return !0
-    // if (JSON.stringify(obj) === '{}') {
-    //     return true;
-    // }
-    // return false;//这种方式如果实例全是函数也会判断为空
+        // if (JSON.stringify(obj) === '{}') {
+        //     return true;
+        // }
+        // return false;//这种方式如果实例全是函数也会判断为空
 };
 /*var isEmptyValue = function(value) {
  var type;
@@ -116,17 +172,17 @@ ccc.isPlainObject = function(obj) {
 }
 
 /*isPlainObject: function(a) {
-	var b;
-	if(!a || "object" !== m.type(a) || a.nodeType || m.isWindow(a)) return !1;
-	try {
-		if(a.constructor && !j.call(a, "constructor") && !j.call(a.constructor.prototype, "isPrototypeOf")) return !1
-	} catch(c) {
-		return !1
-	}
-	if(k.ownLast)
-		for(b in a) return j.call(a, b);
-	for(b in a);
-	return void 0 === b || j.call(a, b)
+    var b;
+    if(!a || "object" !== m.type(a) || a.nodeType || m.isWindow(a)) return !1;
+    try {
+        if(a.constructor && !j.call(a, "constructor") && !j.call(a.constructor.prototype, "isPrototypeOf")) return !1
+    } catch(c) {
+        return !1
+    }
+    if(k.ownLast)
+        for(b in a) return j.call(a, b);
+    for(b in a);
+    return void 0 === b || j.call(a, b)
 }*/
 
 ccc.isAndroid = function() {
@@ -136,8 +192,8 @@ ccc.isAndroid = function() {
 ccc.isIphone = function() {
     return (/iphone/gi).test(navigator.appVersion.toLowerCase());
 }
-ccc.isXBrowser = function(name){//msie(或者trident) chrome firefox
-    var reg = new RegExp(name,"gi");
+ccc.isXBrowser = function(name) { //msie(或者trident) chrome firefox
+    var reg = new RegExp(name, "gi");
     return reg.test(navigator.userAgent.toLowerCase());
 }
 
@@ -284,46 +340,231 @@ ccc.clearCookie = function(cname) {
 }
 
 //判断属性是否存在于原型中
-ccc.hasPrototypeProperty = function(object,name){
+ccc.hasPrototypeProperty = function(object, name) {
     return !object.hasOwnProperty(name) && (name in object);
 }
 
 // URL API
 // 创建一个url指向上传的file
-ccc.getFileUrl = function(fileObj){
-    var URL = window.URL || window.webkitURL; //URL兼容写法
-    return URL.createObjectURL(fileObj);
-}
-// 取消将这个url指向file
-ccc.cancelFileUrl = function(objectURL){
+ccc.getFileUrl = function(fileObj) {
+        var URL = window.URL || window.webkitURL; //URL兼容写法
+        return URL.createObjectURL(fileObj);
+    }
+    // 取消将这个url指向file
+ccc.cancelFileUrl = function(objectURL) {
     var URL = window.URL || window.webkitURL; //URL兼容写法
     URL.revokeObjectURL(objectURL);
 }
 
 // FileReader API
-ccc.fileReader = function(fileObj,callback){
-    var fileReader = new FileReader();//创建fileReader对象
-    fileReader.readAsDataURL(fileObj);
-    fileReader.onload = function(e){
-        src = e.target.result//一个base64的url，若是图片，可以直接写在url上
-        callback(src);//callback函数的第一个参数是src
+ccc.fileReader = function(fileObj, callback) {
+        var fileReader = new FileReader(); //创建fileReader对象
+        fileReader.readAsDataURL(fileObj);
+        fileReader.onload = function(e) {
+            src = e.target.result //一个base64的url，若是图片，可以直接写在url上
+            callback(src); //callback函数的第一个参数是src
+        }
     }
-}
-/*e.g.  
-input.on("change",function(){
-    var fileObj = $(this)[0].files[0];
-    ccc.fileReader(fileObj,function(e){
-        console.log(e);
-    });
-});*/
+    /*e.g.
+    input.on("change",function(){
+        var fileObj = $(this)[0].files[0];
+        ccc.fileReader(fileObj,function(e){
+            console.log(e);
+        });
+    });*/
 
 // 获取url参数
-ccc.getUrlParam = function(name){
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");//以 name 开头或者以 "&"+name 开头，中间是 "=" + 若干个非&的字符 ,后面是结尾 或者 以 "&"结尾
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
-        }
-        return null;
+ccc.getUrlParam = function(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //以 name 开头或者以 "&"+name 开头，中间是 "=" + 若干个非&的字符 ,后面是结尾 或者 以 "&"结尾
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
 }
 
+ccc.specialObj = {
+    "win":window,
+    "doc":document,
+    "html":document.documentElement,
+    "body":document.body
+};
+/*
+ *  on，off
+ */
+// 构造函数
+ccc.cst.domEle = function(el) {
+    this.target = el;
+}
+ccc.cst.eventObj = function(evtName, el) {
+    this.name = evtName;
+    this.each = new Object(); //有命名空间的，删除一个事件用delete属性
+    this.arr = new Array(); //无命名空间的，数组方法删除值
+    var that = this;
+    this.whole = function(event) { //这个不能写在prototype吧，因为每种事件调用方法都不是同一个
+        if (!ccc.isEmptyObject(that.each) || (that.arr.length > 0)) {
+            var event = event || window.event;
+            for (var t in that.each) {
+                that.each[t].method.call(el,event, that.each[t].data);
+            }
+            for (var tt in that.arr) {
+                that.arr[tt].method.call(el,event, that.arr[tt].data);
+            }
+        }
+    }
+    this.work(el, this.name, this.whole);
+}
+ccc.cst.eventObj.prototype.work = function(el, name, fn) {
+    el.addEventListener(name, fn, false);
+}
+ccc.cst.fnObj = function(fn, data) {
+    this.method = fn;
+    this.data = data;
+}
+
+/*
+ * ccc.on
+ * el-原生dom节点 -eg. document
+ * name - 事件类型.(命名空间) - eg. click 或者命名空间click.a
+ * fn - 该事件被触发时执行的函数
+ * data(可选) - 传递给函数的参数
+ */
+ccc.on = function(el, name, fn, data) {
+    // 先判断有没有一个全局的大eventDom对象
+    if (!window.eventDom) {
+        window.eventDom = {};
+    }
+
+    // 处理命名空间写法 将click.a 拆分为click a
+    if (name.indexOf(".") != -1) { //命名空间
+        var evtName = name.slice(0, name.indexOf("."));
+        var nameSpace = name.slice(name.indexOf(".") + 1);
+    } else {
+        evtName = name;
+    }
+
+    var attrName = "";
+    var isSpecial = false;
+    // 处理属性名
+    for(var i in ccc.specialObj){
+        if(el == ccc.specialObj[i]){
+            attrName = i;
+            isSpecial = true;
+        }
+    }
+    if(!isSpecial){//非特殊对象
+        attrName = el.tagName.toLowerCase();
+        if(el.id){
+            attrName += "#"+el.id;
+        }
+    }
+    // 判断有无这个dom对象
+    if (!eventDom[attrName]) {
+        eventDom[attrName] = new ccc.cst.domEle(el);
+    }
+
+
+    // 判断这个dom对象有无这种事件
+    if (!eventDom[attrName][evtName]) {
+        eventDom[attrName][evtName] = new ccc.cst.eventObj(evtName, eventDom[attrName].target);
+    }
+
+    // 判断有无命名空间对待
+    if (nameSpace) {
+        eventDom[attrName][evtName].each[nameSpace] = new ccc.cst.fnObj(fn, data);
+    } else {
+        var len = eventDom[attrName][evtName].arr.length;
+        var has = false; //里面
+        for (var i = 0; i < len; i++) {
+            if (eventDom[attrName][evtName].arr[i].method === fn) {
+                eventDom[attrName][evtName].arr[i].method = fn;
+                eventDom[attrName][evtName].arr[i].data = data;
+                has = true; //里面已经有这个函数
+            }
+        }
+        if (!has) {
+            eventDom[attrName][evtName].arr[len] = new ccc.cst.fnObj(fn, data);
+        }
+    }
+    return {
+        "parent": eventDom,
+        "children": eventDom[attrName]
+    };
+}
+// 暂时存在的问题是，事件里面函数的触发顺序不是定义顺序
+
+// 大bug：若是通过非唯一选择器(id)选出带有合集的元素，区别不出合集里面的每个元素
+// 现在的问题是怎么区分dom了，上面的大bug也是因为这个（要不就要遍历有没有dom重复，要不就要创建自己框架的dom对象，以及dom获取方法，我们现在相当于是将原生dom转化为自己dom，但是转化过程有点错误）
+
+//现在只能用于选择器(id)获取得到的dom对象以及4个特殊对象window,document,document.body,document.documentElement。
+/*
+ * ccc.off
+ * el-原生dom节点 -eg. document
+ * name（可选） - 指定要移除的事件类型.(命名空间) - eg. click 或者命名空间click.a
+ * fn（可选） - 指定要移除的函数。
+ */
+ccc.off = function(el, name, fn) {
+    var attrName = "";
+    var isSpecial = false;
+    // 处理属性名
+    for(var i in ccc.specialObj){
+        if(el == ccc.specialObj[i]){
+            attrName = i;
+            isSpecial = true;
+        }
+    }
+    if(!isSpecial){//非特殊对象
+        attrName = el.tagName.toLowerCase();
+        if(el.id){
+            attrName += "#"+el.id;
+        }
+    }
+
+    // 只有一个参数时，删除这个dom全部事件
+    if (arguments.length == 1) {
+        for (var i in eventDom[attrName]) {
+            if (i != "target") {
+                var the = eventDom[attrName][i]; //遍历有什么类型事件
+                el.removeEventListener(the.name, the.whole, false); //如果不removeEventListener，虽然对象没了，但是事件还是绑定在上面(本身就会保存起来事件的内容，除非改动事件内容，而不是之间将整个对象删除掉，这里的事件内容，是whole函数的内容)，所以一定要解绑whole。
+            }
+        }
+        delete eventDom[attrName];
+        return eventDom;
+    } else if (arguments.length == 2) { //两个参数时
+        // 处理命名空间写法 将click.a 拆分为click a
+        if (name.indexOf(".") != -1) { //命名空间
+            var evtName = name.slice(0, name.indexOf("."));
+            var nameSpace = name.slice(name.indexOf(".") + 1);
+        } else {
+            evtName = name;
+        }
+
+        if (nameSpace) { //有命名空间
+            delete eventDom[attrName][evtName].each[nameSpace];
+        } else {
+            el.removeEventListener(evtName, eventDom[attrName][evtName].whole);
+            delete eventDom[attrName][evtName];
+        }
+
+    } else { //三个参数
+        // 处理命名空间写法 将click.a 拆分为click a
+        if (name.indexOf(".") != -1) { //命名空间
+            var evtName = name.slice(0, name.indexOf("."));
+            var nameSpace = name.slice(name.indexOf(".") + 1);
+        } else {
+            evtName = name;
+        }
+
+        if (nameSpace) { //有命名空间，就按命名空间处置
+            delete eventDom[attrName][evtName].each[nameSpace];
+        } else {
+            var len = eventDom[attrName][evtName].arr.length;
+            for (var i = 0; i < len; i++) {
+                if (eventDom[attrName][evtName].arr[i].method === fn) {
+                    delete eventDom[attrName][evtName].arr[i];
+                }
+            }
+        }
+    }
+    return eventDom[attrName];
+}
