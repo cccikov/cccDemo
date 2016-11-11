@@ -16,6 +16,7 @@ body {
     background-color: transparent;
     border-radius: 50%;
     border: 20px solid #B6B8C0;
+    // 两个平行四边形
     &:after {
         content: "";
         height: 20px;
@@ -38,6 +39,7 @@ body {
         transform: rotate(45deg) skew(45deg);
         transform-origin: bottom left;
     }
+    // 两条遮挡线
     div.across-line:after {
         content: "";
         height: 4px;
@@ -62,6 +64,7 @@ body {
         transform-origin: bottom left;
         z-index: 10;
     }
+    // 三角形
     div.taper:after {
         content: "";
         border-width: 0 0 50px 20px;
@@ -135,7 +138,7 @@ body {
 //     }
 // }
 
-
+// 黄色大块2
 .inner-ring2 {
     position: fixed;
     top: 50%;
@@ -148,29 +151,29 @@ body {
     background-color: transparent;
     border-radius: 50%;
     animation: rotate22 2s linear infinite;
+    .inner-ring2-c {
+        position: relative;
+        width: 100px;
+        height: 200px;
+        overflow: hidden;
+    }
+    .inner-ring2-r {
+        width: 180px;
+        height: 180px;
+        border: 10px solid transparent;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-top: 10px solid #F9D64A;
+        border-left: 10px solid #F9D64A;
+        transform: rotate(0deg);
+        animation: ring12 2s linear infinite;
+    }
 }
 
-.inner-ring2 .inner-ring2-c {
-    position: relative;
-    width: 100px;
-    height: 200px;
-    overflow: hidden;
-}
 
-.inner-ring2 .inner-ring2-r {
-    width: 180px;
-    height: 180px;
-    border: 10px solid transparent;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 10px solid #F9D64A;
-    border-left: 10px solid #F9D64A;
-    transform: rotate(0deg);
-    animation: ring12 2s linear infinite;
-}
-
+// 黄褐色c字形会缩短变长 块
 .inner-ring3 {
     position: fixed;
     top: 50%;
@@ -183,70 +186,67 @@ body {
     background-color: transparent;
     border-radius: 50%;
     animation: ring6 2s infinite linear;
+    //
+    .inner-ring3-p1-c {
+        position: relative;
+        float: left;
+        width: 100px;
+        height: 200px;
+        overflow: hidden;
+        .p1-an {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: ring5 2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+            .inner-ring3-p1-r {
+                width: 180px;
+                height: 180px;
+                border: 10px solid transparent;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-top: 10px solid rgba(189, 186, 62, 0.25);
+                border-left: 10px solid rgba(189, 186, 62, 0.25);
+                transform: rotate(-45deg);
+                animation: ring4 2s linear infinite;
+            }
+        }
+    }
+    //
+    .inner-ring3-p2-c {
+        position: relative;
+        float: right;
+        width: 100px;
+        height: 200px;
+        transform: rotate(180deg);
+        overflow: hidden;
+        .p2-an {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: ring3 2s linear infinite;
+            .inner-ring3-p2-r {
+                width: 180px;
+                height: 180px;
+                border: 10px solid transparent;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-top: 10px solid rgba(189, 186, 62, 0.25);
+                border-left: 10px solid rgba(189, 186, 62, 0.25);
+                transform: rotate(-45deg);
+                animation: ring2 2s cubic-bezier(0.5, 0, 1, 0.5) infinite;
+            }
+        }
+    }
 }
 
-.inner-ring3 .inner-ring3-p1-c {
-    position: relative;
-    float: left;
-    width: 100px;
-    height: 200px;
-    overflow: hidden;
-}
-
-.inner-ring3 .inner-ring3-p1-r {
-    width: 180px;
-    height: 180px;
-    border: 10px solid transparent;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 10px solid rgba(189, 186, 62, 0.25);
-    border-left: 10px solid rgba(189, 186, 62, 0.25);
-    transform: rotate(-45deg);
-    animation: ring4 2s linear infinite;
-}
-
-.inner-ring3 .p1-an {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    animation: ring5 2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-}
-
-.inner-ring3 .inner-ring3-p2-c {
-    position: relative;
-    float: right;
-    width: 100px;
-    height: 200px;
-    transform: rotate(180deg);
-    overflow: hidden;
-}
-
-.inner-ring3 .inner-ring3-p2-r {
-    width: 180px;
-    height: 180px;
-    border: 10px solid transparent;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top: 10px solid rgba(189, 186, 62, 0.25);
-    border-left: 10px solid rgba(189, 186, 62, 0.25);
-    transform: rotate(-45deg);
-    animation: ring2 2s cubic-bezier(0.5, 0, 1, 0.5) infinite;
-}
-
-.inner-ring3 .p2-an {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    animation: ring3 2s linear infinite;
-}
 
 .outer-ring {
     position: fixed;
@@ -258,36 +258,35 @@ body {
     background-color: transparent;
     border-radius: 50%;
     border: 6px solid transparent;
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 220px;
+        height: 220px;
+        border: 6px solid rgba(161, 164, 176, 0.5);
+        border-radius: 50%;
+        clip: rect(112px, 232px, 120px, 100px);
+        animation: rotate3602 3s linear infinite reverse;
+    }
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 220px;
+        height: 220px;
+        border: 6px solid rgba(161, 164, 176, 0.5);
+        border-radius: 50%;
+        clip: rect(105px, 232px, 127px, 100px);
+        animation: rotate3603 3s cubic-bezier(0.34, 0.07, 0.68, 0.93) infinite;
+    }
 }
 
-.outer-ring:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 220px;
-    height: 220px;
-    border: 6px solid rgba(161, 164, 176, 0.5);
-    border-radius: 50%;
-    clip: rect(112px, 232px, 120px, 100px);
-    animation: rotate3602 3s linear infinite reverse;
-}
-
-.outer-ring:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 220px;
-    height: 220px;
-    border: 6px solid rgba(161, 164, 176, 0.5);
-    border-radius: 50%;
-    clip: rect(105px, 232px, 127px, 100px);
-    animation: rotate3603 3s cubic-bezier(0.34, 0.07, 0.68, 0.93) infinite;
-}
-
+// 外圈围绕
 .outer-ring2 {
     position: fixed;
     top: 50%;
@@ -298,34 +297,33 @@ body {
     background-color: transparent;
     border-radius: 50%;
     border: 6px solid transparent;
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 220px;
+        height: 220px;
+        border: 6px solid rgba(161, 164, 176, 0.5);
+        border-radius: 50%;
+        transform: rotate(120deg);
+        clip: rect(80px, 232px, 152px, 100px);
+        animation: rotate3602 3s linear infinite;
+    }
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 220px;
+        height: 220px;
+        border: 6px solid rgba(161, 164, 176, 0.5);
+        border-radius: 50%;
+        transform: rotate(230deg);
+        clip: rect(60px, 232px, 172px, 100px);
+        animation: rotate360 3s cubic-bezier(0.34, 0.07, 0.68, 0.93) infinite;
+    }
 }
 
-.outer-ring2:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 220px;
-    height: 220px;
-    border: 6px solid rgba(161, 164, 176, 0.5);
-    border-radius: 50%;
-    transform: rotate(120deg);
-    clip: rect(80px, 232px, 152px, 100px);
-    animation: rotate3602 3s linear infinite;
-}
-
-.outer-ring2:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 220px;
-    height: 220px;
-    border: 6px solid rgba(161, 164, 176, 0.5);
-    border-radius: 50%;
-    transform: rotate(230deg);
-    clip: rect(60px, 232px, 172px, 100px);
-    animation: rotate360 3s cubic-bezier(0.34, 0.07, 0.68, 0.93) infinite;
-}

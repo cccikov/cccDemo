@@ -144,7 +144,15 @@ body {
   height: 200px;
   overflow: hidden;
 }
-.inner-ring3 .inner-ring3-p1-r {
+.inner-ring3 .inner-ring3-p1-c .p1-an {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: ring5 2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.inner-ring3 .inner-ring3-p1-c .p1-an .inner-ring3-p1-r {
   width: 180px;
   height: 180px;
   border: 10px solid transparent;
@@ -157,14 +165,6 @@ body {
   transform: rotate(-45deg);
   animation: ring4 2s linear infinite;
 }
-.inner-ring3 .p1-an {
-  width: 200px;
-  height: 200px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  animation: ring5 2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-}
 .inner-ring3 .inner-ring3-p2-c {
   position: relative;
   float: right;
@@ -173,7 +173,15 @@ body {
   transform: rotate(180deg);
   overflow: hidden;
 }
-.inner-ring3 .inner-ring3-p2-r {
+.inner-ring3 .inner-ring3-p2-c .p2-an {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: ring3 2s linear infinite;
+}
+.inner-ring3 .inner-ring3-p2-c .p2-an .inner-ring3-p2-r {
   width: 180px;
   height: 180px;
   border: 10px solid transparent;
@@ -185,14 +193,6 @@ body {
   border-left: 10px solid rgba(189, 186, 62, 0.25);
   transform: rotate(-45deg);
   animation: ring2 2s cubic-bezier(0.5, 0, 1, 0.5) infinite;
-}
-.inner-ring3 .p2-an {
-  width: 200px;
-  height: 200px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  animation: ring3 2s linear infinite;
 }
 .outer-ring {
   position: fixed;

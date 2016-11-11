@@ -44,6 +44,50 @@
     transform: rotate(360deg);
   }
 }
+@keyframes ring12 {
+  0% {
+    transform: rotate(-205deg);
+  }
+  50% {
+    transform: rotate(-135deg);
+  }
+  100% {
+    transform: rotate(-205deg);
+  }
+}
+@keyframes ring6 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ring5 {
+  0% {
+    transform: rotate(0deg);
+  }
+  64.5% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes ring4 {
+  0% {
+    transform: rotate(-45deg);
+  }
+  35.5% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(135deg);
+  }
+  100% {
+    transform: rotate(135deg);
+  }
+}
 @keyframes rotate360 {
   0% {
     transform: rotate(0deg);
@@ -66,17 +110,6 @@
   }
   100% {
     transform: rotate(-90deg);
-  }
-}
-@keyframes ring12 {
-  0% {
-    transform: rotate(-205deg);
-  }
-  50% {
-    transform: rotate(-135deg);
-  }
-  100% {
-    transform: rotate(-205deg);
   }
 }
 @keyframes ring2 {
@@ -102,38 +135,5 @@
   }
   100% {
     transform: rotate(180deg);
-  }
-}
-@keyframes ring4 {
-  0% {
-    transform: rotate(-45deg);
-  }
-  35.5% {
-    transform: rotate(-45deg);
-  }
-  50% {
-    transform: rotate(135deg);
-  }
-  100% {
-    transform: rotate(135deg);
-  }
-}
-@keyframes ring5 {
-  0% {
-    transform: rotate(0deg);
-  }
-  64.5% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(180deg);
-  }
-}
-@keyframes ring6 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }
