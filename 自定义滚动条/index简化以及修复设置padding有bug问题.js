@@ -18,13 +18,13 @@ $(function() {
 
 		//内容偏移
 		var contentTop = -changeTop * rate;
-		
+
 		if(animateFlag){
 			inBox.add(slider).addClass("animate");
 		}else{
 			inBox.add(slider).removeClass("animate");
 		}
-		
+
 		goTopFn.apply(slider, [changeTop]);
 		goTopFn.apply(inBox, [contentTop]);
 	}
@@ -36,7 +36,7 @@ $(function() {
 	//或者	var rate = (inBox.innerHeight()+(outBox.innerHeight()-outBox.height())/2) / outBox.innerHeight();
 	console.log((inBox.innerHeight()+(outBox.innerHeight()-outBox.height())/2),outBox[0].scrollHeight)
 	if(rate>1){
-		sideBar.addClass("active"); 
+		sideBar.addClass("active");
 	}
 	$(".slider").height($(".sideBar").height() / rate);
 
@@ -98,3 +98,5 @@ $(function() {
 		posiMove(sliderTop,false);
 	});
 });
+
+/*对 index未简化版.js 做一下简化以及bug的修改*/

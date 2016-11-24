@@ -1,7 +1,7 @@
 $(function() {
 	scrollBar($(".outBox"),$(".inBox"),$(".sideBar"),$(".slider"));
 	scrollBar($(".outBox2"),$(".inBox2"),$(".sideBar2"),$(".slider2"));
-	
+
 	function scrollBar(outobj,inobj,barobj,sliderobj) {
 		var docu = $(document);
 
@@ -100,3 +100,5 @@ $(function() {
 	}
 
 });
+
+/*简化版 封住成函数*/

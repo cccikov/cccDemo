@@ -98,7 +98,10 @@ $.fn.extend({
 			}
 			posiMove(sliderTop, false);
 		});
-		
+
 		return outobj;
 	}
 });
+
+
+/*对 index封装成函数.js 变成jq对象方法*/

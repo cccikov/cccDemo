@@ -99,7 +99,10 @@ $.fn.extend({
 			}
 			posiMove(sliderTop, false);
 		});
-		
+
 		return outobj;
 	}
 });
+
+
+/*index.js作小部分修改*/

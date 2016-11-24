@@ -5,6 +5,7 @@ $(function() {
 	var sideBar = $(".sideBar");
 	var docu = $(document);
 
+	//移动方法
 	function goTopFn(top) {
 		$(this).css("transform", "translate3d(0," + top + "px,0");
 	}
@@ -40,7 +41,7 @@ $(function() {
 
 		docu.on("mousemove", function(e) {
 			var e = e || window.event;
-			
+
 			//滑块偏移
 			var sliderTop = e.clientY - sideBar.offset().top - originHei;
 			sliderTop = sliderTop > 0 ? sliderTop : 0;
@@ -60,7 +61,7 @@ $(function() {
 
 	});
 
-	//滚动 mousewheel--chrome ie; DOMMouseScroll--firefox   
+	//滚动 mousewheel--chrome ie; DOMMouseScroll--firefox
 	outBox.on("mousewheel DOMMouseScroll", function(e) {
 		var e = e || window.event;
 		e.preventDefault();
