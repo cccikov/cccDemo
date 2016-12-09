@@ -41,6 +41,7 @@ ScrollBar.prototype = {
 
         /*将这些变量存入对象的属性里面,以便其他实例方法使用*/
         this.option = {
+            "hasX":hasX,
             "scrollWrap":scrollWrap,
             "scrollCtx":scrollCtx,
             "slideBarY":slideBarY,
@@ -77,7 +78,8 @@ ScrollBar.prototype = {
 
             //滑块偏移
             var sliderTop = e.clientY - that.offset().top - slideBarYHeight / 2;
-            self.posiMove(sliderTop, true);
+            var sliderLeft = !hasX ? 0 : sliderX.position().left;
+            self.posiMove(sliderLeft,sliderTop, true);
         });
 
 
@@ -95,7 +97,8 @@ ScrollBar.prototype = {
 
                 //滑块偏移
                 var sliderTop = e.clientY - slideBarY.offset().top - originHei;
-                self.posiMove(sliderTop, false);
+                var sliderLeft = !hasX ? 0 : sliderX.position().left;
+                self.posiMove(sliderLeft,sliderTop, false);
             });
 
             docu.off("mouseup").on("mouseup", function() {
@@ -120,19 +123,25 @@ ScrollBar.prototype = {
 
             //滑块偏移
             var sliderTop = sliderY.position().top;
+            var sliderLeft = !hasX ? 0 : sliderX.position().left;
             if (direction == "down") {
                 sliderTop += 10;
             } else {
                 sliderTop -= 10;
             }
-            self.posiMove(sliderTop, false);
+            self.posiMove(sliderLeft,sliderTop, false);
         });
 
 	},
-	goTopFn:function(ele,top){//移动方法
-		ele.css("transform", "translate(0," + top + "px");//不用3d是为了兼容ie9;
+	goFn:function(ele,top,left){//移动方法
+        if(left){
+            ele.css("transform", "translate("+left+"px," + top + "px");//不用3d是为了兼容ie9;
+        }else{
+		  ele.css("transform", "translate(0," + top + "px");//不用3d是为了兼容ie9;
+        }
 	},
-	posiMove:function(changeTop, animateFlag){//获取移动多少的方法，changeTop为滚动条滑块移动的距离，animateFlag是否要动画，并调用移动方法实现最终的滚动
+	posiMove:function(changeLeft,changeTop, animateFlag){//获取移动多少的方法，changeTop为滚动条滑块移动的距离，animateFlag是否要动画，并调用移动方法实现最终的滚动
+        var hasX = this.hasX;
 		var scrollCtx = this.option.scrollCtx;
 		var slideBarY = this.option.slideBarY;
 		var sliderY = this.option.sliderY;
@@ -151,7 +160,23 @@ ScrollBar.prototype = {
 		    scrollCtx.add(sliderY).removeClass("animate");
 		}
 
-		this.goTopFn(sliderY,changeTop);
-		this.goTopFn(scrollCtx,contentTop);
+
+        if(hasX){
+            // //上下限
+            // changeLeft = changeLeft >= 0 ? changeLeft : 0;
+            // changeLeft = changeLeft <= slideBarYHeight - sliderY.height() ? changeLeft : slideBarYHeight - sliderY.height();
+
+            // //内容偏移
+            // var contentTop = -changeLeft * this.rateY;
+
+            // if (animateFlag) {
+            //     scrollCtx.add(sliderY).addClass("animate");
+            // } else {
+            //     scrollCtx.add(sliderY).removeClass("animate");
+            // }
+        }
+
+		this.goFn(sliderY,changeTop);
+		this.goFn(scrollCtx,contentTop);
 	}
 }
