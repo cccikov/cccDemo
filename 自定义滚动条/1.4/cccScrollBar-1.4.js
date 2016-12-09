@@ -1,11 +1,11 @@
-function ScrollBar(ele){
+function ScrollBar(ele,x){
 	this.name = "一个ScrollBar的实例";
-	this.init(ele);
+	this.init(ele,x);
 }
 ScrollBar.prototype = {
 	constructor:ScrollBar,
-	init:function(ele){
-
+	init:function(ele,x){
+        var hasX = (typeof x== "boolean" && x==true)||x=="true";//是否需要x轴
 		/*获取对象*/
 		var that = ele.css({"position":"relative","overflow":"hidden"});
 		var scrollWrap = that;//包含着滚动条的块
@@ -18,14 +18,16 @@ ScrollBar.prototype = {
 			slideBarY.appendTo(scrollWrap);
 		}
 		var sliderY = slideBarY.find(".sliderY");
-        // x轴的
-        if(scrollWrap.find(".slideBarX").size()>0){
-            var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
-        }else{
-            var slideBarX = $('<div class="slideBarX"><div class="sliderX"></div></div>');
-            slideBarX.appendTo(scrollWrap);
+        if(hasX){
+            // x轴的
+            if(scrollWrap.find(".slideBarX").size()>0){
+                var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
+            }else{
+                var slideBarX = $('<div class="slideBarX"><div class="sliderX"></div></div>');
+                slideBarX.appendTo(scrollWrap);
+            }
+            var sliderX = slideBarX.find(".sliderX");
         }
-        var sliderX = slideBarX.find(".sliderX");
 
 
 
@@ -35,33 +37,33 @@ ScrollBar.prototype = {
         var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
 
         /*获取实际可滚动长度*/
-        var slideBarYHeight = slideBarY.height() - slideBarX.height();
-        console.log(slideBarYHeight);
-        var slideBarXWidth = slideBarX.width() - slideBarY.width();
+        var slideBarYHeight = hasX ? slideBarY.height() - slideBarX.height() : slideBarY.height();
 
-		/*将这些变量存入对象的属性里面,以便其他实例方法使用*/
-		this.option = {
-			"scrollWrap":scrollWrap,
-			"scrollCtx":scrollCtx,
-			"slideBarY":slideBarY,
-			"sliderY":sliderY,
-            "slideBarX":slideBarX,
-            "sliderX":sliderX,
+        /*将这些变量存入对象的属性里面,以便其他实例方法使用*/
+        this.option = {
+            "scrollWrap":scrollWrap,
+            "scrollCtx":scrollCtx,
+            "slideBarY":slideBarY,
+            "sliderY":sliderY,
             "slideBarYHeight":slideBarYHeight,
-            "slideBarXWidth":slideBarXWidth
-
-		}
+        }
         this.rateY = rateY;
-		this.rateX = rateX;
 
-		/*以下开始进行事件操作*/
-		if (rateY > 1) {
+        /*以下开始进行事件操作*/
+        if (rateY > 1) {
             slideBarY.addClass("active");
             sliderY.height(slideBarYHeight / rateY);
         }
-        if (rateX > 1) {
-            slideBarX.addClass("active");
-            sliderX.width(slideBarX.width() / rateX);
+        if(hasX){
+            var slideBarXWidth = slideBarX.width() - slideBarY.width();
+            this.option.slideBarX = slideBarX;
+            this.option.sliderX = sliderX;
+            this.option.slideBarXWidth = slideBarXWidth;
+            this.rateX = rateX ;
+            if (rateX > 1) {
+                slideBarX.addClass("active");
+                sliderX.width(slideBarX.width() / rateX);
+            }
         }
 
 
