@@ -10,6 +10,7 @@ ScrollBar.prototype = {
 		var that = ele.css({"position":"relative","overflow":"hidden"});
 		var scrollWrap = that;//包含着滚动条的块
 		var scrollCtx = that.find(".scrollCtx").eq(0);//滚动主体
+        // y轴的
 		if(scrollWrap.find(".slideBarY").size()>0){
 			var slideBarY = scrollWrap.find(".slideBarY");//为了重新建滚动，比如内容改变的时候
 		}else{
@@ -17,9 +18,26 @@ ScrollBar.prototype = {
 			slideBarY.appendTo(scrollWrap);
 		}
 		var sliderY = slideBarY.find(".sliderY");
+        // x轴的
+        if(scrollWrap.find(".slideBarX").size()>0){
+            var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
+        }else{
+            var slideBarX = $('<div class="slideBarX"><div class="sliderX"></div></div>');
+            slideBarX.appendTo(scrollWrap);
+        }
+        var sliderX = slideBarX.find(".sliderX");
+
+
+
 		var docu = $(document);
 		/*获取比例*/
 		var rateY = scrollWrap[0].scrollHeight / scrollWrap.innerHeight();//或者 var rateY = (scrollCtx.innerHeight()+(scrollWrap.innerHeight()-scrollWrap.height())/2) / scrollWrap.innerHeight();
+        var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
+
+        /*获取实际可滚动长度*/
+        var slideBarYHeight = slideBarY.height() - slideBarX.height();
+        console.log(slideBarYHeight);
+        var slideBarXWidth = slideBarX.width() - slideBarY.width();
 
 		/*将这些变量存入对象的属性里面,以便其他实例方法使用*/
 		this.option = {
@@ -27,14 +45,24 @@ ScrollBar.prototype = {
 			"scrollCtx":scrollCtx,
 			"slideBarY":slideBarY,
 			"sliderY":sliderY,
+            "slideBarX":slideBarX,
+            "sliderX":sliderX,
+            "slideBarYHeight":slideBarYHeight,
+            "slideBarXWidth":slideBarXWidth
+
 		}
-		this.rateY = rateY;
+        this.rateY = rateY;
+		this.rateX = rateX;
 
 		/*以下开始进行事件操作*/
 		if (rateY > 1) {
             slideBarY.addClass("active");
+            sliderY.height(slideBarYHeight / rateY);
         }
-        sliderY.height(slideBarY.height() / rateY);
+        if (rateX > 1) {
+            slideBarX.addClass("active");
+            sliderX.width(slideBarX.width() / rateX);
+        }
 
 
         /*
@@ -46,7 +74,7 @@ ScrollBar.prototype = {
             var that = $(this);
 
             //滑块偏移
-            var sliderTop = e.clientY - that.offset().top - slideBarY.height() / 2;
+            var sliderTop = e.clientY - that.offset().top - slideBarYHeight / 2;
             self.posiMove(sliderTop, true);
         });
 
@@ -107,9 +135,10 @@ ScrollBar.prototype = {
 		var slideBarY = this.option.slideBarY;
 		var sliderY = this.option.sliderY;
 		var rateY = this.rateY;
+        var slideBarYHeight = this.option.slideBarYHeight;
 		//上下限
 		changeTop = changeTop >= 0 ? changeTop : 0;
-		changeTop = changeTop <= slideBarY.height() - sliderY.height() ? changeTop : slideBarY.height() - sliderY.height();
+		changeTop = changeTop <= slideBarYHeight - sliderY.height() ? changeTop : slideBarYHeight - sliderY.height();
 
 		//内容偏移
 		var contentTop = -changeTop * this.rateY;
