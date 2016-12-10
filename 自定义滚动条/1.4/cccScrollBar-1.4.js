@@ -142,6 +142,7 @@ ScrollBar.prototype = {
 	},
 	posiMove:function(changeLeft,changeTop, animateFlag){//获取移动多少的方法，changeTop为滚动条滑块移动的距离，animateFlag是否要动画，并调用移动方法实现最终的滚动
         var hasX = this.hasX;
+        var scrollWrap = this.option.scrollWrap;
 		var scrollCtx = this.option.scrollCtx;
 		var slideBarY = this.option.slideBarY;
 		var sliderY = this.option.sliderY;
@@ -152,7 +153,18 @@ ScrollBar.prototype = {
 		changeTop = changeTop <= slideBarYHeight - sliderY.height() ? changeTop : slideBarYHeight - sliderY.height();
 
 		//内容偏移
-		var contentTop = -changeTop * this.rateY;
+		var contentTop = -changeTop * rateY * scrollWrap.innerHeight() / slideBarYHeight;//解释在下面，这其实是一个bug，只是一个巧合导致没有发现
+        /*
+         *  我们假设 块之间高度的比值为lenRate（这里为rateY），内容显示区域高度为ctxh，实际高度为ctxH
+         *                                      滚动滑块高度为barh，滚动条高度为barH
+         *                                      内容移动距离为ctxmove，滑块移动距离为barmove
+         *  则：
+         *      lenRate = ctxH/ctxh = barH/barh , 所以 barh = barH/lenRate （实际代码 sliderY.height(slideBarYHeight / rateY);） ctxH = ctxh*lenRate
+         *      假设移动比率（就是移动的距离占总长度的比值）moveRate
+         *      moveRate = barmove/barH = ctxmove/ctxH;  ctxmove = ctxH*barmove/barH  = ctxh*lenRate/barH*barmove = barmove * lenRate * ctxh/barH (实际代码  -changeTop * rateY * scrollWrap.innerHeight() / slideBarYHeight;)
+         *  之前没有考虑到ctxh/barH是因为以前ctxh = barH的，而且现在由于有横向滚动条，所以ctxh ≠ barH，所以出现bug
+         */
+        //
 
 		if (animateFlag) {
 		    scrollCtx.add(sliderY).addClass("animate");
