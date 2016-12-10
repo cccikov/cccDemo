@@ -203,9 +203,9 @@ ScrollBar.prototype = {
         }
 
         if (animateFlag) {
-            scrollCtx.add().addClass("animate");
+            scrollCtx.add(sliderY).addClass("animate");
             if(hasX){
-                sliderY.addClass("animate");
+                sliderX.addClass("animate");
             }
         } else {
             scrollCtx.add(sliderY).removeClass("animate");
