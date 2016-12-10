@@ -211,7 +211,7 @@ ScrollBar.prototype = {
         } else {
             scrollCtx.add(sliderY).removeClass("animate");
             if(hasX){
-                sliderX.addClass("animate");
+                sliderX.removeClass("animate");
             }
         }
 
