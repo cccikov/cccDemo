@@ -35,7 +35,6 @@ ScrollBar.prototype = {
 		/*获取比例*/
 		var rateY = scrollWrap[0].scrollHeight / scrollWrap.innerHeight();//或者 var rateY = (scrollCtx.innerHeight()+(scrollWrap.innerHeight()-scrollWrap.height())/2) / scrollWrap.innerHeight();
         var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
-        console.log(rateX);
 
         /*获取实际可滚动长度*/
         var slideBarYHeight = hasX ? slideBarY.height() - slideBarX.height() : slideBarY.height();
