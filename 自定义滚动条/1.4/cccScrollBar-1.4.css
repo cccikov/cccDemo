@@ -4,6 +4,9 @@
   padding-right: 10px !important;
   padding-bottom: 10px !important;
 }
+.scrollCtx.animate {
+  transition: transform 0.3s;
+}
 .slideBarY {
   display: none;
   position: absolute;

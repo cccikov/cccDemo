@@ -204,10 +204,17 @@ ScrollBar.prototype = {
         }
 
         if (animateFlag) {
-            scrollCtx.add(sliderY).addClass("animate");
+            scrollCtx.add().addClass("animate");
+            if(hasX){
+                sliderY.addClass("animate");
+            }
         } else {
             scrollCtx.add(sliderY).removeClass("animate");
+            if(hasX){
+                sliderX.addClass("animate");
+            }
         }
+
 
         this.goFn(sliderY,changeTop,0);
         if(hasX){
