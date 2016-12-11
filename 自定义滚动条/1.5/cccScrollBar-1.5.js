@@ -55,8 +55,8 @@ ScrollBar.prototype = {
         /*以下开始进行事件操作*/
         if (rateY > 1) {
             slideBarY.addClass("active");
-            sliderY.height(slideBarYHeight / rateY);
         }
+        sliderY.height(slideBarYHeight / rateY);//无论rateY多少，sliderY都要有高度，不然当没有滚动条出现的时候后面posimove里面判断上下限的时候，sliderY的高度为0而不是和slideBarYHeight，就会造成就算没有滚动条也可以滚动
         if(hasX){
             var rateX = this.rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
             var slideBarX = this.slideBarX = option.slideBarX ? option.slideBarX :null;
@@ -64,8 +64,8 @@ ScrollBar.prototype = {
             var slideBarXWidth = this.slideBarXWidth = option.slideBarXWidth ? option.slideBarXWidth : slideBarX.width();
             if (rateX > 1) {
                 slideBarX.addClass("active");
-                sliderX.width(slideBarX.width() / rateX);
             }
+            sliderX.width(slideBarX.width() / rateX);
         }
 
         /*
@@ -226,6 +226,8 @@ ScrollBar.prototype = {
     }
 }
 
+
+//懒人版滚动条，只需要传入包裹滚动条的jq对象，和是否要x轴（ture，false）就可以了；滚动块的class名必须含有scrollCtx，以及要引用相应的css文件
 function AutoScroll(ele,x){
     var hasX = (typeof x== "boolean" && x==true)||x=="true";//是否需要x轴
     /*获取对象*/

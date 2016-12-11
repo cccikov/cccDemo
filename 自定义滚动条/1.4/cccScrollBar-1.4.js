@@ -50,8 +50,8 @@ ScrollBar.prototype = {
         /*以下开始进行事件操作*/
         if (rateY > 1) {
             slideBarY.addClass("active");
-            sliderY.height(slideBarYHeight / rateY);
         }
+        sliderY.height(slideBarYHeight / rateY);//无论rateY多少，sliderY都要有高度，不然当没有滚动条出现的时候后面posimove里面判断上下限的时候，sliderY的高度为0而不是和slideBarYHeight，就会造成就算没有滚动条也可以滚动
         if(hasX){
             var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
             var slideBarXWidth = slideBarX.width() - slideBarY.width();
@@ -61,8 +61,8 @@ ScrollBar.prototype = {
             this.rateX = rateX ;
             if (rateX > 1) {
                 slideBarX.addClass("active");
-                sliderX.width(slideBarX.width() / rateX);
             }
+            sliderX.width(slideBarX.width() / rateX);
         }
 
         /*
@@ -177,6 +177,8 @@ ScrollBar.prototype = {
 		//上下限
 		changeTop = changeTop >= 0 ? changeTop : 0;
 		changeTop = changeTop <= slideBarYHeight - sliderY.height() ? changeTop : slideBarYHeight - sliderY.height();
+        console.log(slideBarYHeight,sliderY.height());
+
 
 		//内容偏移
 		var contentTop = -changeTop * rateY * scrollWrap.innerHeight() / slideBarYHeight;//解释在下面，这其实是一个bug，只是一个巧合导致没有发现
