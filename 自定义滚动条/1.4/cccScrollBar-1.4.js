@@ -62,7 +62,7 @@ ScrollBar.prototype = {
             if (rateX > 1) {
                 slideBarX.addClass("active");
             }
-            sliderX.width(slideBarX.width() / rateX);
+            sliderX.width(slideBarXWidth / rateX);
         }
 
         /*
@@ -177,7 +177,6 @@ ScrollBar.prototype = {
 		//上下限
 		changeTop = changeTop >= 0 ? changeTop : 0;
 		changeTop = changeTop <= slideBarYHeight - sliderY.height() ? changeTop : slideBarYHeight - sliderY.height();
-        console.log(slideBarYHeight,sliderY.height());
 
 
 		//内容偏移

@@ -44,7 +44,6 @@ ScrollBar.prototype = {
 
         // 判断有无x轴
         var hasX = !!(option.slideBarX && option.slideBarX);
-        console.log(hasX);
 
         /*获取比例*/
         var rateY = scrollWrap[0].scrollHeight / scrollWrap.innerHeight();//或者 var rateY = (scrollCtx.innerHeight()+(scrollWrap.innerHeight()-scrollWrap.height())/2) / scrollWrap.innerHeight();
@@ -65,7 +64,7 @@ ScrollBar.prototype = {
             if (rateX > 1) {
                 slideBarX.addClass("active");
             }
-            sliderX.width(slideBarX.width() / rateX);
+            sliderX.width(slideBarXWidth / rateX);
         }
 
         /*
