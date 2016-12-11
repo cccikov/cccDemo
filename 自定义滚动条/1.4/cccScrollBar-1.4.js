@@ -50,6 +50,8 @@ ScrollBar.prototype = {
         /*以下开始进行事件操作*/
         if (rateY > 1) {
             slideBarY.addClass("active");
+        }else{
+            slideBarY.removeClass("active");//为了避免有时候复用的时候，之前出现过就一直在
         }
         sliderY.height(slideBarYHeight / rateY);//无论rateY多少，sliderY都要有高度，不然当没有滚动条出现的时候后面posimove里面判断上下限的时候，sliderY的高度为0而不是和slideBarYHeight，就会造成就算没有滚动条也可以滚动
         if(hasX){
@@ -61,6 +63,8 @@ ScrollBar.prototype = {
             this.rateX = rateX ;
             if (rateX > 1) {
                 slideBarX.addClass("active");
+            }else{
+                slideBarX.removeClass("active");
             }
             sliderX.width(slideBarXWidth / rateX);
         }
