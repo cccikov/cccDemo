@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   display: inline-block;
-  /*为了被里面的元素撑大*/
+  /*为了横向滚动条时，被里面的元素撑大，*/
   min-width: 100%;
   /*由于是inline-block，所以为了避免不够长的时候出现的差错*/
   box-shadow: border-box;
