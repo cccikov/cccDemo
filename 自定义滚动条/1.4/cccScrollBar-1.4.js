@@ -29,12 +29,9 @@ ScrollBar.prototype = {
             var sliderX = slideBarX.find(".sliderX");
         }
 
-
-
 		var docu = $(document);
 		/*获取比例*/
 		var rateY = scrollWrap[0].scrollHeight / scrollWrap.innerHeight();//或者 var rateY = (scrollCtx.innerHeight()+(scrollWrap.innerHeight()-scrollWrap.height())/2) / scrollWrap.innerHeight();
-        var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
 
         /*获取实际可滚动长度*/
         var slideBarYHeight = hasX ? slideBarY.height() - slideBarX.height() : slideBarY.height();
@@ -56,6 +53,7 @@ ScrollBar.prototype = {
             sliderY.height(slideBarYHeight / rateY);
         }
         if(hasX){
+            var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
             var slideBarXWidth = slideBarX.width() - slideBarY.width();
             this.option.slideBarX = slideBarX;
             this.option.sliderX = sliderX;
@@ -66,7 +64,6 @@ ScrollBar.prototype = {
                 sliderX.width(slideBarX.width() / rateX);
             }
         }
-
 
         /*
          * 点击
@@ -81,17 +78,17 @@ ScrollBar.prototype = {
             var sliderLeft = !hasX ? 0 : sliderX.position().left;
             self.posiMove(sliderLeft,sliderTop, true);
         });
-        var self = this;//将实例对象用self存储起来,为了防止与事件里面的this冲突
-        slideBarX.off("mousedown").on("mousedown", function(e) {
-            var e = e || window.event;
-            var that = $(this);
+        if(hasX){
+            slideBarX.off("mousedown").on("mousedown", function(e) {
+                var e = e || window.event;
+                var that = $(this);
 
-            //滑块偏移
-            var sliderLeft = e.clientX - that.offset().left - sliderX.width() / 2;
-            var sliderTop = sliderY.position().top;
-            self.posiMove(sliderLeft,sliderTop, true);
-        });
-
+                //滑块偏移
+                var sliderLeft = e.clientX - that.offset().left - sliderX.width() / 2;
+                var sliderTop = sliderY.position().top;
+                self.posiMove(sliderLeft,sliderTop, true);
+            });
+        }
 
         /*
          * 滑动
@@ -116,26 +113,27 @@ ScrollBar.prototype = {
             });
 
         });
-        sliderX.off("mousedown").on("mousedown", function(e) {
-            var e = e || window.event;
-            e.stopPropagation();
-            e.preventDefault();
-            var originWid = e.clientX - $(this).offset().left;
-
-            docu.on("mousemove", function(e) {
+        if(hasX){
+            sliderX.off("mousedown").on("mousedown", function(e) {
                 var e = e || window.event;
+                e.stopPropagation();
+                e.preventDefault();
+                var originWid = e.clientX - $(this).offset().left;
 
-                //滑块偏移
-                var sliderLeft = e.clientX - slideBarX.offset().left - originWid;
-                var sliderTop = sliderY.position().top;
-                self.posiMove(sliderLeft,sliderTop, false);
+                docu.on("mousemove", function(e) {
+                    var e = e || window.event;
+
+                    //滑块偏移
+                    var sliderLeft = e.clientX - slideBarX.offset().left - originWid;
+                    var sliderTop = sliderY.position().top;
+                    self.posiMove(sliderLeft,sliderTop, false);
+                });
+
+                docu.off("mouseup").on("mouseup", function() {
+                    docu.off("mousemove");
+                });
             });
-
-            docu.off("mouseup").on("mouseup", function() {
-                docu.off("mousemove");
-            });
-
-        });
+        }
 
         /*
          * 滚动 mousewheel--chrome ie; DOMMouseScroll--firefox
@@ -161,7 +159,6 @@ ScrollBar.prototype = {
             }
             self.posiMove(sliderLeft,sliderTop, false);
         });
-
 	},
 	goFn:function(ele,top,left){//移动方法
         ele.css("transform", "translate("+left+"px," + top + "px");//不用3d是为了兼容ie9;
@@ -200,6 +197,8 @@ ScrollBar.prototype = {
 
             //内容偏移
             var contentLeft = -changeLeft * this.rateX * scrollWrap.innerWidth() / slideBarXWidth;
+        }else{
+            var contentLeft = 0;//没有x轴的时候
         }
 
         if (animateFlag) {
@@ -213,7 +212,6 @@ ScrollBar.prototype = {
                 sliderX.removeClass("animate");
             }
         }
-
 
         this.goFn(sliderY,changeTop,0);
         if(hasX){

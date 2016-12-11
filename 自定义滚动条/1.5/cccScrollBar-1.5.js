@@ -1,53 +1,42 @@
-function ScrollBar(ele,x){
+/*
+ *   本来是打算这样的
+ *   function ScrollBar(option){
+ *      this.init(option);
+ *      .......
+ *   }
+ *   function AutoScroll(ele){
+ *      ScrollBar.call(this,option)//这个执行的时候，由于init是在ScrollBar prototype里面，所以这个执行的时候，this还没有init方法
+ *   }
+ *   AutoScroll.prototype = new ScrollBar(option);//这里也存在参数传递麻烦的问题
+ *   所以就改成下面那样需要判断option
+ */
+
+function ScrollBar(option){
     this.name = "一个ScrollBar的实例";
-    this.init(ele,x);
+    if(option){
+        this.init(option);
+    }
 }
 ScrollBar.prototype = {
     constructor:ScrollBar,
-    init:function(ele,x){
-        var hasX = (typeof x== "boolean" && x==true)||x=="true";//是否需要x轴
-        /*获取对象*/
-        var that = ele.css({"position":"relative","overflow":"hidden"});
-        var scrollWrap = that;//包含着滚动条的块
-        var scrollCtx = that.find(".scrollCtx").eq(0);//滚动主体
-        // y轴的
-        if(scrollWrap.find(".slideBarY").size()>0){
-            var slideBarY = scrollWrap.find(".slideBarY");//为了重新建滚动，比如内容改变的时候
-        }else{
-            var slideBarY = $('<div class="slideBarY"><div class="sliderY"></div></div>');
-            slideBarY.appendTo(scrollWrap);
-        }
-        var sliderY = slideBarY.find(".sliderY");
-        if(hasX){
-            // x轴的
-            if(scrollWrap.find(".slideBarX").size()>0){
-                var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
-            }else{
-                var slideBarX = $('<div class="slideBarX"><div class="sliderX"></div></div>');
-                slideBarX.appendTo(scrollWrap);
-            }
-            var sliderX = slideBarX.find(".sliderX");
-        }
-
-
-
+    init:function(option){
         var docu = $(document);
+        //将option里面的属性转到this
+        /*将这些变量存入对象的属性里面,以便其他实例方法使用*/
+        var scrollWrap = this.scrollWrap = option.scrollWrap;
+        var scrollCtx = this.scrollCtx = option.scrollCtx;
+        var slideBarY = this.slideBarY = option.slideBarY;
+        var sliderY = this.sliderY = option.sliderY;
+        var slideBarYHeight = this.slideBarYHeight = option.slideBarYHeight ? option.slideBarYHeight : slideBarY.height();
+
+        // 判断有无x轴
+        var hasX = !!(option.slideBarX && option.slideBarX);
+        console.log(hasX);
+
         /*获取比例*/
         var rateY = scrollWrap[0].scrollHeight / scrollWrap.innerHeight();//或者 var rateY = (scrollCtx.innerHeight()+(scrollWrap.innerHeight()-scrollWrap.height())/2) / scrollWrap.innerHeight();
-        var rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
 
-        /*获取实际可滚动长度*/
-        var slideBarYHeight = hasX ? slideBarY.height() - slideBarX.height() : slideBarY.height();
-
-        /*将这些变量存入对象的属性里面,以便其他实例方法使用*/
-        this.option = {
-            "hasX":hasX,
-            "scrollWrap":scrollWrap,
-            "scrollCtx":scrollCtx,
-            "slideBarY":slideBarY,
-            "sliderY":sliderY,
-            "slideBarYHeight":slideBarYHeight,
-        }
+        this.hasX = hasX;
         this.rateY = rateY;
 
         /*以下开始进行事件操作*/
@@ -56,17 +45,15 @@ ScrollBar.prototype = {
             sliderY.height(slideBarYHeight / rateY);
         }
         if(hasX){
-            var slideBarXWidth = slideBarX.width() - slideBarY.width();
-            this.option.slideBarX = slideBarX;
-            this.option.sliderX = sliderX;
-            this.option.slideBarXWidth = slideBarXWidth;
-            this.rateX = rateX ;
+            var rateX = this.rateX = scrollWrap[0].scrollWidth / scrollWrap.innerWidth();
+            var slideBarX = this.slideBarX = option.slideBarX ? option.slideBarX :null;
+            var sliderX = this.sliderX = option.sliderX ? option.sliderX :null;
+            var slideBarXWidth = this.slideBarXWidth = option.slideBarXWidth ? option.slideBarXWidth : slideBarX.width();
             if (rateX > 1) {
                 slideBarX.addClass("active");
                 sliderX.width(slideBarX.width() / rateX);
             }
         }
-
 
         /*
          * 点击
@@ -81,17 +68,6 @@ ScrollBar.prototype = {
             var sliderLeft = !hasX ? 0 : sliderX.position().left;
             self.posiMove(sliderLeft,sliderTop, true);
         });
-        var self = this;//将实例对象用self存储起来,为了防止与事件里面的this冲突
-        slideBarX.off("mousedown").on("mousedown", function(e) {
-            var e = e || window.event;
-            var that = $(this);
-
-            //滑块偏移
-            var sliderLeft = e.clientX - that.offset().left - sliderX.width() / 2;
-            var sliderTop = sliderY.position().top;
-            self.posiMove(sliderLeft,sliderTop, true);
-        });
-
 
         /*
          * 滑动
@@ -114,27 +90,6 @@ ScrollBar.prototype = {
             docu.off("mouseup").on("mouseup", function() {
                 docu.off("mousemove");
             });
-
-        });
-        sliderX.off("mousedown").on("mousedown", function(e) {
-            var e = e || window.event;
-            e.stopPropagation();
-            e.preventDefault();
-            var originWid = e.clientX - $(this).offset().left;
-
-            docu.on("mousemove", function(e) {
-                var e = e || window.event;
-
-                //滑块偏移
-                var sliderLeft = e.clientX - slideBarX.offset().left - originWid;
-                var sliderTop = sliderY.position().top;
-                self.posiMove(sliderLeft,sliderTop, false);
-            });
-
-            docu.off("mouseup").on("mouseup", function() {
-                docu.off("mousemove");
-            });
-
         });
 
         /*
@@ -162,21 +117,55 @@ ScrollBar.prototype = {
             self.posiMove(sliderLeft,sliderTop, false);
         });
 
+
+        //x轴的事件绑定
+        if(hasX){
+            slideBarX.off("mousedown").on("mousedown", function(e) {
+                var e = e || window.event;
+                var that = $(this);
+
+                //滑块偏移
+                var sliderLeft = e.clientX - that.offset().left - sliderX.width() / 2;
+                var sliderTop = sliderY.position().top;
+                self.posiMove(sliderLeft,sliderTop, true);
+            });
+            sliderX.off("mousedown").on("mousedown", function(e) {
+                var e = e || window.event;
+                e.stopPropagation();
+                e.preventDefault();
+                var originWid = e.clientX - $(this).offset().left;
+
+                docu.on("mousemove", function(e) {
+                    var e = e || window.event;
+
+                    //滑块偏移
+                    var sliderLeft = e.clientX - slideBarX.offset().left - originWid;
+                    var sliderTop = sliderY.position().top;
+                    self.posiMove(sliderLeft,sliderTop, false);
+                });
+
+                docu.off("mouseup").on("mouseup", function() {
+                    docu.off("mousemove");
+                });
+            });
+        }
     },
     goFn:function(ele,top,left){//移动方法
         ele.css("transform", "translate("+left+"px," + top + "px");//不用3d是为了兼容ie9;
     },
     posiMove:function(changeLeft,changeTop, animateFlag){//获取移动多少的方法，changeTop为滚动条滑块移动的距离，animateFlag是否要动画，并调用移动方法实现最终的滚动
-        var hasX = this.option.hasX;
-        var scrollWrap = this.option.scrollWrap;
-        var scrollCtx = this.option.scrollCtx;
-        var slideBarY = this.option.slideBarY;
-        var sliderY = this.option.sliderY;
+
+        var hasX = this.hasX;
+        var scrollWrap = this.scrollWrap;
+        var scrollCtx = this.scrollCtx;
+        var slideBarY = this.slideBarY;
+        var sliderY = this.sliderY;
         var rateY = this.rateY;
-        var sliderX = this.option.sliderX;
+        var sliderX = this.sliderX;
         var rateX = this.rateX;
-        var slideBarYHeight = this.option.slideBarYHeight;
-        var slideBarXWidth = this.option.slideBarXWidth;
+        var slideBarYHeight = this.slideBarYHeight;
+        var slideBarXWidth = this.slideBarXWidth;
+
         //上下限
         changeTop = changeTop >= 0 ? changeTop : 0;
         changeTop = changeTop <= slideBarYHeight - sliderY.height() ? changeTop : slideBarYHeight - sliderY.height();
@@ -199,7 +188,9 @@ ScrollBar.prototype = {
             changeLeft = changeLeft <= slideBarXWidth - sliderX.width() ? changeLeft : slideBarXWidth - sliderX.width();
 
             //内容偏移
-            var contentLeft = -changeLeft * this.rateX * scrollWrap.innerWidth() / slideBarXWidth;
+            var contentLeft = -changeLeft * rateX * scrollWrap.innerWidth() / slideBarXWidth;
+        }else{
+            var contentLeft = 0;
         }
 
         if (animateFlag) {
@@ -214,7 +205,6 @@ ScrollBar.prototype = {
             }
         }
 
-
         this.goFn(sliderY,changeTop,0);
         if(hasX){
             this.goFn(sliderX,0,changeLeft);
@@ -222,3 +212,47 @@ ScrollBar.prototype = {
         this.goFn(scrollCtx,contentTop,contentLeft);
     }
 }
+
+function AutoScroll(ele,x){
+    var hasX = (typeof x== "boolean" && x==true)||x=="true";//是否需要x轴
+    /*获取对象*/
+    var that = ele.css({"position":"relative","overflow":"hidden"});
+    var scrollWrap = that;//包含着滚动条的块
+    var scrollCtx = that.find(".scrollCtx").eq(0);//滚动主体
+    // y轴的
+    if(scrollWrap.find(".slideBarY").size()>0){
+        var slideBarY = scrollWrap.find(".slideBarY");//为了重新建滚动，比如内容改变的时候
+    }else{
+        var slideBarY = $('<div class="slideBarY"><div class="sliderY"></div></div>');
+        slideBarY.appendTo(scrollWrap);
+    }
+    var sliderY = slideBarY.find(".sliderY");
+
+    if(hasX){
+        // x轴的
+        if(scrollWrap.find(".slideBarX").size()>0){
+            var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
+        }else{
+            var slideBarX = $('<div class="slideBarX"><div class="sliderX"></div></div>');
+            slideBarX.appendTo(scrollWrap);
+        }
+        var sliderX = slideBarX.find(".sliderX");
+        var slideBarXWidth = slideBarX.width() - slideBarY.width();
+    }
+    /*获取实际可滚动长度*/
+    var slideBarYHeight = hasX ? slideBarY.height() - slideBarX.height() : slideBarY.height();
+
+    var option = {
+        "scrollWrap":scrollWrap,
+        "scrollCtx":scrollCtx,
+        "slideBarY":slideBarY,
+        "sliderY":sliderY,
+        "slideBarX":hasX ? slideBarX : null,
+        "sliderX":hasX ? sliderX : null,
+        "slideBarYHeight":slideBarYHeight,
+        "slideBarXWidth": hasX ? slideBarXWidth : null,
+    }
+    this.init(option);
+}
+AutoScroll.prototype = new ScrollBar();//AutoScroll继承于ScrollBar
+AutoScroll.prototype.constructor = AutoScroll;//将AutoScroll的constructor指向为AutoScroll，因为上面重写了
