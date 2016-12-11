@@ -11,6 +11,19 @@
  *   所以就改成下面那样需要判断option
  */
 
+/*
+ * option = {
+ *      "scrollWrap":包裹着滚动内容的jq对象（必须）,
+ *      "scrollCtx":滚动内容的jq对象（必须）,
+ *      "slideBarY":Y轴滚动条的jq对象（必须）,
+ *      "sliderY":Y轴滚动滑块的jq对象（必须）,
+ *      "slideBarX":X轴滚动条的jq对象（可选）,
+ *      "sliderX":X轴滚动滑块的jq对象（可选）,
+ *      "slideBarYHeight":Y轴滚动条实际可以滚动的区域的高度（可选，默认是Y轴滚动条的高度；是因为有些时候滑块不是整条滚动条的区域都是可以去的，比如与横向滚动条交界处就不能；甚至有些时候就想它只有80%的位置可以滚动）,
+ *      "slideBarXWidth": X轴滚动条实际可以滚动的区域的高度（可选，默认是X轴滚动条的宽度；理由同上），
+ * }
+ */
+
 function ScrollBar(option){
     this.name = "一个ScrollBar的实例";
     if(option){
@@ -252,7 +265,16 @@ function AutoScroll(ele,x){
         "slideBarYHeight":slideBarYHeight,
         "slideBarXWidth": hasX ? slideBarXWidth : null,
     }
-    this.init(option);
+    /*
+     *  调用方式1 直接实例化，但是这样AutoScroll的实例就会没有任何属性方法，所以AutoScroll的调用用new AutoScroll() 和直接 AutoScroll()是没有区别的
+     */
+    // new ScrollBar(option)//调用方式1 代码
+
+
+    /*
+     *  调用方式二，用AutoScroll继承于ScrollBar
+     */
+    this.init(option);//调用方式二 代码
 }
-AutoScroll.prototype = new ScrollBar();//AutoScroll继承于ScrollBar
-AutoScroll.prototype.constructor = AutoScroll;//将AutoScroll的constructor指向为AutoScroll，因为上面重写了
+AutoScroll.prototype = new ScrollBar();//调用方式二 代码；AutoScroll继承于ScrollBar
+AutoScroll.prototype.constructor = AutoScroll;//调用方式二 代码；将AutoScroll的constructor指向为AutoScroll，因为上面重写了
