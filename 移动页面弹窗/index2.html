@@ -1,4 +1,4 @@
-<!-- 
+<!--
 	****
 	这个方法是用跳转去看图片，返回的时候利用localStorage记录的数据去判断弹窗是否出现，
 	读取localStorage保存的弹窗内容
@@ -31,26 +31,26 @@
 				opacity: 0;
 				/*先不显示内容，等判断好localStorage之后，用js恢复为1*/
 			}
-			
+
 			a {
 				text-decoration: none;
 				color: inherit;
 			}
-			
+
 			.wrap {
 				box-sizing: border-box;
 				width: 100%;
 				/*fixed的时候*/
 				padding: 12px;
 			}
-			
+
 			.head h1 {
 				float: left;
 				padding:5px 0 0 0;
 				font: 700 1rem "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
 				;
 			}
-			
+
 			.head a {
 				float: right;
 				padding: 3px 5px 1px;
@@ -58,7 +58,7 @@
 				border-radius: 5px;
 				color: #57B4F0;
 			}
-			
+
 			.head a:after {
 				content: '';
 				position: relative;
@@ -70,58 +70,58 @@
 				margin: -3px 0 0 0;
 				background: #000 center/contain no-repeat;
 			}
-			
+
 			.main {
 				color: #555;
 			}
-			
+
 			.main .top {
 				padding: 8px 12px;
 				margin: 15px -6px 10px;
 				background: #ebebeb;
 			}
-			
+
 			.main .top span:first-of-type {
 				float: left;
 			}
-			
+
 			.main .top span:last-of-type {
 				float: right;
 			}
-			
+
 			.ivo-list {
 				display: table;
 				width: 100%;
 			}
-			
+
 			.ivo-item {
 				display: table-row;
 			}
-			
+
 			.ivo-item:active {
 				background: #f0f0f0;
 			}
-			
+
 			.ivo-item span {
 				display: table-cell;
 				padding: 8px 0;
 				border-bottom: 1px solid #ccc;
 				vertical-align: middle;
 			}
-			
+
 			.ivo-item span:nth-of-type(1) {}
-			
+
 			.ivo-item span:nth-of-type(2) {
 				width: 5rem;
 				text-align: center;
 			}
-			
+
 			.ivo-item span:nth-of-type(3) {
 				width: 0.5rem;
 				background: #000 center/0.5rem no-repeat;
 			}
 			/*弹窗*/
-			
+
 			.floating {
 				display: none;
 				position: fixed;
@@ -138,7 +138,7 @@
 			.floating.in{
 				opacity:1;
 			}
-			
+
 			.f-main {
 				box-sizing: border-box;
 				position: absolute;
@@ -160,14 +160,14 @@
 				transform: scale(1);
 				opacity: 1;
 			}
-			
+
 			.f-wrap {
 				box-sizing: border-box;
 				height: 100%;
 				overflow: auto;
 				padding:0 0 20px 0;
 			}
-			
+
 			.f-wrap h2 {
 				margin: 5px 12px 10px;
 				font-size: 1rem;
@@ -175,30 +175,30 @@
 				text-align: center;
 				color: #666;
 			}
-			
+
 			.f-wrap ul {
 				display: table;
 				width: 100%;
 			}
-			
+
 			.f-wrap li {
 				display: table-row;
 			}
-			
+
 			.f-wrap span {
 				display: table-cell;
 				padding: 8px 0;
 				vertical-align: middle;
 			}
-			
+
 			.f-wrap span:nth-of-type(1) {
 				width: 42%;
 			}
-			
+
 			.f-wrap span:nth-of-type(2) {
 				text-align: right;
 			}
-			
+
 			.f-a {
 				display: block;
 				margin: 15px 0 20px;
@@ -206,16 +206,16 @@
 				color: #57B4F0;
 				font-size: 0.9rem;
 			}
-			
+
 			.f-a:active {
 				text-decoration: underline;
 			}
-			
+
 			.f-btn {
 				padding: 0 2rem;
 				color: #fff;
 			}
-			
+
 			.f-btn a {
 				width: 45%;
 				padding: 8px 0;
@@ -223,21 +223,21 @@
 				text-align: center;
 				font-size: 1.2rem;
 			}
-			
+
 			.f-btn a:nth-of-type(1) {
 				float: left;
 				background: #2DA1F7;
 			}
-			
+
 			.f-btn a:nth-of-type(1):active {
 				background: #1b8ee2;
 			}
-			
+
 			.f-btn a:nth-of-type(2) {
 				float: right;
 				background: #E84B4C;
 			}
-			
+
 			.f-btn a:nth-of-type(2):active {
 				background: #ad3030;
 			}
@@ -266,7 +266,7 @@
 				vertical-align: middle;
 			}
 		</style>
-		
+
 		<script type="text/javascript">
 			$(function() {
 				var f = {};//floating 悬浮窗
@@ -305,7 +305,7 @@
 					setTimeout(function(){
 						f.fl.addClass("in");
 						f.main.addClass("in");
-					})
+					},16.7)
 					f.top = $("body").scrollTop();
 					f.wrap.css({
 						"position": "fixed",
@@ -749,7 +749,7 @@
 						<span>待审核</span>
 						<span></span>
 					</a>
-					<a class="ivo-item" 
+					<a class="ivo-item"
 						data-taxR = "6354654654652"
 						data-bankN = "广发银行2"
 						data-bankA = "392000100100594022"
