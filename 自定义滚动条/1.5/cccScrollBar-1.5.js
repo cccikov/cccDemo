@@ -232,6 +232,7 @@ ScrollBar.prototype = {
 
 //懒人版滚动条，只需要传入包裹滚动条的jq对象，和是否要x轴（ture，false）就可以了；滚动块的class名必须含有scrollCtx，以及要引用相应的css文件
 function AutoScroll(ele,x){
+    console.log(this);
     var hasX = (typeof x== "boolean" && x==true)||x=="true";//是否需要x轴
     /*获取对象*/
     var that = ele.css({"position":"relative","overflow":"hidden"});
@@ -279,7 +280,7 @@ function AutoScroll(ele,x){
     /*
      *  调用方式二，用AutoScroll继承于ScrollBar
      */
-    this.init(option);//调用方式二 代码
+    this.init(option);//调用方式二 代码 虽然这个写在prototype的前面，但是由于页面调用AutoScroll函数的时候，已经把下面的代码读完了，所以是没有问题的
 }
 AutoScroll.prototype = new ScrollBar();//调用方式二 代码；AutoScroll继承于ScrollBar
 AutoScroll.prototype.constructor = AutoScroll;//调用方式二 代码；将AutoScroll的constructor指向为AutoScroll，因为上面重写了
