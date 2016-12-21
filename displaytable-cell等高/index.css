@@ -23,7 +23,8 @@
   /*重点*/
   height: 200px;
   background: #efefef;
-  vertical-align: middle;/*重点*/
+  vertical-align: middle;
+  /*重点*/
 }
 #demo3 {
   margin: 10px;
@@ -40,6 +41,29 @@
   /*重点*/
   width: 10000px;
   /*重点*/
+  height: 110px;
+  background: darkred;
+  text-align: right;
+}
+#demo3-1 {
+  display: table;
+  width: 100%;
+  margin: 10px 0;
+  color: #eee;
+}
+#demo3-1 .wrap {
+  display: table-row;
+}
+#demo3-1 .wrap .left {
+  display: table-cell;
+  width: 100px;
+  background: darkblue;
+  vertical-align: middle;
+  text-align: center;
+}
+#demo3-1 .wrap .right {
+  /*重点*/
+  display: table-cell;
   height: 110px;
   background: darkred;
   text-align: right;
@@ -80,4 +104,3 @@ table td {
   max-height: 128px;
   vertical-align: middle;
 }
-/*# sourceMappingURL=index.css.map */
