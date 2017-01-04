@@ -248,6 +248,7 @@ function AutoScroll(ele,x){
     var sliderY = slideBarY.find(".sliderY");
 
     if(hasX){
+        scrollCtx.addClass("hasX");
         // x轴的
         if(scrollWrap.find(".slideBarX").size()>0){
             var slideBarX = scrollWrap.find(".slideBarX");//为了重新建滚动，比如内容改变的时候
