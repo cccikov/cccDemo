@@ -1,7 +1,7 @@
 window.onload = function() {
     var map = new BMap.Map("map"); // 创建地图实例 map为地图所在div 的 id
     var point = new BMap.Point(113.115038, 22.991109); // 创建点坐标 坐标可通过百度api获取 http://api.map.baidu.com/lbsapi/getpoint/index.html
-    map.centerAndZoom("point",15); // 初始化地图，设置中心点坐标和地图级别
+    map.centerAndZoom(point,15); // 初始化地图，设置中心点坐标和地图级别
 
     /*缩放*/
     !function(){
