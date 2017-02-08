@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>三列布局中间自适应</title>
+    <style type="text/css">
+    .wrap {
+        /*overflow: hidden;*/
+    }
+
+    .left {
+        width: 200px;
+        height: 300px;
+        float: left;
+        background-color: red;
+    }
+
+    .right {
+        width: 300px;
+        height: 300px;
+        float: right;
+        background-color: blue;
+    }
+
+    .middle {
+        height: 300px;
+        background-color: yellow;
+        overflow: hidden;
+        /* 如果不加这个 left right只是浮在middle上面而不是并排在一起*/
+        margin-right: 300px;
+        /*margin-left/right 加不加都无所谓，因为上面已经有overflow触发了BFC */
+    }
+    .top{
+    	height:100px;
+    	background: #8cc588;
+    }
+    .bottom{
+    	height:100px;
+    	background: #fb27fb;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="top"></div>
+    <div class="wrap">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="middle">/*这里顺序好重要如果Middle在right之前那么right就会被Middle挤下去因为middle没有浮动，独占一行就算设置margin也是独占一行只是块的宽度变窄了而已*/</div>
+    </div>
+    <div class="bottom"></div>
+</body>
+
+</html>
