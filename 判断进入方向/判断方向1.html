@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>判断进入方向</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    #wrap {
+        width: 300px;
+        height: 250px;
+        background: #f00;
+        margin: 100px;
+    }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $("#wrap").bind("mouseenter mouseleave", function(e) {
+            var w = $(this).width();
+            var h = $(this).height();
+            var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1); //按比例转为正方形后的x坐标
+            var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1); //按比例转为正方形后的一坐标
+
+            // Math.atan2(y, x) 返回值 : -PI 到 PI 之间的值(可以取PI)，是从 X 轴正向逆时针旋转到点 (x,y) 时经过的角度。
+            //Math.round()四舍五入
+
+            var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4; //direction的值为“0,1,2,3”分别对应着“上，右，下，左”
+            /*
+                (Math.atan2(y, x) 从 X 轴正向逆时针旋转到点 (x,y) 时经过的角度(弧度制) (-π,π]
+                Math.atan2()本来是数学方法 数学上y轴是向上的,所以取值:
+                                π/2
+                        π(-π)           0
+                               -π/2
+                但是由于html里面好多情况y轴是向下的,所以取值(反过来):
+                               -π/2
+                        π(-π)           0
+                                π/2
+
+
+                (((Math.atan2(y, x) * (180 / Math.PI)) 角度由弧度转为角度 结果范围 (-180,180]
+                (((Math.atan2(y, x) * (180 / Math.PI)) + 180   将范围变成 (0,360]
+                (((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90)  范围 (0,4]
+            */
+            var eventType = e.type;
+            var dirName = new Array('上方', '右侧', '下方', '左侧');
+            if (e.type == 'mouseenter') {
+                $("#result").html(dirName[direction] + '进入');
+            } else {
+                $('#result').html(dirName[direction] + '离开');
+            }
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="wrap"></div>
+    <div id="result"></div>
+</body>
+
+</html>
