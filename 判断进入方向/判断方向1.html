@@ -23,6 +23,15 @@
         $("#wrap").bind("mouseenter mouseleave", function(e) {
             var w = $(this).width();
             var h = $(this).height();
+
+            /*
+                假设以元素的中心做坐标原点
+
+                进入元素时x坐标为e.pageX - this.offsetLeft - (w / 2)
+                假如宽比高大,转为正方形时,新的宽为h
+                实际坐标/转化坐标 = w/h; 转化坐标 = h/w*实际坐标;
+
+            */
             var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1); //按比例转为正方形后的x坐标
             var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1); //按比例转为正方形后的一坐标
 
