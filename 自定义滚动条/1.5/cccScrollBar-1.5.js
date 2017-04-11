@@ -282,6 +282,7 @@ function AutoScroll(ele,x){
      *  调用方式二，用AutoScroll继承于ScrollBar
      */
     this.init(option);//调用方式二 代码 虽然这个写在prototype的前面，但是由于页面调用AutoScroll函数的时候，已经把下面的代码读完了，所以是没有问题的
+                      // 因为创建实例是在继承后面，所以实例是会有init方法
 }
 AutoScroll.prototype = new ScrollBar();//调用方式二 代码；AutoScroll继承于ScrollBar
 AutoScroll.prototype.constructor = AutoScroll;//调用方式二 代码；将AutoScroll的constructor指向为AutoScroll，因为上面重写了
