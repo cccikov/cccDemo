@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>直线运动</title>
+    <title>抛物线运动</title>
     <style type="text/css">
     * {
         padding: 0;
@@ -91,6 +91,7 @@
         var v0 = that.v0;
         var t = t || 0; //t = 0;从零开始
 
+        that.pause(that.timer);//把之前的先停止了
         that.timer = window.requestAnimationFrame(move);
 
         function move() {
