@@ -9,7 +9,7 @@
 
     曲线的极坐标参数方程ρ=f(t),θ=g(t）。
 
-    圆的参数方程 x=a+r cosθ y=b+r sinθ（θ∈ [0，2π) ） (a,b) 为圆心坐标，r 为圆半径，θ 为参数，(x,y) 为经过点的坐标
+    圆的参数方程 x=a+r*cosθ y=b+r*sinθ（θ∈ [0，2π) ） (a,b) 为圆心坐标，r 为圆半径，θ 为参数，(x,y) 为经过点的坐标
 
     椭圆的参数方程 x=a cosθ　 y=b sinθ（θ∈[0，2π）） a为长半轴长 b为短半轴长 θ为参数
 
@@ -38,3 +38,37 @@
     上开口抛物线：x2=2py
     下开口抛物线：x2=-2py
     [p为焦准距（p>0）]
+
+
+分析
+    函数
+        y = ax + b      一次函数
+        y = ax² + bx + c     二次函数
+
+        函数以x为横坐标，y为纵坐标作为坐标系作图
+        一次函数        直线
+        二次函数       抛物线
+        但是，这里面x是自变量，y是因变量，图像是为了更加直观地观察变化
+
+        如 v = at，
+           s = vt 是一次函数
+           s = 1/2at² + vt 是二次函数
+
+           图像可以看出变化
+           s = vt，s = 1/2at² + vt 斜率可以看出速度的大小
+           v = at + v0，曲线与x轴形成的面积，就是路程
+
+    参数方程
+        而描述轨迹的方程，如参数方程，曲线方程。自变量是参数，x、y都是因变量。
+        定义：
+            在确定的坐标系中，如果曲线上任意一点的坐标x、y都是某个变量t的函数，即y = f(t),x = g(t);
+
+
+    inner.style.left = change * t / maxT + start
+    s = vt + s0
+        当 t = maxT 的时候，s = change + start = v*maxT + start ; 得到 v = change/maxT * t + start
+
+    y = t*t*(change/maxT/maxT-v0/maxT) + v0*t + start;
+        同理 s = 1/2at² + vt + s0
+            c + start = 1/2a*maxT² + v*maxT + start就可以求出 a = 2*(change/maxT/maxT-v0/maxT)
+                                                                v = at + v0 ，v0 = -at，t=-v0/a
