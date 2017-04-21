@@ -71,21 +71,21 @@
         });
 
         $("#restart2").on("click", function() {
-            $("#startPause").addClass("active").html("暂停");
+            $("#startPause2").addClass("active").html("暂停2");
             point2.go(null, function() {
-                $("#startPause").removeClass("active").html("开始");
+                $("#startPause2").removeClass("active").html("开始2");
                 point2.t = 0;
             });
         });
         $("#startPause2").on("click", function() {
             var that = $(this);
             if (that.is(".active")) {
-                $("#startPause").removeClass("active").html("开始");
+                $("#startPause2").removeClass("active").html("开始2");
                 point2.pause(point2.timer);
             } else {
-                $("#startPause").addClass("active").html("暂停");
+                $("#startPause2").addClass("active").html("暂停2");
                 point2.go(point2.t, function() {
-                    $("#startPause").removeClass("active").html("开始");
+                    $("#startPause2").removeClass("active").html("开始2");
                     point2.t = 0;
                 });
             }
