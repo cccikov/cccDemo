@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>抛物线运动</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    #point {
+        position: fixed;
+        top: 200px;
+        left: 100px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: red;
+    }
+
+    #point2 {
+        position: fixed;
+        top: 300px;
+        left: 100px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: green;
+    }
+    </style>
+    <script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/tween.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var option = {
+            "ele": $("#point")[0], //元素
+            "change": [200, 500], //结束坐标
+            "maxTime": 35, //帧数，会影响形状
+            "v0": -20, //初速度，会影响形状,
+            "auto": false,
+        }
+        var point = new MotionGpu(option);
+
+        $("#select").on("change",function(){
+            point.tween = this.value;
+        });
+
+        $("#restart").on("click", function() {
+            $("#startPause").addClass("active").html("暂停");
+            point.go(null, function() {
+                $("#startPause").removeClass("active").html("开始");
+                point.t = 0;
+            });
+        });
+        $("#startPause").on("click", function() {
+            var that = $(this);
+            if (that.is(".active")) {
+                $("#startPause").removeClass("active").html("开始");
+                point.pause(point.timer);
+            } else {
+                $("#startPause").addClass("active").html("暂停");
+                point.go(point.t, function() {
+                    $("#startPause").removeClass("active").html("开始");
+                    point.t = 0;
+                });
+            }
+        });
+    });
+
+
+
+    function MotionGpu(option) { //抛物线运动构造函数
+        /*var option = {
+            "ele":$("#point"),//元素
+            "change":[200,600],//变化值
+            "maxTime":50,//帧数，会影响形状
+            "v0":-50,//初速度，会影响形状
+            "auto":true//自动开始
+        }*/
+        this._init(option);
+    }
+    MotionGpu.prototype = {
+        "constructor": MotionGpu,
+        _init: function(option) { //_init私有函数
+            this.ele = option.ele;
+            this.maxTime = option.maxTime;
+            this.v0 = option.v0;
+            this.change = option.change;
+            this.t = 0;
+            this.tween = option.tween || "Linear";
+            if (option.auto) {
+                this.go();
+            }
+        },
+        event: function(x, y) { //定时器运作期间执行操作
+            this.ele.style.transform = "translate(" + x + "px," + y + "px)";
+        },
+        pause: function(timer) { //暂停函数，timer为定时器ID
+            window.cancelAnimationFrame(timer);
+        },
+        go: function(t, endfn) { //t为运动开始帧数（默认为0），endfn运动完回调函数
+            var that = this;
+            var change = that.change;
+            var maxTime = that.maxTime;
+            var v0 = that.v0;
+            var t = t || 0; //t = 0;从零开始
+            var time = 0;
+
+            // 常理来说，这个放进move判断都可以，但是由于这个方法从go函数执行的时候就可以确定了，所以就放出来；而且move会重复多次执行，每次判断，可能会影响影响性能。
+            this.tweenFn = this.tween == "Linear" ? Tween.Linear : Tween[this.tween].easeIn;
+
+            that.pause(that.timer); //把之前的先停止了
+            that.timer = window.requestAnimationFrame(move);
+
+            function move() {
+                t += 1;
+                that.t = t;
+
+                // time = t;//以前就相当于这样，time的变化是均匀的。
+                time = that.tweenFn(t, 0, maxTime, 40); //现在time是变化的，相当于看视频，是以倍数去观看。
+
+                that.x = change[0] * time / maxTime;
+                that.y = time * time * (change[1] / maxTime / maxTime - v0 / maxTime) + v0 * time;
+                that.event(that.x, that.y);
+                that.timer = window.requestAnimationFrame(move);
+                if (time >= maxTime) {
+                    that.pause(that.timer);
+                    if (endfn) {
+                        endfn();
+                    }
+                }
+            }
+        }
+    }
+    var str = ""
+    for (var i in Tween) {
+        console.log(i);
+        str += i + " ";
+    }
+    console.log(str);
+    </script>
+</head>
+
+<body>
+    <div id="point"></div>
+    <button id="restart">重新开始</button>
+    <button id="startPause">开始</button>
+    <select id="select">
+        <option value="Linear">Linear</option>
+        <option value="Quad">Quad</option>
+        <option value="Cubic">Cubic</option>
+        <option value="Quart">Quart</option>
+        <option value="Quint">Quint</option>
+        <option value="Sine">Sine</option>
+        <option value="Expo">Expo</option>
+        <option value="Circ">Circ</option>
+        <option value="Elastic">Elastic</option>
+        <option value="Back">Back</option>
+        <option value="Bounce">Bounce</option>
+    </select>
+</body>
+
+</html>
