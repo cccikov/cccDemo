@@ -1,7 +1,7 @@
 $(function() {
     loadImg(function() {
         let data = getImgData();
-        layout(data,true);
+        layout(data, true);
     });
 });
 
@@ -47,28 +47,41 @@ function getImgData() {
  * @param  {arr} data 获取的图片信息
  * @param  {Boolean} bool 是否再次布局
  */
-function layout(data,bool) {
+function layout(data, bool) {
     let arr = [];
     for (let i = 0, len = data.length; i < len; i++) {
         arr.push(data[i].mul);
     }
 
-    let allMul = 0;
-    for (let i = 0, len = arr.length; i < len; i++) {
-        allMul += arr[i];
-    }
+    let contentWidth = $(".content").width();// 获取大容器宽度,会影响每排多少个图片
+    let groupArr = group(arr, 6);//将数据分组
 
-    let contentWidth = $(".content").width();
-    let len = arr.length;
-    let h = count(allMul, len, contentWidth);
-    $(".img-wrap").height(h);
+    column();//进行每排布局
 
     bool = bool || false;
-    if(bool){//由于有些情况是布局前会出现滚动条,而布局后,会没了滚动条,容器宽度就会有所变化,所以根据需求是否再次布局
-        contentWidth = $(".content").width();
-        h = count(allMul, len, contentWidth);
-        $(".img-wrap").height(h);
+    if (bool) { //由于有些情况是布局前会出现滚动条,而布局后,会没了滚动条,容器宽度就会有所变化,所以根据需求是否再次布局
+        column();
     }
+
+    function column() { //每排布局
+        let beginIndex = 0;//开始下标 每排分别对应总图片的第几个开始
+        let lastIndex = 0;//结束下标 每排分别对应总图片的第几个结束
+        let columnMul,h,dataLen;//每排总宽度倍数,每排高度,每排图片数
+
+        for (let i = 0, len = groupArr.length; i < len; i++) {//循环中的每次就是一组,就是一排
+            columnMul = 0;//每排总宽度倍数归0
+            dataLen = groupArr[i].length;//图片数更新
+            lastIndex = beginIndex + dataLen//结束下标 = 开始下标 + 长度
+            for (let j = 0; j < dataLen; j++) {
+                columnMul += groupArr[i][j];
+            }
+
+            h = count(columnMul, dataLen, contentWidth);//计算每排高度
+            $(".img-wrap").slice(beginIndex,lastIndex).height(h);//找出每排图片,设置高度
+            beginIndex = lastIndex;//这一组的结束下标 , 就是下一组的开始下标
+        }
+    }
+
 }
 
 /**
@@ -80,4 +93,33 @@ function layout(data,bool) {
  */
 function count(mul, len, contentWidth) {
     return (contentWidth - (len + 1) * 5) / mul; //一排图片的高度
+}
+
+/**
+ * 将数据进行分组 每组数据总和不超过max
+ * @param  {obj} data 分组的数据
+ * @param  {num} max  每组数据最大的总和
+ * @return {arr}      分组好的数据
+ */
+function group(data, max) {
+    let mulArr = []; //这是一个记录排信息的数组,数组里面的内容还是数组
+    let columnMul = 0; //每排的总宽度
+    let firstIndex = 0; //mulArr一级下标
+    let secondIndex = 0; //mulArr二级下标
+
+    for (let i = 0, len = data.length; i < len; i++) {
+        columnMul += data[i]; //总宽度递加
+        if (columnMul > +max) { //如果一排总宽度大于6
+            columnMul -= data[i]; // 则把上面递加的减回来
+            columnMul = 0; // 把每排的总宽度归0,因为这已经是属于下一排的总宽度
+            secondIndex = 0; //mulArr二级下标归0
+            firstIndex++; //增加排数,所以mulArr二级下标+1
+        }
+        if (secondIndex == 0) { //如果二级下标为0的时候,表明mulArr[firstIndex]的类型还没有定义
+            mulArr[firstIndex] = []; //定义为数组
+        }
+        mulArr[firstIndex][secondIndex] = data[i]; //放入数据
+        secondIndex++;
+    }
+    return mulArr;
 }
