@@ -113,13 +113,12 @@ function group(data, max) {
 
     for (let i = 0, len = data.length; i < len; i++) {
         columnMul += data[i]; //总宽度递加
-        if (columnMul >= max) { //如果一排总宽度大于6
-            columnMul -= data[i]; // 则把上面递加的减回来
-            columnMul = 0; // 把每排的总宽度归0,因为这已经是属于下一排的总宽度
-            secondIndex = 0; //mulArr二级下标归0
+        if (columnMul >= max) { //如果一排总宽度大于最大值
+            columnMul = data[i]; // 如果加起来是大于最大值,那么data[i]应该就是属于下一组的了,所以columnMul = data[i]
             if (i != 0) { //这个做个判断,加入第一数据就超出了极限,那么下标就切换到下一排,就会导致第一组数据为空
                 firstIndex++; //切换到下一排,所以mulArr二级下标+1
             }
+            secondIndex = 0; //数据存储切到下一组,所以mulArr二级下标归0
         }
         if (secondIndex == 0) { //如果二级下标为0的时候,表明mulArr[firstIndex]的类型还没有定义
             mulArr[firstIndex] = []; //定义为数组
