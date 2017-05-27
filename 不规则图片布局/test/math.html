@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>算法测试</title>
+    <style>
+        P{
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    算法测试
+    <script type="text/javascript">
+    function random(max, min) {
+        return parseInt(Math.random() * (max - min + 1) + min)
+    }
+
+    function ran() {
+        return random(80, 250) / 100;
+    }
+
+    let arr = [];
+    for (let i = 0; i < 100; i++) {
+        arr.push(ran()); // 假设是100张图片的宽度
+    }
+    console.log(arr);
+
+    /**
+     * 将数据进行分组
+     * 每组数据不超过max
+     */
+    function group(max){
+        let mulArr = [];//这是一个记录排信息的数组,数组里面的内容还是数组
+        let columnMul = 0;//每排的总宽度
+        let firstIndex = 0;//mulArr一级下标
+        let secondIndex = 0;//mulArr二级下标
+
+        for(let i=0,len=arr.length;i<len;i++){
+            columnMul += arr[i];//总宽度递加
+            if(columnMul >+ max){//如果一排总宽度大于6
+                columnMul -= arr[i];// 则把上面递加的减回来
+                columnMul = 0;// 把每排的总宽度归0,因为这已经是属于下一排的总宽度
+                secondIndex = 0;//mulArr二级下标归0
+                firstIndex++;//增加排数,所以mulArr二级下标+1
+            }
+            if(secondIndex == 0){//如果二级下标为0的时候,表明mulArr[firstIndex]的类型还没有定义
+                mulArr[firstIndex] = [];//定义为数组
+            }
+            mulArr[firstIndex][secondIndex] = arr[i];//放入数据
+            secondIndex++;
+        }
+        return mulArr;
+    }
+    let mulArr = group(6);
+    console.log(mulArr);
+    for(let i=0,len=mulArr.length;i<len;i++){
+        document.body.innerHTML += "<p>" + JSON.stringify(mulArr[i]) + "</p>"
+    }
+
+
+    </script>
+</body>
+
+</html>
