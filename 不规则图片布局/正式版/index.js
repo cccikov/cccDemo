@@ -81,7 +81,7 @@ function layout(data, bool) {
             }
 
             h = count(columnMul, dataLen, contentWidth); //计算每排高度
-            $(".img-wrap").slice(beginIndex, lastIndex).height(h); //找出每排图片,设置高度
+            $(".img-wrap img").slice(beginIndex, lastIndex).height(h); //找出每排图片,设置高度
             beginIndex = lastIndex; //这一组的结束下标 , 就是下一组的开始下标
         }
     }
