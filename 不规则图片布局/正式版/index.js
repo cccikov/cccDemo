@@ -116,7 +116,7 @@ function group(data, max) {
         if (columnMul >= max) { //如果一排总宽度大于最大值
             columnMul = data[i]; // 如果加起来是大于最大值,那么data[i]应该就是属于下一组的了,所以columnMul = data[i]
             if (i != 0) { //这个做个判断,加入第一数据就超出了极限,那么下标就切换到下一排,就会导致第一组数据为空
-                firstIndex++; //切换到下一排,所以mulArr二级下标+1
+                firstIndex++; //切换到下一排,所以mulArr一级下标+1
             }
             secondIndex = 0; //数据存储切到下一组,所以mulArr二级下标归0
         }
