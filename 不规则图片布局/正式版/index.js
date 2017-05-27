@@ -1,7 +1,10 @@
 $(function() {
     loadImg(function() {
         let data = getImgData();
-        layout(data, true);
+        layout(data,true);
+        $(window).on("resize",function(){
+            layout(data);
+        });
     });
 });
 
@@ -54,7 +57,8 @@ function layout(data, bool) {
     }
 
     let contentWidth = $(".content").width();// 获取大容器宽度,会影响每排多少个图片
-    let groupArr = group(arr, 6);//将数据分组
+    let max = parseInt(contentWidth/200);//每张图片宽度200px;
+    let groupArr = group(arr, max);//将数据分组
 
     column();//进行每排布局
 
