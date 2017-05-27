@@ -1,0 +1,23 @@
+*{
+    padding:0;
+    margin:0;
+}
+.content{
+    padding: 5px 0 0 0;//本来这里padding-right应该5px才对,但是由于图片有些太后面的小数点会忽略,所以图片实际的计算宽度会小一点,所以padding-right就不用设置了
+    margin:10px;
+    // border: 1px solid #eee;
+    list-style: none;
+    &:after{
+        content:"";
+        display:block;
+        clear:both;
+    }
+    .img-wrap{
+        float: left;
+        margin: 0 0 5px 5px;
+        img{
+            display: block;
+            height:100%;
+        }
+    }
+}
