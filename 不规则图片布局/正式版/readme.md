@@ -9,3 +9,5 @@ readme
 * 多排
 
 math.html文字是测试一个算法
+
+index2.js 是在 index1.js 的基础进行改进,减少for循环次数

@@ -9,6 +9,16 @@ $(function() {
 });
 
 /**
+ * 函数之间的调用关系
+ * loadImg
+ *     getImgData
+ *     layout
+ *         group
+ *         count
+ *         column
+ */
+
+/**
  * 检测是否全部图片load完
  * @param  {Function} callback load完的回调
  */
