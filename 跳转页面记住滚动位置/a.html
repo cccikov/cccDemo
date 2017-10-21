@@ -1,104 +1,123 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>页面a</title>
-		<style type="text/css">
-			a{
-				display: block;
-				padding:0 12px;
-				margin:20px 0;
-			}
-		</style>
-		<script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/ccc.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			$(function(){
-				function setTop(top){
-					ccc.setStorage("atop",top);
-				}
-				function getTop(){
-					return ccc.getStorage("atop");
-				}
 
-				$("body").scrollTop(getTop());
+<head>
+    <meta charset="UTF-8">
+    <title>页面a</title>
+    <style type="text/css">
+    a {
+        display: block;
+        padding: 0 12px;
+        margin: 20px 0;
+    }
+    </style>
+    <script src="../js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/ccc.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    function getScrollTop() {
+        return document.documentElement.scrollTop || document.body.scrollTop;
+    }
 
-				$("a").on("touchstart mousedown",function(e){
-					e.preventDefault();
+    function setScrollTop(top) {
+    	console.log(top);
+        document.documentElement.scrollTop = document.body.scrollTop = top;
+        setTimeout(function() { // 虽然是在window.onload里面 , 但是有时页面进入的时候 , 还是设置不成功 , 初步猜测 , 可能是页面虽然加载好 , 但是还没有渲染完成, 还没有滚动条 , 所以设置失败
+            if (getScrollTop() != top) { // 判断是否设置值 , 不是的话重新设置
+                console.log("执行");
+                setScrollTop(top);
+            }
+        }, 16.7); // 经过试验 其实定时器时间设为1都也只是执行一次
+    }
 
-					setTop($("body").scrollTop());
-					window.location.href = $(this).attr("href");
-				});
-			});
-		</script>
-	</head>
-	<body>
-		<div id="wrap">
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-			<a href="b.html">跳转到页面b</a>
-		</div>
-	</body>
+    $(function() {
+        function setTop(top) {
+            ccc.setStorage("atop", top);
+        }
+
+        function getTop() {
+            return ccc.getStorage("atop");
+        }
+
+        setScrollTop(getTop());
+
+        $("a").on("touchstart mousedown", function(e) {
+            e.preventDefault();
+
+            setTop(getScrollTop());
+            window.location.href = $(this).attr("href");
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+        <a href="b.html">跳转到页面b</a>
+    </div>
+</body>
+
 </html>
