@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>检测css是否已经加载并且渲染完毕</title>
+</head>
+
+<body>
+    <div id="wrap">
+        <p>在控制台设置了限制网速在20k/s的时候</p>
+        <img src="loadcss.png">
+        <img src="loadcss (2).png">
+
+
+        <!-- 标记元素 -->
+        <span id="loadcssdom"></span>
+    </div>
+    <script type="text/javascript">
+    /* 其实一般来说js应该放在css后面 , 因为如果js先加载 , 有可能造成一些数据获取不正确 */
+    /* 这里是为了让检测效果更明显 */
+    function hadLoadCss(cb) {
+        var loadcssdom = document.getElementById("loadcssdom"); // 这是使用的标记元素 , 还可以采用自己想要检测是否渲染成功的元素 , 在if里面判断渲染成功的样式
+        console.log(loadcssdom.offsetHeight);
+        if (loadcssdom.offsetHeight != 1) {
+            setTimeout(function() {
+                hadLoadCss(cb);
+            }, 16.7);
+        } else {
+            cb && cb();
+        }
+    }
+    window.addEventListener("DOMContentLoaded", function() {
+        hadLoadCss(function() {
+            console.log("css加载完成");
+            document.body.innerHTML += "<p>css加载完毕</p>"
+        });
+    }, false);
+    </script>
+    <link rel="stylesheet" type="text/css" href="load.css">
+</body>
+
+</html>
