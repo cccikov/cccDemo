@@ -27,7 +27,6 @@
 </head>
 
 <body>
-
     <div id="wrap">
         <div class="content"></div>
         <div id="mark"></div>
@@ -48,58 +47,16 @@
 
             var screenPosi; // 指定视口位置
             // 等式 scrollTop + screenPosi == eleTop; 相等的时候元素就出现在屏幕视口位置;
-
-            // 或者
             var eleScreenPosi = eleTop - scrollTop; // 元素相对于视口位置
             // 当 eleScreenPosi == screenPosi 的时候元素就出现在屏幕视口位置
 
 
-            // 元素出现视口顶部时 , 位置为0
-            if (scrollTop + 0 == eleTop) { // 由于scrollTop变化通常不是1个像素变化 , 所以我们可以改变一下写法 可改写为 (eleTop) - (scrollTop + 0) == 0
-                console.log("元素在视口顶部");
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-            // 元素出现视口顶部时 , 位置为0
-            if (Math.abs((eleTop) - (scrollTop + 0)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口顶部");
-            }
-
-
-            // 元素出现视口底部时 , 位置为screenHeight
-            if (Math.abs((eleTop) - (scrollTop + screenHeight)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口底部");
-            }
-
-
-            // 元素出现视口中部时 , 位置为screenHeight/2
-            if (Math.abs((eleTop) - (scrollTop + screenHeight / 2)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口中部");
-            }
-
-
-
-
-
-
-
-
-
-
-
-            console.log(eleScreenPosi);
             /*随着滚动条往下滚动 , scrollTop在增大 , eleScreenPosi在减少 , screenPosi不变 , 所以总有eleScreenPosi == screenPosi的时候*/
 
+            // 但是我们通常的需求是过了之后 , 不是等于 所以一般触发事件都是 eleScreenPosi == screenPosi
+            if (eleScreenPosi < screenHeight) {
+                console.log("元素过了底部", "一般执行加载更多数据");
+            }
         }, false);
     </script>
 </body>

@@ -20,14 +20,14 @@
         }
 
         #mark {
-            height: 0px;
+            height: 300px;
+            margin: 0 20px;
             outline: 1px solid #f00;
         }
     </style>
 </head>
 
 <body>
-
     <div id="wrap">
         <div class="content"></div>
         <div id="mark"></div>
@@ -45,61 +45,33 @@
             var scrollTop = getScrollTop(); // 滚动条高度
             var screenHeight = document.documentElement.clientHeight; // 浏览器视口的高度
             var eleTop = document.getElementById("mark").offsetTop; // 元素距离页面顶部的高度
+            var eleHeight = document.getElementById("mark").offsetHeight; // 元素高度
 
             var screenPosi; // 指定视口位置
             // 等式 scrollTop + screenPosi == eleTop; 相等的时候元素就出现在屏幕视口位置;
-
-            // 或者
             var eleScreenPosi = eleTop - scrollTop; // 元素相对于视口位置
             // 当 eleScreenPosi == screenPosi 的时候元素就出现在屏幕视口位置
 
 
-            // 元素出现视口顶部时 , 位置为0
-            if (scrollTop + 0 == eleTop) { // 由于scrollTop变化通常不是1个像素变化 , 所以我们可以改变一下写法 可改写为 (eleTop) - (scrollTop + 0) == 0
-                console.log("元素在视口顶部");
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-            // 元素出现视口顶部时 , 位置为0
-            if (Math.abs((eleTop) - (scrollTop + 0)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口顶部");
-            }
-
-
-            // 元素出现视口底部时 , 位置为screenHeight
-            if (Math.abs((eleTop) - (scrollTop + screenHeight)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口底部");
-            }
-
-
-            // 元素出现视口中部时 , 位置为screenHeight/2
-            if (Math.abs((eleTop) - (scrollTop + screenHeight / 2)) < 10) { // 在上下10px左右都算
-                console.log("元素在视口中部");
-            }
-
-
-
-
-
-
-
-
-
-
-
-            console.log(eleScreenPosi);
             /*随着滚动条往下滚动 , scrollTop在增大 , eleScreenPosi在减少 , screenPosi不变 , 所以总有eleScreenPosi == screenPosi的时候*/
 
+            // 但是我们通常的需求是过了之后 , 不是等于 所以一般触发事件都是 eleScreenPosi == screenPosi
+            // 之前高度为 0 , 但是元素都有高度 , 所以实际的screenPosi位置是 screenHeight - eleHeight
+            if (eleScreenPosi < screenHeight - eleHeight) {
+                console.log("元素整个过了底部");
+            }
+
+
+            // 但是有时真的等到整个过了底部再去请求就有点迟 , 一般元素一出现就是触发
+            if (eleScreenPosi < screenHeight - 100) {
+                console.log("元素出现100px触发");
+            }
+
+
+            // 甚至可以一出现就出发
+            if (eleScreenPosi < screenHeight - 0) {
+                console.log("元素一出现就触发");
+            }
         }, false);
     </script>
 </body>
