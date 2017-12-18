@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>footer</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html {
+        /*height:100% 关键*/
+        height: 100%;
+        color: #666;
+    }
+
+    body {
+        /*position: relative;*/
+        position: relative;
+        /*min-height: 100%;关键*/
+        min-height: 100%;
+        background: #f0f0f0;
+    }
+
+    #nav {
+        line-height: 100px;
+        background: #fff;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        text-indent: 100px;
+    }
+
+    #main {
+        padding: 1px 0 100px;
+        margin: -1px 0 0;
+    }
+
+    .content {
+        width: 1000px;
+        padding: 12px;
+        margin: 20px auto;
+        background: #fff;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+    }
+
+    .content p {
+        height: 28px;
+        line-height: 28px;
+        transition: height 1s, line-height 1s;
+    }
+
+    .content:hover p {
+        height: 1080px;
+        line-height: 1080px;
+    }
+
+    #footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        /*absolute定位底下关键*/
+        width: 100%;
+        line-height: 100px;
+        text-indent: 100px;
+        background: #fff;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="nav">这是导航栏</div>
+        <div id="main">
+            <div class="content">
+                <p>footer 永远在内容底部 , 亲 , 鼠标移上来。</p>
+            </div>
+        </div>
+        <div id="footer">这是底部</div>
+    </div>
+</body>
+
+</html>
