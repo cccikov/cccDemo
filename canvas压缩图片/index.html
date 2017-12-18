@@ -54,23 +54,29 @@
                 img.src = result
 
                 // if image file size is not greater than 100 kb, upload it directly
+                // 如果图片小于100k，则直接输出，不经过压缩
                 if (result.length <= maxSize) {
                     img = null
-                    upload(result, file.type)
+                    // upload(result, file.type);
+                    showImg(result);
                     return
                 }
 
                 // compress image firstly after uploaded completely, and then upload it
-                if (img.complete) {
-                    callback()
+                // 如果图片大于100k，经过压缩后输出
+                if (img.complete) { // 对于 complete 属性来讲，IE是根据图片是否显示过来判断，就是说当加载的图片显示出来后，complete 属性的值才为 true ，否则一直是 false ，和以前是否加载 
+                    callback();
                 } else {
-                    img.onload = callback
+                    img.onload = callback; // 现代浏览器，img 加载好会触发onload事件
                 }
 
-                function callback() {
+                function callback() { // img 加载好callback
+                    console.dir(img);
+                    console.log(img.complete);
                     var data = compress(img)
-                    upload(data, file.type)
-                    img = null
+                    // upload(data, file.type);
+                    showImg(data);
+                    img = null; // 释放内存
                 }
             }
 
@@ -133,11 +139,49 @@
             return nData
         }
 
+        // 显示图片
+        function showImg(basestr) {
+            var fileWrapper = document.querySelector('.file-wrapper');
+            fileWrapper.style.backgroundImage = 'url(' + basestr + ')';
+            fileWrapper.classList.add('has-image');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // 图片上传，将base64的图片转成二进制对象，塞进formdata上传
         function upload(basestr, type) {
-            var fileWrapper = document.querySelector('.file-wrapper')
-            fileWrapper.style.backgroundImage = 'url(' + basestr + ')'
-            fileWrapper.classList.add('has-image')
+            var fileWrapper = document.querySelector('.file-wrapper');
+            fileWrapper.style.backgroundImage = 'url(' + basestr + ')';
+            fileWrapper.classList.add('has-image');
+
             // 去除mime type，atob() 函数用来解码一个已经被base-64编码过的数据
             var text = window.atob(basestr.split(',')[1])
             var buffer = new Uint8Array(text.length)
