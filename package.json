@@ -1,0 +1,21 @@
+{
+  "name": "cccdemo",
+  "version": "0.0.1",
+  "description": "cccDemo",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cccikov/cccDemo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cccikov/cccDemo/issues"
+  },
+  "homepage": "https://github.com/cccikov/cccDemo#readme"
+}
