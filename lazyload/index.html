@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>懒加载</title>
+    <style type="text/css">
+    p {
+        width: 600px;
+        margin: 10px auto;
+    }
+
+    p img {
+        position: relative;
+        display: block;
+        max-width: 100%;
+        min-height: 400px;
+    }
+
+    p img:before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #f0f0f0;
+    }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    var option = {
+        selector: "img",
+        sortby: "dom", // dom & offset
+        callback:function(){
+            console.log("一幅图片加载");
+        }
+    }
+
+    /**
+     * 获取滚动条位置处理
+     * @return {number} 浏览器滚动条位置
+     */
+    function getScrollTop() {
+        return document.documentElement.scrollTop || document.body.scrollTop;
+    }
+
+    /**
+     * 设置浏览器滚动条位置
+     * @param {number} top 需要设置浏览器滚动条的位置
+     * @param {boolean} until 是否需要一直设置浏览器滚动条的位置 , 知道浏览器滚动条的位置 为top , 一般是页面进入的时候才需要设置为true , 其他时候可以忽略
+     */
+    function setScrollTop(top, until) {
+        document.documentElement.scrollTop = document.body.scrollTop = top;
+        setTimeout(function() { // 虽然是在window.onload里面 , 但是有时页面进入的时候 , 还是设置不成功 , 初步猜测 , 可能是页面虽然加载好 , 但是还没有渲染完成, 还没有滚动条 , 所以设置失败 ; 特别是刷新的时候,  如果是直接跳转过来还好
+            if (getScrollTop() != top && until) { // 判断是否设置值 , 不是的话重新设置 , 这个判断只能是放在定时器里面 , 因为如果是直接在外面判断的话 , 可能由于刚设置的原因 , getScrollTop()是等于top的
+                /*console.log("执行");*/
+                setScrollTop(top);
+            }
+        }, 16.7); // 经过试验 其实定时器时间设为1都也只是执行一次
+        return getScrollTop() == top;
+    }
+
+    /**
+     * 获取元素的文档坐标
+     */
+    function documentPis(ele) {
+        var left = ele.offsetLeft;
+        var top = ele.offsetTop;
+        while (ele.offsetParent) {
+            left = left + ele.offsetParent.offsetLeft + ele.offsetParent.clientLeft;
+            //        父级的左偏移量                       父级的border宽度
+            top = top + ele.offsetParent.offsetTop + ele.offsetParent.clientTop;
+            //        父级的上偏移量                       父级的border宽度
+            ele = ele.offsetParent;
+        }
+        return {
+            left: left,
+            top: top
+        }; //返回一个json
+    }
+
+    /**
+     * 窗口坐标
+     */
+    function winPis(ele) {
+        return documentPis(ele).top - getScrollTop();
+    }
+
+
+    function Lazyload(option) {
+        var _this = this;
+        _this._param(option);
+        _this._init();
+    }
+    Lazyload.prototype._param = function(option) {
+        var _this = this;
+        _this.option = option;
+        if (!option.selector) {
+            console.error("参数缺少选择器")
+        } else {
+            _this.selector = option.selector;
+        }
+
+        _this.callback = option.callback;
+    }
+    Lazyload.prototype._init = function() {
+        var _this = this;
+        var imgs = $(_this.selector);
+        _this.imgs = Array.prototype.slice.apply(imgs);
+        _this.scroll();
+        _this.handle();
+    }
+    Lazyload.prototype.scroll = function() {
+        var _this = this;
+
+        function scrollListener(e) {
+            // _this.handle.apply(_this, [e]);
+            _this.handle();
+        }
+        _this.scrollListener = scrollListener; // _this.scrollListener 仅仅是用于记录这个 监听器 , 用于remove的时候
+
+        window.addEventListener("scroll", _this.scrollListener, false);
+        // window.removeEventListener("scroll", scrollListener, false);
+    }
+    Lazyload.prototype.handle = function(){
+        var _this = this;
+        var img = _this.imgs[0];
+        if(!img){
+            return;
+        }
+        var src = $(img).attr("data-src");
+        var imgPis = winPis(img);
+        var windowH = window.innerHeight;
+        if (imgPis < windowH) {
+            $(img).attr('src', src);
+            _this.imgs.shift();
+            _this.callback && _this.callback();
+
+            _this.handle();
+        }
+        if(_this.imgs.length == 0){
+            window.removeEventListener("scroll", _this.scrollListener, false);
+        }
+    }
+
+    $(function() {
+        lazy = new Lazyload(option);
+    });
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <p><img data-src="img/test (1).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (2).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (3).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (4).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (5).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (6).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (7).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (8).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (9).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (10).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (11).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (12).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (13).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (14).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (15).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (16).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (17).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (18).jpeg" alt="图片"></p>
+        <p><img data-src="img/test (19).jpeg" alt="图片"></p>
+    </div>
+</body>
+
+</html>
