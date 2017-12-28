@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bankcardinfo</title>
+    <script src="./js/index.js"></script>
+    <script>
+        var card = "6214620421000384932";
+        getBankBin(card, function (err, data) {
+            if (!err) { // 没有错误的时候
+                console.dir(data);
+                console.log(data.bankName);
+            } else {
+                console.log(err);
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
