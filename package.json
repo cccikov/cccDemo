@@ -4,10 +4,12 @@
   "description": "cccDemo",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "bankcardinfo": "^2.0.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"browser-sync start --server --files \"**/*.html,**/*.css,**/*.js\""
+    "start": "browser-sync start --server --files \"**/*.html,**/*.css,**/*.js\""
   },
   "repository": {
     "type": "git",
