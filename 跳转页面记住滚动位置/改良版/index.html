@@ -18,19 +18,20 @@
 			// 进入页面的时候
 			var scrollTop;
 			if(scrollTop = ccc.getStorage("scrollTop")){//有记录scrollTop
+				console.log(scrollTop);
 				$("body").css("overflow","auto");
-				$("body").scrollTop(scrollTop);
-				$('body').css('opacity',"1");
+				$(window).scrollTop(scrollTop);
+				$("body").css('opacity',"1");
 			}else{
 				$("body").css("overflow","auto");
-				$('body').css('opacity',"1");
+				$("body").css('opacity',"1");
 			}
 		});
 
 		//离开页面的时候
 		$(window).on("unload",function(){
-			var scrollTop = $("body").scrollTop();
-			ccc.setStorage("scrollTop",scrollTop)
+			var scrollTop = $(window).scrollTop();
+			ccc.setStorage("scrollTop",scrollTop);
 		});
 	</script>
 </head>
