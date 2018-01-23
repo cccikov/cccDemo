@@ -35,13 +35,13 @@
 			var drag = document.getElementById("drag");
 			drag.onmousedown = function(e) {
 				var event = e || window.event;
-				var mouseX = event.clientX - drag.offsetLeft;
-				var mouseY = event.clientY - drag.offsetTop;
+				var mouseX = event.clientX - drag.offsetLeft; // 鼠标离屏幕(客户区)边缘的距离 - drag屏幕(客户区)边缘的距离 = 鼠标离drag元素边缘的距离
+				var mouseY = event.clientY - drag.offsetTop; // 鼠标离drag元素边缘的距离
 				document.onmousemove = function(e) {
 					var event = e || window.event;
 					var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
 					var scrollLeft=document.documentElement.scrollLeft||document.body.scrollLeft;
-					var moveX = event.clientX - mouseX;
+					var moveX = event.clientX - mouseX; // 鼠标离屏幕(客户区)边缘的距离 - 鼠标离drag元素边缘的距离 = drag屏幕(客户区)边缘的距离
 					var moveY = event.clientY - mouseY;
 					if(moveX<=0+scrollLeft){
 						moveX=0+scrollLeft;
