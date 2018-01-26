@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+        cursor: move;
+        transform: translate3d(0,0,0);
+    }
+
+    #box1 {
+        top: 12px;
+        left: 12px;
+        background: rgba(255, 204, 204, 0.5);
+    }
+
+    #box2 {
+        top: 12px;
+        right: 12px;
+        background: rgba(107, 202, 132, 0.5);
+    }
+    </style>
+    <script type="text/javascript">
+    function Drag(el){
+        var _this = this;
+        _this.el = el;
+
+        _this.el.addEventListener("mousedown",function(e){
+            // e.preventDefault();
+            var el = this;
+
+            // 块离视口区域距离
+            _this.left = el.offsetLeft;
+            _this.top = el.offsetTop;
+            console.log(_this.left,_this.top);
+
+            // 鼠标离视口区域距离 - 块离视口区域距离 =  鼠标离块边缘距离
+            _this.mouseEdgeLeft = e.clientX - _this.left;
+            _this.mouseEdgeTop = e.clientY - _this.top;
+
+            window.addEventListener("mousemove",_this.handle,false);
+        },false);
+
+        window.addEventListener("mouseup",function(e){ // 注意 , 这个对象应该是window , 就是handle监听器监听的对象 , 因为要是鼠标出界了(移出了视区 , 甚至移出屏幕) , 如果对象是el的话 , 这个mouseup事件将不会触发 , 导致松开鼠标后 , mousemove监听器没有别清除 , 造成bug
+            window.removeEventListener("mousemove",_this.handle,false);
+        },false);
+
+        _this.handle = function(e){
+            var moveX = e.clientX - _this.mouseEdgeLeft; // 鼠标离视口区域距离 - 鼠标离块边缘距离 =   块离视口区域距离
+            var moveY = e.clientY - _this.mouseEdgeTop;
+
+            _this.el.style.left = moveX+"px";
+            _this.el.style.top = moveY+"px";
+        }
+    }
+
+    window.onload = function() {
+        var box1 = document.getElementById("box1");
+        var box2 = document.getElementById("box2");
+        new Drag(box1);
+    }
+    </script>
+</head>
+
+<body>
+    <div class="box" id="box1"></div>
+    <div class="box" id="box2"></div>
+</body>
+
+</html>

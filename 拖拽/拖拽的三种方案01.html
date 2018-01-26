@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽的三种方案</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+        cursor: move;
+        transform: translate3d(0, 0, 0);
+    }
+
+    #box1 {
+        top: 50px;
+        left: 50px;
+        background: rgba(255, 204, 204, 0.5);
+    }
+
+    #box2 {
+        top: 50px;
+        right: 50px;
+        background: rgba(107, 202, 132, 0.5);
+    }
+
+    #box3 {
+        bottom: 50px;
+        left: 50px;
+        background: rgba(152, 107, 202, 0.5);
+    }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+        /////////
+        // 方法1 //
+        /////////
+        $("#box1").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离视口区域距离 - 块离视口区域距离 =  鼠标离块边缘距离
+            var mouseEdgeLeft = e.clientX - left;
+            var mouseEdgeTop = e.clientY - top;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault(); // 系统有默认的拖拽标签动作 , 必须禁止
+                // 鼠标离视口区域距离 - 鼠标离块边缘距离 =   块离视口区域距离
+                var moveX = e.clientX - mouseEdgeLeft; // 其实这个就是新的 left值
+                var moveY = e.clientY - mouseEdgeTop;
+                _this.css({
+                    left: moveX + "px", // 这里的left是点击下的left
+                    top: moveY + "px",
+                });
+            });
+        });
+
+        /////////
+        // 方法2 //
+        /////////
+        $("#box2").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+                // 鼠标离块边缘距离的变化量
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                /**
+                 * 其实这种方式和方式1是可以互推出来的
+                 *
+                 * 方式1中
+                 * mouseEdgeLeft = e.clientX - left => left = e.clientX - mouseEdgeLeft
+                 * moveX = e.clientX - mouseEdgeLeft
+                 *
+                 *
+                 * moveX - left = (e.clientX - mouseEdgeLeft) - (e.clientX - mouseEdgeLeft) = e.clientX - e.clientX
+                 * 由于两次的e.clientX是不同的
+                 * moveX - left = e.clientX - e.clientX = deltaX
+                 * 所以原理是一样的
+                 */
+
+                _this.css({
+                    left: (left + deltaX) + "px", // 这里的left是点击下的left 加上 鼠标总共移动的距离
+                    top: (top + deltaY) + "px",
+                });
+            });
+        });
+
+        /* 方式1 和 方式2 都是使用 拖动中鼠标的位置相对上点击时鼠标的位置来得出新的位置 */
+
+
+
+
+        /////////
+        // 方式3 //
+        /////////
+        $("#box3").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+                // 每次mousemove事件触发时鼠标离块边缘距离 相对于 上次mousemove事件触发时鼠标离块边缘距离 的变化量 (除了第一次是相对于mousedown事件触发时鼠标离块边缘距离)
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                left = left + deltaX; // 这里的left除了第一次是点击下的left , 后面都是上一次mousemove触发是的left
+                top = top + deltaY;
+
+                _this.css({
+                    left: left + "px",
+                    top: top + "px",
+                });
+
+                // 由于deltaX每次的mousemove触发的变化值 , 所以mouseX每次都要等于新值
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+            });
+        });
+
+        /* 由于浏览器的mousemove是每隔一段时间触发的 , 方式2中的deltaX是整个拖拽的距离 , 而方式3中的deltaX是每次mousemove的距离相当于是拖拽过程的速度 */
+        /* 方式2中的deltaX只能证明拖拽的距离 , 方式3中的deltaX只能证明拖拽的速度*/
+
+
+
+        // 多种方法共用 ,但是如果单独使用某种方式 ,也一定要记得写下面语句
+        $(window).on("mouseup", function() { // 注意 , 这个对象应该是window , 就是handle监听器监听的对象 , 因为要是鼠标出界了(移出了视区 , 甚至移出屏幕) , 如果对象是拖拽元素的话的话 , 这个mouseup事件将不会触发 , 导致松开鼠标后 , mousemove监听器没有别清除 , 造成bug
+            $(window).off("mousemove");
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="box" id="box1"></div>
+    <div class="box" id="box2"></div>
+    <div class="box" id="box3"></div>
+    <p>拖拽的三种方式的基本代码都完成了 , 但是实际上还会在这基础上添加一些边界限制条件</p>
+</body>
+
+</html>
