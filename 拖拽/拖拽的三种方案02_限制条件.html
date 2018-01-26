@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽的三种方案</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+        cursor: move;
+        transform: translate3d(0, 0, 0);
+    }
+
+    #box1 {
+        top: 50px;
+        left: 50px;
+        background: rgba(255, 204, 204, 0.5);
+    }
+
+    #box2 {
+        top: 50px;
+        right: 50px;
+        background: rgba(107, 202, 132, 0.5);
+    }
+
+    #box3 {
+        bottom: 50px;
+        left: 50px;
+        background: rgba(152, 107, 202, 0.5);
+    }
+
+    #box4 {
+        bottom: 50px;
+        right: 50px;
+        background: rgba(16, 140, 189, 0.5);
+    }
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+        /////////
+        // 限制1 //
+        /////////
+        $("#box1").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            // 获取各种尺寸 , 元素的宽高 屏幕的宽高
+            var elW = _this.width();
+            var elH = _this.height();
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+
+            // 上下左右位置的限制
+            limitTop = 0;
+            limitBottom = winH - elH;
+            limitLeft = 0;
+            limitRight = winW - elW;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                left = left + deltaX;
+                top = top + deltaY;
+
+                // 限制
+                if (left <= limitLeft) {
+                    left = limitLeft;
+                }
+                if (left > limitRight) {
+                    left = limitRight;
+                }
+                if (top <= limitTop) {
+                    top = limitTop;
+                }
+                if (top >= limitBottom) {
+                    top = limitBottom;
+                }
+
+                _this.css({
+                    left: left + "px",
+                    top: top + "px",
+                });
+
+                // 更新鼠标位置
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+            });
+        });
+
+        /* 限制1中是通过限制元素的位置 , 不让元素移出视区 */
+
+
+        // 限制1
+        $("#box2").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            // 获取各种尺寸 , 元素的宽高 屏幕的宽高
+            var elW = _this.width();
+            var elH = _this.height();
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+
+            // 上下左右位置的限制
+            limitTop = 0;
+            limitBottom = winH - elH;
+            limitLeft = 0;
+            limitRight = winW - elW;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+                // 鼠标离块边缘距离的变化量
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                var moveX = left + deltaX;
+                var moveY = top + deltaY;
+
+                 // 限制
+                if (moveX <= limitLeft) {
+                    moveX = limitLeft;
+                }
+                if (moveX > limitRight) {
+                    moveX = limitRight;
+                }
+                if (moveY <= limitTop) {
+                    moveY = limitTop;
+                }
+                if (moveY >= limitBottom) {
+                    moveY = limitBottom;
+                }
+
+
+                _this.css({
+                    left: moveX + "px", // 这里的left是点击下的left 加上 鼠标总共移动的距离
+                    top: moveY + "px",
+                });
+            });
+        });
+
+
+
+        /////////
+        // 限制2 //
+        /////////
+        $("#box3").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            // 获取各种尺寸 , 元素的宽高 屏幕的宽高
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+
+                // 限制
+                if (e.clientX <= 0 || e.clientX >= winW || e.clientY <= 0 || e.clientY >= winH) {
+                    $(window).off("mousemove");
+                }
+
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                left = left + deltaX;
+                top = top + deltaY;
+
+                _this.css({
+                    left: left + "px",
+                    top: top + "px",
+                });
+
+                // 更新鼠标位置
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+            });
+        });
+
+       $("#box4").on("mousedown", function(e) {
+            e.preventDefault();
+            var _this = $(this);
+
+            // 块离视口区域距离
+            var left = _this.offset().left;
+            var top = _this.offset().top;
+
+            // 鼠标离块边缘距离
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            // 获取各种尺寸 , 元素的宽高 屏幕的宽高
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+
+            $(window).on("mousemove", function(e) {
+                e.preventDefault();
+                // 鼠标离块边缘距离的变化量
+                var deltaX = e.clientX - mouseX;
+                var deltaY = e.clientY - mouseY;
+
+                // 限制
+                if (e.clientX <= 0 || e.clientX >= winW || e.clientY <= 0 || e.clientY >= winH) {
+                    $(window).off("mousemove");
+                }
+
+                _this.css({
+                    left: (left + deltaX) + "px", // 这里的left是点击下的left 加上 鼠标总共移动的距离
+                    top: (top + deltaY) + "px",
+                });
+            });
+        });
+
+        /* 限制1中是通过限制鼠标的位置 , 鼠标移出视区后 , 去除监听器 , 来达到不让元素全部移出视区(故意移出还是可以的) */
+
+
+        $(window).on("mouseup", function() {
+            $(window).off("mousemove");
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="box" id="box1">限制1-方法3</div>
+    <div class="box" id="box2">限制1-方法2</div>
+    <div class="box" id="box3">限制2-方法3</div>
+    <div class="box" id="box4">限制2-方法2</div>
+
+    <p>限制1在不同的拖拽方法下 , 会有所不同; 移出屏幕再移回试试 ; 你会发现是方法2的比较合理</p>
+    <p>由于方法2的delta是距离, 所以移出屏幕再移回来 , 距离是不会变的</p>
+    <p>但是方法3的delta是速度, 所以移出屏幕再移回来 , 距离还是会一直叠加</p>
+
+    <p>限制1-方法2是比较好的 , 对于以下较大的弹窗可以使用限制2</p>
+
+</body>
+
+</html>
