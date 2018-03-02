@@ -17,7 +17,7 @@
 
 			// 进入页面的时候
 			var scrollTop;
-			if(scrollTop = ccc.getStorage("scrollTop")){//有记录scrollTop
+			if(scrollTop = ccc.getSessionStorage("scrollTop")){//有记录scrollTop
 				console.log(scrollTop);
 				$("body").css("overflow","auto");
 				$(window).scrollTop(scrollTop);
@@ -31,8 +31,17 @@
 		//离开页面的时候
 		$(window).on("unload",function(){
 			var scrollTop = $(window).scrollTop();
-			ccc.setStorage("scrollTop",scrollTop);
+			ccc.setSessionStorage("scrollTop",scrollTop);
 		});
+
+		/*
+		 * 用sessionStorage 比 localStorage 更好
+		 * 因为 sessionStorage 只要关闭页面后就会清除 sessionStorage , 那么下次打开就不会再记住位置 , 是从头开始 ; 而且在浏览器中用新标签页打开, 新窗口打开不会记住之前的位置 ;
+		 * 仅仅只会在本页面跳转到其他页面的时候会记住位置 , 用于返回的时候 , 继续上次的位置
+		 * 
+		 * 如果 用 localStorage  只要之前打开过这个页面就会一直记住位置 , 就算下次是重新输入网址进入(相当于重新进入) , 但是还是续着好久之前的位置 , 这样体验不好
+		 */
+
 	</script>
 </head>
 <body>
