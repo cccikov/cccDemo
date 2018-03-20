@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>div模拟textarea</title>
+	<style>
+		.test_box {
+			width: 400px;
+			min-height: 120px;
+			max-height: 300px;
+			_height: 120px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 3px;
+			outline: 0;
+			border: 1px solid #a0b3d6;
+			font-size: 12px;
+			word-wrap: break-word;
+			overflow-x: hidden;
+			overflow-y: auto;
+			_overflow-y: visible;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="test_box" contenteditable="true">
+		<br />
+	</div>
+	<button>按我啊</button>
+	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		$("button").on("click", function () {
+			console.log($(".test_box").html())
+		})
+	</script>
+</body>
+
+</html>
