@@ -81,6 +81,7 @@ hr {
 }
 #demo6 {
   display: inline-block;
+  max-width: 80%;
 }
 #demo6 .left {
   float: left;
@@ -90,6 +91,21 @@ hr {
   overflow: hidden;
 }
 #demo6 .right {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#demo7 {
+  display: inline-block;
+  max-width: 50%;
+}
+#demo7 .left {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#demo7 .right {
+  float: right;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
