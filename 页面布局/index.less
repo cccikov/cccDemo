@@ -1,127 +1,132 @@
-*{
-    padding:0;
-    margin:0;
+* {
+    padding: 0;
+    margin: 0;
 }
 
-p{
-    margin:10px 0 0;
-    color:#111;
+p {
+    margin: 10px 0 0;
+    color: #111;
 }
 
-hr{
-    margin:20px 0;
+hr {
+    margin: 20px 0;
 }
 
-[id*="demo"]{
-    color:#eee;
+[id*="demo"] {
+    color: #eee;
 }
 
-.left{
+.left {
     height: 100px;
     background: darkred;
 }
-.right{
+
+.right {
     height: 110px;
-    margin:10px 0 0;
+    margin: 10px 0 0;
     text-align: right;
     background: darkblue;
 }
-#demo1{
+
+#demo1 {
     overflow: hidden;
-    .left{
+    .left {
         float: left;
         width: 200px;
     }
-    .right{
+    .right {
         overflow: hidden;
     }
 }
-#demo2{
+
+#demo2 {
     overflow: hidden;
-    margin:10px 0 0;
-    .left{
+    margin: 10px 0 0;
+    .left {
         overflow: hidden;
     }
-    .right{
+    .right {
         float: right;
         width: 200px;
     }
 }
-#demo3{
+
+#demo3 {
     overflow: hidden;
-    margin:10px 0 0;
-    .left{
+    margin: 10px 0 0;
+    .left {
         float: left;
         width: 200px;
     }
-    .right{
-        margin-left:200px
-    }
-}
-#demo4{
-    position: relative;
-    margin:10px 0 0;
-    .left{
-        position: absolute;
-        top:0;
-        left:0;
-        width: 200px;
-    }
-    .right{
-        margin-left:200px
+    .right {
+        margin-left: 200px
     }
 }
 
-#demo5{
-    .left{
+#demo4 {
+    position: relative;
+    margin: 10px 0 0;
+    .left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+    }
+    .right {
+        margin-left: 200px
+    }
+}
+
+#demo5 {
+    .left {
         float: left;
         max-width: 50%;
 
         white-space: nowrap;
         text-overflow: ellipsis;
-        overflow:hidden;
+        overflow: hidden;
     }
-    .right{
-        overflow:hidden;
+    .right {
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
 }
 
 
-#demo6{
+#demo6 {
     display: inline-block;
-    max-width:80%;
-    .left{
+    max-width: 80%;
+    .left {
         float: left;
-        max-width:300px;
+        max-width: 300px;
 
         white-space: nowrap;
         text-overflow: ellipsis;
-        overflow:hidden;
+        overflow: hidden;
     }
-    .right{
-        overflow:hidden;
+    .right {
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
 }
 
 
-#demo7{
+#demo7 {
     display: inline-block;
-    max-width:50%;
-    .left{
-        overflow:hidden;
+    max-width: 50%;
+    .left {
+        overflow: hidden;
 
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .right{
+    .right {
         // 标记 ， 标记都要全部显示 ， 所以是主动占据空间 ， 所以是标记浮动
         float: right;
 
-        overflow:hidden;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
