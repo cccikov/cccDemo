@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>每日优鲜</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- 导航 -->
+    <div class="swiper-container" id="nav">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <span style="color:rgba(255,72,145,1);">热卖</span>
+            </div>
+            <div class="swiper-slide">
+                <span>水果</span>
+            </div>
+            <div class="swiper-slide">
+                <span>乳品</span>
+            </div>
+            <div class="swiper-slide">
+                <span>零食</span>
+            </div>
+            <div class="swiper-slide">
+                <span>肉蛋</span>
+            </div>
+            <div class="swiper-slide">
+                <span>蔬菜</span>
+            </div>
+            <div class="swiper-slide">
+                <span>酒饮</span>
+            </div>
+            <div class="swiper-slide">
+                <span>速食</span>
+            </div>
+            <div class="swiper-slide">
+                <span>熟食</span>
+            </div>
+            <div class="swiper-slide">
+                <span>水产</span>
+            </div>
+            <div class="swiper-slide">
+                <span>粮油</span>
+            </div>
+            <div class="swiper-slide">
+                <span>轻食</span>
+            </div>
+            <div class="swiper-slide">
+                <span>火锅</span>
+            </div>
+            <div class="swiper-slide">
+                <span>日百</span>
+            </div>
+            <div class="bar">
+                <div class="color"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/swiper.min.js"></script>
+
+    <script type="text/javascript">
+        var barwidth = 36 //导航粉色条的长度px
+        var tSpeed = 300 //切换速度300ms
+
+        var navSlideWidth;
+
+        var navSwiper = new Swiper('#nav', {
+            slidesPerView: 6, // 设置slider容器能够同时显示的slides数量(carousel模式)。
+            freeMode: true, // 默认为false，普通模式：slide滑动时只滑动一格，并自动贴合wrapper，设置为true则变为free模式，slide会根据惯性滑动可能不止一格且不会贴合。
+            on: {
+                init: function() {
+                    navSlideWidth = this.slides.eq(0).css('width'); //导航字数需要统一,每个导航宽度一致
+                    bar = this.$el.find('.bar')
+                    console.log(bar);
+                    bar.css('width', navSlideWidth)
+                    bar.transition(tSpeed); // swiper dom api 等价于 bar.css("transition-duration", tSpeed + "ms");
+
+                    navSum = this.slides[this.slides.length - 1].offsetLeft //最后一个slide的位置
+
+                    clientWidth = parseInt(this.$wrapperEl.css('width')) //Nav的可视宽度
+
+                    navWidth = 0; // Nav的内容宽度宽度 , 即this.$wrapperEl[0].scrollWidth
+                    for (i = 0; i < this.slides.length; i++) {
+                        navWidth += parseInt(this.slides.eq(i).css('width'))
+                    }
+
+                    console.log(navSum , clientWidth , navWidth , this.$wrapperEl[0].scrollWidth);
+
+                    topBar = this.$el.parents('body').find('#top') //页头
+
+                },
+
+            },
+        });
+
+    </script>
+</body>
+
+</html>
