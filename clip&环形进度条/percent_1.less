@@ -158,17 +158,15 @@ p {
             height: 300px;
             border: 20px solid #ffc107;
             border-radius: 50%;
+            transition: all 0.2s;
             &.right {
                 clip: rect(0px, 150px, 300px, 0px);
-                transition: all 0.2s;
             }
             &.left {
                 display: none;
                 clip: rect(0px, 300px, 300px, 150px);
-                
                 &.over50{
                     display: block;
-
                 }
             }
         }

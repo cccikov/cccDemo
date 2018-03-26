@@ -76,11 +76,12 @@
             <div class="percent left"></div>
         </div>
     </div>
+    <p>这里有一个问题就是先执行 <code>set_percent(0)</code> 再执行 <code>set_percent(75)</code> 会发现过度效果好怪 ; 那是因为0-50%与50%-100%是不同元素旋转的结果 解决方法见 <a href="环形进度条_2.html"></a></p>
 
 
     <script src="../js/jquery-1.11.3.min.js"></script>
     <script>
-        function percent(num) {
+        function set_percent(num) {
             var per = 180 / 50; // 每%转的角度
             if (num <= 50) {
                 $(".right").css("transform", "rotate(" + num * per + "deg)");
@@ -92,6 +93,18 @@
                 $(".left").addClass("over50").css("transform", "rotate(" + (num-50) * per + "deg)");
             }
         }
+
+        /*var percent = 0;
+
+        var timer = setInterval(function(){
+            set_percent(percent);
+            console.log(percent+"%");
+            if(percent>=100){
+                clearInterval(timer);
+            }
+            percent++;
+        }, 50);*/
+
     </script>
 </body>
 

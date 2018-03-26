@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环形进度条2</title>
+    <link rel="stylesheet" href="percent_2.css">
+</head>
+
+<body>
+    <p>正式做一个完整的</p>
+    <div class="demo">
+        <div class="circle">
+            <!-- 一直都是move旋转 -->
+            <div class="percent move"></div>
+            <!-- static是超过50%出现, 但是不旋转 , 充当前50%的弧形 -->
+            <div class="percent static"></div>
+        </div>
+    </div>
+
+    <a href="javascript:set_percent(0)">0</a>
+    <a href="javascript:set_percent(40)">40</a>
+    <a href="javascript:set_percent(75)">75</a>
+
+
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script>
+        function set_percent(num) {
+            var per = 180 / 50; // 每%转的角度
+            if (num <= 50) {
+                $(".circle").removeClass("over50");
+                $(".static").removeClass("over50");
+            } else if (num > 50 && num <= 100) {
+                $(".circle").addClass("over50");
+                $(".static").addClass("over50");
+            }
+            $(".move").css("transform", "rotate(" + num * per + "deg)");
+        }
+
+
+    </script>
+</body>
+
+</html>
