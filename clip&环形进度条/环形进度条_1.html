@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环形进度条</title>
+    <link rel="stylesheet" href="percent_1.css">
+</head>
+
+<body>
+    <p>先利用border-radius将元素做成圆形 , 并用border做成一个环(.percent)</p>
+    <div class="wrap">
+        <div class="circle">
+            <div class="percent"></div>
+        </div>
+    </div>
+
+    <p>clip切掉右边一半环形(.percent)</p>
+    <div class="wrap step1">
+        <div class="circle">
+            <div class="percent"></div>
+        </div>
+    </div>
+
+    <p>clip切掉环形父元素左边一半(.circle)</p>
+    <div class="wrap step2">
+        <div class="circle">
+            <div class="percent"></div>
+        </div>
+    </div>
+
+    <p>给环(.percent)设置transform旋转</p>
+    <div class="wrap step3">
+        <div class="circle">
+            <div class="percent"></div>
+        </div>
+    </div>
+
+    <p>无背景效果</p>
+    <div class="wrap step4">
+        <div class="circle">
+            <div class="percent"></div>
+        </div>
+    </div>
+
+    <p>由于上面最多只能做到50%的进度状态 , 我们就多做一个新环(.percent-left) , 并clip了它的左边一半 ; 取消clip环形父元素左边一半</p>
+    <div class="wrap step5">
+        <div class="circle">
+            <div class="percent"></div>
+            <div class="percent-left"></div>
+        </div>
+    </div>
+
+    <p>给新环(.percent-left)设置一个旋转</p>
+    <div class="wrap step6">
+        <div class="circle">
+            <div class="percent"></div>
+            <div class="percent-left"></div>
+        </div>
+    </div>
+
+    <p>没有背景时</p>
+    <div class="wrap step7">
+        <div class="circle">
+            <div class="percent"></div>
+            <div class="percent-left"></div>
+        </div>
+    </div>
+
+    <p>正式做一个完整的</p>
+    <div class="demo">
+        <div class="circle">
+            <div class="percent right"></div>
+            <div class="percent left"></div>
+        </div>
+    </div>
+
+
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script>
+        function percent(num) {
+            var per = 180 / 50; // 每%转的角度
+            if (num <= 50) {
+                $(".right").css("transform", "rotate(" + num * per + "deg)");
+                $(".circle").removeClass("over50");
+                $(".left").removeClass("over50");
+            } else if (num > 50 && num <= 100) {
+                $(".right").css("transform", "rotate(" + 180 + "deg)");
+                $(".circle").addClass("over50");
+                $(".left").addClass("over50").css("transform", "rotate(" + (num-50) * per + "deg)");
+            }
+        }
+    </script>
+</body>
+
+</html>

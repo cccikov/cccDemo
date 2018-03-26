@@ -1,0 +1,176 @@
+p {
+    clear: both;
+    padding: 20px 12px 10px;
+    margin: 0;
+}
+
+.wrap {
+    position: relative;
+    float: left;
+    width: 400px;
+    height: 400px;
+    border: 1px solid #ccc;
+    .circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(103, 165, 162, 0.1), rgba(98, 253, 110, 0.1));
+        .percent {
+            box-sizing: border-box;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 20px solid #ff0;
+            background: #f9f9f9;
+            opacity: 0.4;
+        }
+    }
+}
+
+.step1 {
+    .circle {
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+        }
+    }
+}
+
+.step2 {
+    .circle {
+        clip: rect(auto auto auto 400-200px);
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+        }
+    }
+}
+
+.step3 {
+    .circle {
+        clip: rect(auto auto auto 400-200px);
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.step4 {
+    .circle {
+        clip: rect(auto auto auto 400-200px);
+        background: none;
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+            transform: rotate(90deg);
+            background: none;
+        }
+    }
+}
+
+.wrap {
+    .circle {
+        .percent-left {
+            box-sizing: border-box;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 20px solid #0ff;
+            background: #ff0000;
+            opacity: 0.4;
+        }
+    }
+}
+
+.step5 {
+    .circle {
+        clip: rect(auto auto auto auto);
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+            transform: rotate(180deg);
+        }
+        .percent-left {
+            clip: rect(auto auto auto 150px);
+        }
+    }
+}
+
+.step6 {
+    .circle {
+        clip: rect(auto auto auto auto);
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+            transform: rotate(180deg);
+        }
+        .percent-left {
+            clip: rect(auto auto auto 150px);
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.step7 {
+    .circle {
+        clip: rect(auto auto auto auto);
+        background: none;
+        .percent {
+            clip: rect(auto 300-150px auto auto);
+            transform: rotate(180deg);
+            background: none;
+        }
+        .percent-left {
+            clip: rect(auto auto auto 150px);
+            transform: rotate(90deg);
+            background: none;
+            border-color: #ff0
+        }
+    }
+}
+
+.demo {
+    position: relative;
+    float: left;
+    width: 400px;
+    height: 400px;
+    border: 1px solid #ccc;
+    .circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip: rect(auto, auto , auto, 200px);
+        &.over50{
+            clip: rect(auto, auto, auto, auto);
+        }
+        .percent {
+            box-sizing: border-box;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 300px;
+            border: 20px solid #ffc107;
+            border-radius: 50%;
+            &.right {
+                clip: rect(0px, 150px, 300px, 0px);
+                transition: all 0.2s;
+            }
+            &.left {
+                display: none;
+                clip: rect(0px, 300px, 300px, 150px);
+                
+                &.over50{
+                    display: block;
+
+                }
+            }
+        }
+    }
+}
