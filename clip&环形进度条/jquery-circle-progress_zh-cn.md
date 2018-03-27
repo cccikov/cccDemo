@@ -62,10 +62,10 @@ Also, object options like `"fill"` or `"animation"` should be valid JSON (and do
 ></div>
 ```
 
-Events
+事件
 ------
 
-| Event | Description | Handler |
+| 事件 | Description | Handler |
 | ---- | ---- | ---- |
 | `circle-inited` | Triggered on init or re-init. | `function(event)`: <br>- `event` - jQuery event |
 | `circle-animation-start` | Triggered once the animation is started. | `function(event)`: <br>- `event` - jQuery event |
@@ -149,9 +149,9 @@ You can use any JS bundler ([Webpack](https://webpack.github.io/), [Browserify](
 API
 ---
 
-### Get/set value
+### 获取/设置 参数值
 
-Get it:
+获取参数值:
 
 ```js
 $('.circle').circleProgress({ value: 0.5 });
@@ -161,7 +161,7 @@ var value = $('.circle').circleProgress('value'); // 0.5
 It will return the *first* item's value (by *first* I mean when `$('.circle').length >= 1`).
 *It works only if the widget is already inited. Raises an error otherwise*.
 
-Set it:
+设置参数值:
 
 ```js
 $('.circle').circleProgress('value', 0.75); // set value to 0.75 & animate the change
@@ -171,7 +171,7 @@ It will update *all* selected items value and animate the change.
 It doesn't *redraw* the widget - it updates the value & animates the changes.
 For example, it may be an AJAX loading indicator, which shows the loading progress.
 
-### Get `<canvas>`
+### 获取 `<canvas>`
 
 ```js
 $('.circle').circleProgress({ value: 0.5 });
@@ -181,13 +181,13 @@ var canvas = $('.circle').circleProgress('widget');
 It will return the *first* item's `<canvas>` (by *first* I mean when `$('.circle').length >= 1`).
 *It works only if the widget is already inited. Raises an error otherwise*.
 
-### Get `CircleProgress` instance
+### 你可以获取 `CircleProgress` 对象实例
 
 ```js
 var instance = $('#circle').data('circle-progress');
 ```
 
-### Redraw existing circle
+### 重新绘制
 
 ```js
 $('#circle').circleProgress({ value: 0.5, fill: { color: 'orange' }});
@@ -198,7 +198,7 @@ $('#circle').circleProgress({ size: 150 }); // set new size and redraw
 
 *It works only if the widget is already inited. Raises an error otherwise*.
 
-### Change default options
+### 改变默认的参数配置：
 
 ```js
 $.circleProgress.defaults.size = 50;

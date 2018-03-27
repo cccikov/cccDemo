@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环形进度条2</title>
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script src="./circle-progress.min.js"></script>
+    <script>
+        $(function () {
+            $('#circle').circleProgress({
+                value: 0.2, // 	这是唯一一个必填参数 进度条的值
+                size: 300, // 进度条整体的大小
+                startAngle: -Math.PI / 2, // 初始角度
+                reverse: false, // 是否反向
+                thickness: 30, //进度条 粗细
+                lineCap: "butt", // 圆弧的线头样式  "butt" "round" "square" 
+                fill: {
+                    gradient: ["red", "orange"],
+                    gradientAngle: Math.PI / 2
+                },
+                emptyFill: "#fff", // 空圆弧的颜色
+                animationStartValue:"0.5" // 动画起始位置
+            });
+
+            // 获取环形滚动条的canvas对象
+            var canvas = $('#circle').circleProgress('widget');      
+
+            // 获取CircleProgress对象实例
+            var instance = $('#circle').data('circle-progress'); 
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="circle"></div>
+
+
+</body>
+
+</html>
