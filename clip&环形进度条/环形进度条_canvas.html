@@ -22,22 +22,36 @@
                     gradientAngle: Math.PI / 2
                 },
                 emptyFill: "#fff", // 空圆弧的颜色
-                animationStartValue:"0.5" // 动画起始位置
+                animation: {
+                    duration: 1500,
+                    easing: "circleProgressEasing"
+                },
+                animationStartValue: "0.5" // 动画起始位置
             });
 
             // 获取环形滚动条的canvas对象
-            var canvas = $('#circle').circleProgress('widget');      
+            var canvas = $('#circle').circleProgress('widget');
 
             // 获取CircleProgress对象实例
-            var instance = $('#circle').data('circle-progress'); 
+            var instance = $('#circle').data('circle-progress');
 
+
+
+            $('.circle').circleProgress({
+                size: 300,
+                startAngle: -Math.PI / 2
+            });
         });
     </script>
 </head>
 
 <body>
-
     <div id="circle"></div>
+
+    <!-- 参数还可以写在标签上 使用 data- 自定义属性 -->
+    <div class="circle" data-value="0.1"></div>
+    <div class="circle" data-value="0.5"></div>
+    <div class="circle" data-value="0.9"></div>
 
 
 </body>
