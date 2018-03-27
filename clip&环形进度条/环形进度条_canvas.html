@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>环形进度条2</title>
+    <title>环形进度条 canvas</title>
     <script src="../js/jquery-1.11.3.min.js"></script>
     <script src="./circle-progress.min.js"></script>
     <script>
@@ -34,6 +34,7 @@
 
             // 获取CircleProgress对象实例
             var instance = $('#circle').data('circle-progress');
+            window.instance = instance;
 
 
 
@@ -41,7 +42,17 @@
                 size: 300,
                 startAngle: -Math.PI / 2
             });
+
+
         });
+
+        function click1() {
+            $('.circle').circleProgress("value", 0.9);
+        }
+
+        function click2() {
+            $('.circle').eq(0).circleProgress("value", 0.6);
+        }
     </script>
 </head>
 
@@ -53,6 +64,8 @@
     <div class="circle" data-value="0.5"></div>
     <div class="circle" data-value="0.9"></div>
 
+    <a href="javascript:void(0)" onclick="click1()">全部设置为0.9</a>
+    <a href="javascript:void(0)" onclick="click2()">第一个设置为0.6</a>
 
 </body>
 
