@@ -280,53 +280,53 @@
     <script src="js/swiper.min.js"></script>
     <script type="text/javascript">
         var pageSwiper = new Swiper('#page', {
-            watchSlidesProgress: true, // 开启这个参数来计算每个slide的progress(进度、进程)，Swiper的progress无需设置即开启。
-            resistanceRatio: 0,
-            on: {
-                touchMove: function() { // 手指触碰Swiper并滑动（手指）时执行，接受touchmove事件作为参数。此时slide不一定会发生移动，比如你手指的移动方向和swiper的切换方向垂直时。
-                    // 改变 nav 的颜色
-                    progress = this.progress // 每个slide的progress
-                    // 粉色255,72,145 灰色51,51,51
-                    for (i = 0; i < this.slides.length; i++) {
-                        slideProgress = this.slides[i].progress
-                        if (Math.abs(slideProgress) < 1) {
-                            r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-                            g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-                            b = Math.floor((145 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-                        }
-                    }
-                },
-                transitionStart: function() {
-                    console.log("触发transitionStart"); // 就是放手后 , swiper开始自动滑动回到对应格子的时候触发
-                    activeIndex = this.activeIndex
-                    activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
-                    //释放时导航粉色条移动过渡
-                    bar.transform('translateX(' + activeSlidePosition + 'px)')
-                    //释放时文字变色过渡
-                    navSwiper.slides.eq(activeIndex).find('span').transition(tSpeed)
-                    navSwiper.slides.eq(activeIndex).find('span').css('color', 'rgba(255,72,145,1)')
-                    if (activeIndex > 0) {
-                        navSwiper.slides.eq(activeIndex - 1).find('span').transition(tSpeed)
-                        navSwiper.slides.eq(activeIndex - 1).find('span').css('color', 'rgba(51,51,51,1)')
-                    }
-                    if (activeIndex < this.slides.length) {
-                        navSwiper.slides.eq(activeIndex + 1).find('span').transition(tSpeed)
-                        navSwiper.slides.eq(activeIndex + 1).find('span').css('color', 'rgba(51,51,51,1)')
-                    }
-                    //导航居中
-                    navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft //activeSlide距左边的距离
+            // watchSlidesProgress: true, // 开启这个参数来计算每个slide的progress(进度、进程)，Swiper的progress无需设置即开启。
+            // resistanceRatio: 0,
+            // on: {
+            //     // touchMove: function() { // 手指触碰Swiper并滑动（手指）时执行，接受touchmove事件作为参数。此时slide不一定会发生移动，比如你手指的移动方向和swiper的切换方向垂直时。
+            //     //     // 改变 nav 的颜色
+            //     //     progress = this.progress // 每个slide的progress
+            //     //     // 粉色255,72,145 灰色51,51,51
+            //     //     for (i = 0; i < this.slides.length; i++) {
+            //     //         slideProgress = this.slides[i].progress
+            //     //         if (Math.abs(slideProgress) < 1) {
+            //     //             var r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)  // (255 - 51) * (1 - |slideProgress|²) + 51  ; 是过渡效果变化曲线 , 初始值为51 , 最终值为255-51 , (1 - |slideProgress|²)是曲线核心 , |slideProgress| 的范围是[0,1} , 所以 (1 - |slideProgress|²) 是 {0,1] ; 可查看cccgit里面的tween分析
+            //     //             var g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
+            //     //             var b = Math.floor((145 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
+            //     //         }
+            //     //     }
+            //     // },
+            //     transitionStart: function() {
+            //         console.log("触发transitionStart"); // 就是放手后 , swiper开始自动滑动回到对应格子的时候触发
+            //         activeIndex = this.activeIndex
+            //         activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
+            //         //释放时导航粉色条移动过渡
+            //         bar.transform('translateX(' + activeSlidePosition + 'px)')
+            //         //释放时文字变色过渡
+            //         navSwiper.slides.eq(activeIndex).find('span').transition(tSpeed)
+            //         navSwiper.slides.eq(activeIndex).find('span').css('color', 'rgba(255,72,145,1)')
+            //         if (activeIndex > 0) {
+            //             navSwiper.slides.eq(activeIndex - 1).find('span').transition(tSpeed)
+            //             navSwiper.slides.eq(activeIndex - 1).find('span').css('color', 'rgba(51,51,51,1)')
+            //         }
+            //         if (activeIndex < this.slides.length) {
+            //             navSwiper.slides.eq(activeIndex + 1).find('span').transition(tSpeed)
+            //             navSwiper.slides.eq(activeIndex + 1).find('span').css('color', 'rgba(51,51,51,1)')
+            //         }
+            //         //导航居中
+            //         navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft //activeSlide距左边的距离
 
-                    navSwiper.setTransition(tSpeed)
-                    if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
-                        navSwiper.setTranslate(0)
-                    } else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
-                        navSwiper.setTranslate(clientWidth - navWidth)
-                    } else {
-                        navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft)
-                    }
+            //         navSwiper.setTransition(tSpeed)
+            //         if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
+            //             navSwiper.setTranslate(0)
+            //         } else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
+            //             navSwiper.setTranslate(clientWidth - navWidth)
+            //         } else {
+            //             navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft)
+            //         }
 
-                },
-            }
+            //     },
+            // }
         });
     </script>
 </body>
