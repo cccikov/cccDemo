@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>swiper-demo</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <style type="text/css">
+    html,
+    body,
+    #wrap {
+        height: 100%;
+        position: relative;
+    }
+
+    .nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        width: 100%;
+        font-size: 14px;
+        background: #fff;
+        color: #999;
+    }
+
+    .nav .swiper-slide {
+        width: auto;
+        line-height: 40px;
+        padding: 0 12px;
+        box-sizing: border-box;
+    }
+
+    .page {
+        height: 100%
+    }
+
+    .page .swiper-slide {
+        box-sizing: border-box;
+        line-height: 3;
+        padding: 40px 0 0;
+        font-size: 40px;
+        background: #fafafa;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <!-- nav -->
+        <div class="swiper-container nav">
+            <div class="swiper-wrapper">
+                <span class="swiper-slide" style="color:rgb(255,72,145)">推荐</span>
+                <span class="swiper-slide">今日头条</span>
+                <span class="swiper-slide">关注</span>
+                <span class="swiper-slide">头条号</span>
+                <span class="swiper-slide">科技</span>
+                <span class="swiper-slide">精选</span>
+                <span class="swiper-slide">汽车</span>
+                <span class="swiper-slide">电影</span>
+                <span class="swiper-slide">问答</span>
+                <span class="swiper-slide">游戏</span>
+                <span class="swiper-slide">家居</span>
+                <span class="swiper-slide">家居</span>
+
+                <div class="bar">
+                    <div class="bar-color"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- page -->
+        <div class="swiper-container page">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">推荐-page</div>
+                <div class="swiper-slide">今日头条-page</div>
+                <div class="swiper-slide">关注-page</div>
+                <div class="swiper-slide">头条号-page</div>
+                <div class="swiper-slide">科技-page</div>
+                <div class="swiper-slide">精选-page</div>
+                <div class="swiper-slide">汽车-page</div>
+                <div class="swiper-slide">电影-page</div>
+                <div class="swiper-slide">问答-page</div>
+                <div class="swiper-slide">游戏-page</div>
+                <div class="swiper-slide">家居-page</div>
+                <div class="swiper-slide">家居-page</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var nav_width_arr = [];
+
+    var nav_swiper = new Swiper(".nav", {
+        slidesPerView: "auto",
+        freeMode: true,
+        on: {
+            init: function() {
+                var nav_slides = this.slides;
+                for (var i = 0, len = nav_slides.length; i < len; i++) {
+                    var width = nav_slides[i].offsetWidth;
+                    nav_width_arr.push(width);
+                }
+                console.log(nav_width_arr);
+            }
+        }
+    });
+
+
+
+
+    var page_swiper = new Swiper(".page", {
+
+    });
+    </script>
+</body>
+
+</html>
