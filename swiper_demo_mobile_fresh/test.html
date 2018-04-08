@@ -204,24 +204,27 @@
 
                 activeIndex = this.activeIndex;
                 activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft;
+
                 //释放时导航粉色条移动过渡
                 bar.transition(tSpeed);
                 bar.transform('translateX(' + activeSlidePosition + 'px)');
+
                 //释放时文字变色过渡
                 navSwiper.slides.eq(activeIndex).transition(tSpeed);
                 navSwiper.slides.eq(activeIndex).css('color', 'rgba(255,72,145,1)');
-                if (activeIndex > 0) {
+                if (activeIndex > 0) { // 控制当前活动块前一个的颜色
                     navSwiper.slides.eq(activeIndex - 1).transition(tSpeed);
                     navSwiper.slides.eq(activeIndex - 1).css('color', 'rgba(51,51,51,1)');
                 }
-                if (activeIndex < this.slides.length) {
+                if (activeIndex < this.slides.length) { // 控制当前活动块后一个的颜色
                     navSwiper.slides.eq(activeIndex + 1).transition(tSpeed);
                     navSwiper.slides.eq(activeIndex + 1).css('color', 'rgba(51,51,51,1)');
                 }
+
                 //导航居中
                 navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft; //activeSlide距左边的距离
 
-                navSwiper.setTransition(tSpeed);
+                navSwiper.setTransition(tSpeed); // 见 mySwiper.setTranslate(translate) API 相当于 navSwiper.$wrapperEl.transition()
                 if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
                     navSwiper.setTranslate(0);
                 } else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
