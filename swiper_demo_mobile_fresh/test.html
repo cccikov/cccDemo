@@ -226,11 +226,11 @@
 
                 navSwiper.setTransition(tSpeed); // 见 mySwiper.setTranslate(translate) API 相当于 navSwiper.$wrapperEl.transition()
                 if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
-                    navSwiper.setTranslate(0);
+                    navSwiper.setTranslate(0); // 最前
                 } else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
-                    navSwiper.setTranslate(clientWidth - navWidth);
+                    navSwiper.setTranslate(clientWidth - navWidth); // 最后
                 } else {
-                    navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft);
+                    navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft); // 中间
                 }
 
             },

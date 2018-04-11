@@ -105,6 +105,7 @@
     </div>
     <script type="text/javascript">
     var nav_slides; // nav 的 slides
+    var nav_width;
     var bar; // 滑块
     var speed = 300; // 触摸滑动时释放至贴合的时间 , 也是全局过渡效果的过渡时间
 
@@ -115,6 +116,8 @@
             init: function() {
                 nav_slides = this.slides;
                 var nav_slides_per_width = parseInt(nav_slides.eq(0).css("width"));
+
+                nav_width = parseInt(this.$el.css("width"));
 
                 bar = this.$el.find(".bar"); // 获取滑块dom
                 bar.css("width", (nav_slides_per_width - 20) + "px"); // 设置滑块宽度
