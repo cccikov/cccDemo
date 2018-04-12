@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>swiper-demo</title>
+    <title>swiper-demo2</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
@@ -106,6 +106,7 @@
     <script type="text/javascript">
     var nav_slides; // nav 的 slides
     var nav_width; // nav 的 container 宽度，即nav的可视宽度
+    var nav_wrapper_width; // nav 的 wrapper 内容宽度
     var nav_slides_per_width; // 每个 nav 的 slide 宽度
     var bar; // 滑块
     var speed = 300; // 触摸滑动时释放至贴合的时间 , 也是全局过渡效果的过渡时间
@@ -115,10 +116,12 @@
         freeMode: true,
         on: {
             init: function() {
+                nav_width = parseInt(this.$el.css("width"));
+
+                nav_wrapper_width = this.$wrapperEl[0].scrollWidth;
+
                 nav_slides = this.slides;
                 nav_slides_per_width = parseInt(nav_slides.eq(0).css("width"));
-
-                nav_width = parseInt(this.$el.css("width"));
 
                 bar = this.$el.find(".bar"); // 获取滑块dom
                 bar.css("width", (nav_slides_per_width - 20) + "px"); // 设置滑块宽度
@@ -146,20 +149,44 @@
 
                 /*
                  * 如果一个 slide 在 container 视区中间；那么该slide离视区左边缘的距离是； container.width/2 - slide.width/2 ;
-                 * 即系 nav_width/2 - nav_slides_per_width/2
+                 * 即系 nav_width/2 - nav_slides_per_width/2 ；我称之为 关键距离 key_distance
                  *
                  * slide 距离 wrapper 边缘的距离是 active_nav_position
                  *
                  * 我们为了让 slide 在 视区中间，就要移动 wrapper 来实现
                  * 
-                 * wrapper 需要向左移动的距离是 active_nav_position - （nav_width/2 - nav_slides_per_width/2）
+                 * wrapper 需要向左移动的距离是 active_nav_position - （nav_width/2 - nav_slides_per_width/2）;即系active_nav_position - key_distance
+                 */
+                
+                var key_distance = nav_width/2 - nav_slides_per_width/2; // 关键距离
+
+                // 你会发现 ， 其实前面几个 slide 和最后几个 slide  活动时；是没有必要移动 wrapper 的
+
+                /* 
+                当wrapper在初始位置的时候，如果slide距离视区左边边缘的距离少于关键距离；该slide活动的时候没有必要移动wrapper；因为如果硬要该slide居中的话，会导致wrapper倒移；
+                那么实际上这些slide在任何时候距离wrapper左边边缘的距离也是少于关键距离
+                */
+
+                /* 
+                当wrapper在最大位置的时候，如果slide距离视区右边边缘的距离少于关键距离；该slide活动的时候没有必要移动wrapper；因为如果硬要该slide居中的话，会导致wrapper超出最大位移；
+                那么实际上这些slide在任何时候距离wrapper右边边缘的距离也是少于关键距离
+                转化为距离wrapper左边边缘的话就是大于 nav_wrapper_width -（key_distance + nav_slides_per_width）
+                最大移动距离是nav_wrapper_width - nav_width
                  */
 
-                var nav_wrapper_translate = -(active_nav_position - (nav_width/2 - nav_slides_per_width/2)); // 由于是向左 ； 所以是负数
+
+                // 同理，我们通过活动的slide的active_nav_position判断是否少于关键距离，来控制wrapper是否移动
+                if(active_nav_position < key_distance){
+                    var nav_wrapper_translate = 0;
+                }else if(active_nav_position > nav_wrapper_width - (key_distance + nav_slides_per_width)){
+                    var nav_wrapper_translate = -(nav_wrapper_width - nav_width);// // 由于是向左 ； 所以是负数
+                }else{
+                    var nav_wrapper_translate = -(active_nav_position - key_distance); // // 由于是向左 ； 所以是负数
+                }
                 nav_swiper.setTranslate(nav_wrapper_translate);
 
-                
-                
+             
+            
             }
         }
     });
