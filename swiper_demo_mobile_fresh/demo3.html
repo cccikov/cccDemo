@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>swiper-demo2</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <style type="text/css">
+        html,
+        body,
+        #wrap {
+            height: 100%;
+            position: relative;
+        }
+
+        .nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+            font-size: 14px;
+            background: #fff;
+            color: #999;
+            color: rgb(153, 153, 153);
+        }
+
+        .nav .swiper-slide {
+            width: auto;
+            line-height: 40px;
+            padding: 0 12px;
+            box-sizing: border-box;
+        }
+
+        .nav .bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 0 10px;
+            width: 40px;
+        }
+
+        .nav .bar-color {
+            width: 100%;
+            height: 3px;
+            background: #ff4891;
+            background: rgb(255, 72, 145);
+        }
+
+        .page {
+            height: 100%
+        }
+
+        .page .swiper-slide {
+            box-sizing: border-box;
+            line-height: 3;
+            padding: 40px 0 0;
+            font-size: 40px;
+            background: #fafafa;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <!-- nav -->
+        <div class="swiper-container nav">
+            <div class="swiper-wrapper">
+                <span class="swiper-slide" style="color:rgb(255,72,145)">推荐</span>
+                <span class="swiper-slide">头条</span>
+                <span class="swiper-slide">关注</span>
+                <span class="swiper-slide">热门</span>
+                <span class="swiper-slide">科技</span>
+                <span class="swiper-slide">精选</span>
+                <span class="swiper-slide">汽车</span>
+                <span class="swiper-slide">电影</span>
+                <span class="swiper-slide">问答</span>
+                <span class="swiper-slide">游戏</span>
+                <span class="swiper-slide">家居</span>
+                <div class="bar">
+                    <div class="bar-color"></div>
+                </div>
+            </div>
+        </div>
+        <!-- page -->
+        <div class="swiper-container page">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">推荐-page</div>
+                <div class="swiper-slide">头条-page</div>
+                <div class="swiper-slide">关注-page</div>
+                <div class="swiper-slide">热门-page</div>
+                <div class="swiper-slide">科技-page</div>
+                <div class="swiper-slide">精选-page</div>
+                <div class="swiper-slide">汽车-page</div>
+                <div class="swiper-slide">电影-page</div>
+                <div class="swiper-slide">问答-page</div>
+                <div class="swiper-slide">游戏-page</div>
+                <div class="swiper-slide">家居-page</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var nav_slides; // nav 的 slides
+        var nav_width; // nav 的 container 宽度，即nav的可视宽度
+        var nav_wrapper_width; // nav 的 wrapper 内容宽度
+        var nav_slides_per_width; // 每个 nav 的 slide 宽度
+        var bar; // 滑块
+        var speed = 300; // 触摸滑动时释放至贴合的时间 , 也是全局过渡效果的过渡时间
+
+        var nav_swiper = new Swiper(".nav", {
+            slidesPerView: "auto",
+            freeMode: true,
+            on: {
+                init: function () {
+                    nav_width = parseInt(this.$el.css("width"));
+
+                    nav_wrapper_width = this.$wrapperEl[0].scrollWidth;
+
+                    nav_slides = this.slides;
+                    nav_slides_per_width = parseInt(nav_slides.eq(0).css("width"));
+
+                    bar = this.$el.find(".bar"); // 获取滑块dom
+                    bar.css("width", (nav_slides_per_width - 20) + "px"); // 设置滑块宽度
+                }
+            }
+        });
+
+
+
+
+        var page_swiper = new Swiper(".page", {
+            speed: speed,
+            on: {
+                transitionStart: function () {
+                    var active_page_index = this.activeIndex; // 当前活动块的索引
+                    var active_nav_position = nav_slides[active_page_index].offsetLeft; // 对应的nav应该活动的块的距离wrapper的位置
+
+                    // 设置滑块偏移量
+                    bar.css('transform', "translate(" + active_nav_position + "px , 0px)");
+
+                    // 设置nav slide 颜色
+                    nav_slides.eq(active_page_index).css("color", "rgb(255,72,145)");
+                    nav_slides.eq(active_page_index + 1).css("color", "rgb(153,153,153)"); // rgb(153,153,153) 就是 #999
+                    nav_slides.eq(active_page_index - 1).css("color", "rgb(153,153,153)");
+
+                    // nav slide活动块居中
+                    var key_distance = nav_width / 2 - nav_slides_per_width / 2; // 关键距离
+                    if (active_nav_position < key_distance) {
+                        var nav_wrapper_translate = 0;
+                    } else if (active_nav_position > nav_wrapper_width - (key_distance + nav_slides_per_width)) {
+                        var nav_wrapper_translate = -(nav_wrapper_width - nav_width);// // 由于是向左 ； 所以是负数
+                    } else {
+                        var nav_wrapper_translate = -(active_nav_position - key_distance); // // 由于是向左 ； 所以是负数
+                    }
+                    nav_swiper.setTranslate(nav_wrapper_translate);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
