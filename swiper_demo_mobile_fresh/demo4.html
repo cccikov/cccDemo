@@ -201,6 +201,21 @@
                 }
             }
         });
+
+
+        nav_swiper.$el.on('touchstart', function(e) {
+            e.preventDefault(); //去掉按压阴影
+        })
+
+        // 点击导航的时候
+        nav_swiper.on('tap', function(e) {
+            var click_index = this.clickedIndex;
+            var click_slide = this.slides.eq(click_index);
+            page_swiper.slideTo(click_index, speed);
+            this.slides.css('color', 'rgba(153,153,153,1)');
+            click_slide.css('color', 'rgba(255,72,145,1)');
+        })
+
     </script>
 </body>
 
