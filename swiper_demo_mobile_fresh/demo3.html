@@ -181,9 +181,10 @@
                         if (page_slide_progress_abs < 1) { // 滑动的时候只有两个slides的progress的绝对值少于1 , 一个是活动块 , 一个是将要成为活动块
 
                             //slide progress 绝对值为 0 的时候颜色是255,72,145 ; 1 的时候颜色为153,153,153
-                            var r = Math.floor(255 + (153 - 255) * page_slide_progress_abs); // 初始值加上变化量
-                            var g = Math.floor(72 + (153 - 72) * page_slide_progress_abs); // 记住一定要加上 Math.floor 因为rgba只接受整数
-                            var b = Math.floor(145 + (153 - 145) * page_slide_progress_abs);
+                            var rate = Math.pow(page_slide_progress_abs, 1.8); // page_slide_progress_abs的变化是0-1 ; 那么他的指数也是0-1 ;  如果指数大于1 , 那么在红色的情况会多一点 (小数的平方会更小) ; 增加指数后 , 变化不再是平滑 , 效果更佳好看
+                            var r = Math.floor(255 + (153 - 255) * rate); // 初始值加上变化量
+                            var g = Math.floor(72 + (153 - 72) * rate); // 记住一定要加上 Math.floor 因为rgba只接受整数
+                            var b = Math.floor(145 + (153 - 145) * rate);
 
                             nav_slides.eq(i).css("color", "rgb(" + r + "," + g + "," + b + ")");
                         }
