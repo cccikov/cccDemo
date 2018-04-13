@@ -11,12 +11,9 @@
 
 <body>
     <div id="top">
-
         <img src="images/top.png" class="addr">
         <img src="images/search.png" class="search">
-
         <!-- 导航 -->
-
         <div class="swiper-container" id="nav">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -67,18 +64,13 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
     <div class="swiper-container" id="page">
         <div class="swiper-wrapper">
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">
-
                             <div class="swiper-container banner">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -94,7 +86,6 @@
                                 <div class="swiper-pagination">
                                 </div>
                             </div>
-
                             <div class="img">
                                 <img src="images/index1.png">
                                 <img src="images/hot.png">
@@ -149,14 +140,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">
-
                             <div class="swiper-container banner">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -225,123 +213,96 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide3</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide4</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide5</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide6</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide7</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide8</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide9</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide10</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide11</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide12</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide13</div>
                     </div>
                 </div>
-
             </div>
             <div class="swiper-slide slidepage">
-
                 <div class="swiper-container scroll">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide slidescroll">slide14</div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
     <div class="img" id="footer">
         <img src="images/footer.png">
     </div>
-
     <script src="js/swiper.min.js"></script>
     <script>
     //暂时设计每个slide大小需要一致
@@ -382,7 +343,7 @@
                     navWidth += parseInt(this.slides.eq(i).css('width'))
                 }
 
-                console.log(navSum , clientWidth , navWidth , this.$wrapperEl[0].scrollWidth);
+                console.log(navSum, clientWidth, navWidth, this.$wrapperEl[0].scrollWidth);
 
                 topBar = this.$el.parents('body').find('#top') //页头
 
@@ -397,12 +358,12 @@
         on: {
             touchMove: function() { // 手指触碰Swiper并滑动（手指）时执行，接受touchmove事件作为参数。此时slide不一定会发生移动，比如你手指的移动方向和swiper的切换方向垂直时。
                 // 改变 nav 的颜色
-                progress = this.progress // 每个slide的progress
+                progress = this.progress; // swiper的progress
                 bar.transition(0)
                 bar.transform('translateX(' + navSum * progress + 'px)') // swiper dom api 设置 transform
                 // 粉色255,72,145 灰色51,51,51 即默认颜色#333
                 for (i = 0; i < this.slides.length; i++) {
-                    slideProgress = this.slides[i].progress
+                    slideProgress = this.slides[i].progress; // 每个slide的progress
                     if (Math.abs(slideProgress) < 1) {
                         r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51); // (255 - 51) * (1 - |slideProgress|²) + 51  ; 是过渡效果变化曲线 , 初始值为51 , 最终值为255-51 , (1 - |slideProgress|²)是曲线核心 , |slideProgress| 的范围是[0,1} , 所以 (1 - |slideProgress|²) 是 {0,1] ; 可查看cccgit里面的tween分析
                         g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
