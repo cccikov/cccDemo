@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>swiper-demo2</title>
+    <title>swiper-demo3</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
@@ -109,19 +109,22 @@
         var nav_wrapper_width; // nav 的 wrapper 内容宽度
         var nav_slides_per_width; // 每个 nav 的 slide 宽度
         var bar; // 滑块
+        var bar_max_translate; // 滑块最大移动距离
         var speed = 300; // 触摸滑动时释放至贴合的时间 , 也是全局过渡效果的过渡时间
 
         var nav_swiper = new Swiper(".nav", {
             slidesPerView: "auto",
             freeMode: true,
             on: {
-                init: function () {
+                init: function() {
                     nav_width = parseInt(this.$el.css("width"));
 
                     nav_wrapper_width = this.$wrapperEl[0].scrollWidth;
 
                     nav_slides = this.slides;
                     nav_slides_per_width = parseInt(nav_slides.eq(0).css("width"));
+
+                    bar_max_translate = nav_slides[nav_slides.length - 1].offsetLeft;
 
                     bar = this.$el.find(".bar"); // 获取滑块dom
                     bar.css("width", (nav_slides_per_width - 20) + "px"); // 设置滑块宽度
@@ -134,8 +137,12 @@
 
         var page_swiper = new Swiper(".page", {
             speed: speed,
+            resistanceRatio: 0,
+            watchSlidesProgress: true,
             on: {
-                transitionStart: function () {
+
+                // 过渡效果开始时 , 滑动松手时 , 或者手动设置切换到指定slide
+                transitionStart: function() {
                     var active_page_index = this.activeIndex; // 当前活动块的索引
                     var active_nav_position = nav_slides[active_page_index].offsetLeft; // 对应的nav应该活动的块的距离wrapper的位置
 
@@ -152,11 +159,35 @@
                     if (active_nav_position < key_distance) {
                         var nav_wrapper_translate = 0;
                     } else if (active_nav_position > nav_wrapper_width - (key_distance + nav_slides_per_width)) {
-                        var nav_wrapper_translate = -(nav_wrapper_width - nav_width);// // 由于是向左 ； 所以是负数
+                        var nav_wrapper_translate = -(nav_wrapper_width - nav_width); // // 由于是向左 ； 所以是负数
                     } else {
                         var nav_wrapper_translate = -(active_nav_position - key_distance); // // 由于是向左 ； 所以是负数
                     }
                     nav_swiper.setTranslate(nav_wrapper_translate);
+                },
+
+
+                // 手指触摸移动滑块的时候
+                touchMove: function() {
+
+                    var page_swiper_progress = this.progress; // page的progress
+                    bar.css('transform', "translate(" + bar_max_translate * page_swiper_progress + "px , 0px)");
+
+
+
+
+                    for (var i = 0, len = this.slides.length; i < len; i++) {
+                        var page_slide_progress_abs = Math.abs(this.slides[i].progress); // 当前活动slides为0 , 上一个为1 , 下一个为-1 ; 先左滑动时 , slide的progress加大 ;
+                        if (page_slide_progress_abs < 1) { // 滑动的时候只有两个slides的progress的绝对值少于1 , 一个是活动块 , 一个是将要成为活动块
+
+                            //slide progress 绝对值为 0 的时候颜色是255,72,145 ; 1 的时候颜色为153,153,153
+                            var r = Math.floor(255 + (153 - 255) * page_slide_progress_abs); // 初始值加上变化量
+                            var g = Math.floor(72 + (153 - 72) * page_slide_progress_abs); // 记住一定要加上 Math.floor 因为rgba只接受整数
+                            var b = Math.floor(145 + (153 - 145) * page_slide_progress_abs);
+
+                            nav_slides.eq(i).css("color", "rgb(" + r + "," + g + "," + b + ")");
+                        }
+                    }
                 }
             }
         });
