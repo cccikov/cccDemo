@@ -109,6 +109,7 @@
         var nav_wrapper_width; // nav 的 wrapper 内容宽度
         var nav_first_slide_width; // nav 的第一个 slide 宽度
         var nav_slides_width_arr = []; // nav 每个slides的宽度
+        var nav_slides_position_arr = []; // nav 每个slides的偏移
         var bar; // 滑块
         var bar_max_translate; // 滑块最大移动距离
         var speed = 300; // 触摸滑动时释放至贴合的时间 , 也是全局过渡效果的过渡时间
@@ -126,7 +127,8 @@
                     nav_first_slide_width = parseInt(nav_slides.eq(0).css("width"));
 
                     for (var i = 0, len = nav_slides.length; i < len; i++) {
-                        nav_slides_width_arr.push(parseInt(nav_slides.eq(i).css("width")))
+                        nav_slides_width_arr.push(parseInt(nav_slides.eq(i).css("width")));
+                        nav_slides_position_arr.push(nav_slides[i].offsetLeft);
                     }
 
                     bar_max_translate = nav_slides[nav_slides.length - 1].offsetLeft;
@@ -191,6 +193,11 @@
                     // console.log(active_page_slide_progress, active_page_index); // 只要 超过 -0.5 或者 0.5 ； 下一次touchMove的活动块索引就会变
 
 
+                    /**
+                     * 其实实时变化都是使用一个原理 --- 初始值加上变化量 = 初始值 + (未来值 - 初始值)*变化率
+                     */
+
+
                     // 设置滑块的宽度
                     bar.transition(0);
                     // 当前slide的宽度 + (未来slide的宽度-当前slide的宽度) * 变化率 = 当前slide的宽度 * (1-变化率) + 未来slide的宽度 * 变化率             --变化率为正数
@@ -202,6 +209,17 @@
                         var bar_width = nav_slides_width_arr[active_page_index] - (nav_slides_width_arr[active_page_index - 1] - nav_slides_width_arr[active_page_index]) * active_page_slide_progress; // 由于active_page_slide_progress是负数 所以用减
                         bar.css("width", (bar_width - 20) + "px");
                     }
+
+
+                    // 设置滑块偏移
+                    if (active_page_slide_progress > 0) {
+                        var bar_position = nav_slides_position_arr[active_page_index] + (nav_slides_position_arr[active_page_index + 1] - nav_slides_position_arr[active_page_index]) * active_page_slide_progress;
+                        bar.css("transform", "translate(" + bar_position + "px , 0px)");
+                    } else if (active_page_slide_progress < 0) {
+                        var bar_position = nav_slides_position_arr[active_page_index] - (nav_slides_position_arr[active_page_index - 1] - nav_slides_position_arr[active_page_index]) * active_page_slide_progress; // 由于active_page_slide_progress是负数 所以用减
+                        bar.css("transform", "translate(" + bar_position + "px , 0px)");
+                    }
+
 
 
                     // nav 颜色切换
