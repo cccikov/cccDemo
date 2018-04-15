@@ -237,6 +237,23 @@
                             nav_slides.eq(i).css("color", "rgb(" + r + "," + g + "," + b + ")");
                         }
                     }
+
+
+                    // nav slide活动块居中
+                    var active_nav_position = nav_slides[active_page_index].offsetLeft; // 对应的nav应该活动的块的距离wrapper的位置
+                    var key_distance = nav_width / 2 - nav_slides_width_arr[active_page_index] / 2; // 关键距离
+                    if (active_nav_position < key_distance) {
+                        var nav_wrapper_translate = 0;
+                    } else if (active_nav_position > nav_wrapper_width - (key_distance + nav_slides_width_arr[active_page_index])) {
+                        var nav_wrapper_translate = -(nav_wrapper_width - nav_width); // // 由于是向左 ； 所以是负数
+                    } else {
+                        var nav_wrapper_translate = -(active_nav_position - key_distance); // // 由于是向左 ； 所以是负数
+                    }
+                    nav_swiper.setTransition(speed);
+                    nav_swiper.setTranslate(nav_wrapper_translate);
+                    // 上面的transitionStart也要同时设置 , 因为太用力滑动 ; 可能page翻过去几页 , 但是touchMove的时候的active_page_index还是触摸的那页 ; 就会导致居中出问题
+
+
                 }
             }
         });
