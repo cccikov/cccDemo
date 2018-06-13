@@ -15,6 +15,22 @@
   /*重点*/
   line-height: 1.5;
 }
+#demo1_2 {
+  margin: 10px;
+}
+#demo1_2 .outer {
+  min-height: 200px;
+  line-height: 200px;
+  background: #efefef;
+}
+#demo1_2 .outer .content {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+#demo1_2 .outer .content p {
+  margin: 0;
+}
 #demo2 {
   margin: 10px;
 }

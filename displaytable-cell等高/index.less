@@ -1,4 +1,5 @@
 /*display table-cell*/
+
 #demo1 {
     margin: 10px;
     p {
@@ -15,6 +16,24 @@
         }
     }
 }
+
+#demo1_2 {
+    margin: 10px;
+    .outer {
+        min-height: 200px;
+        line-height: 200px;
+        background: #efefef;
+        .content {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1.5;
+            p {
+                margin: 0;
+            }
+        }
+    }
+}
+
 #demo2 {
     margin: 10px;
     p {
@@ -26,6 +45,7 @@
         /*重点*/
     }
 }
+
 #demo3 {
     margin: 10px;
     color: #eee;
@@ -45,18 +65,19 @@
         text-align: right;
     }
 }
+
 #demo3-1 {
-    display:table;
-    width:100%;
+    display: table;
+    width: 100%;
     margin: 10px 0;
     color: #eee;
-    .wrap{
-        display:table-row;
+    .wrap {
+        display: table-row;
         .left {
             display: table-cell;
             width: 100px;
             background: darkblue;
-            vertical-align:middle;
+            vertical-align: middle;
             text-align: center;
         }
         .right {
@@ -68,9 +89,10 @@
         }
     }
 }
+
 #demo4 {
     margin: 10px;
-    display: table-row;//有时候需要这个
+    display: table-row; //有时候需要这个
     .col {
         display: table-cell;
         width: 33.3333333333%;
@@ -86,6 +108,7 @@
         }
     }
 }
+
 table {
     border-collapse: collapse;
     td {
@@ -93,13 +116,13 @@ table {
     }
 }
 
-.img-wrap{
+.img-wrap {
     width: 128px;
     height: 128px;
     line-height: 128px;
     text-align: center;
     border: 1px solid #ccc;
-    img{
+    img {
         max-width: 128px;
         max-height: 128px;
         vertical-align: middle;
