@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>逗牛</title>
+		<script type="text/javascript">
+			if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+				var version = parseFloat(RegExp.$1);
+				if (version > 2.3) {
+					var phoneScale = parseInt(window.screen.width) / 640;
+					document.write('<meta name="viewport" content="width=640, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+				} else {
+					document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+				}
+			} else {
+				document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+			}
+		</script>
+		<!--<link rel="stylesheet" type="text/css" href="css/animate.css" />-->
+		<link rel="stylesheet" type="text/css" href="css/animation.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+	</head>
+
+	<body>
+		<div id="audiocontainer" style="display:none">
+			<audio src="audio/bgmusic.MP3" autoplay="autoplay" preload="meta" loop="loop" id="bgmusic"></audio>
+		</div>
+		<audio src="audio/eggmusic.mp3" preload="meta" id="eggmusic"></audio>
+		<div id="wrap">
+			<div id="loading">
+				<span id="loadNum">加载0%</span>
+				<img src="img/common_bg.jpg" style="display: none;" />
+				<img src="img/page_0_0.png" class="logo0" />
+				<img src="img/page_0_1.png" id="loadPic" />
+			</div>
+			<div id="page1">
+				<img data-src="img/page_1_1.png" class="house" />
+				<img data-src="img/page_1_2.png" class="smoke" />
+				<img data-src="img/page_1_3.png" class="brand" />
+				<img data-src="img/page_1_logo.png" class="logo1" />
+				<img data-src="img/page_1_4.png" class="bull1" />
+				<img data-src="img/page_1_5.png" class="bull2" />
+				<img data-src="img/page_1_6.png" class="bull3" />
+				<img data-src="img/page_1_7.png" class="bull4" />
+				<img data-src="img/page_1_8.png" class="bull5" />
+				<img data-src="img/page_1_start.png" id="startBut" />
+			</div>
+			<div id="page2">
+				<img data-src="img/page_2_LOGO.png" class="logo2" />
+				<img src="img/page_2_4.png" id="ham" />
+				<img data-src="img/page_2_1.png" id="egg" />
+				<img data-src="img/page_2_2.png" id="ribbon" />
+				<img data-src="img/page_2_3.png" id="smash" />
+			</div>
+			<div id="page3">
+				<img data-src="img/page_2_LOGO.png" class="logo2" />
+				<img data-src="img/page_3_1.png" class="upEgg" />
+				<img data-src="img/page_2_ribbon.png" class="ribbon3 " />
+				<!--<img data-src="img/page_3_la.gif" class="banana " />-->
+				<img src="img/banzhuan/banzhuan_1.png" class="banana" id="banzhuan" />
+				<img data-src="img/page_3_2.png" class="downEgg" />
+				<img data-src="img/page_3_4.png" class="blueOne" />
+				<img data-src="img/page_3_5.png" class="bluewWord" />
+				<img data-src="img/page_3_6.png" class="blueNote" />
+			</div>
+			<div id="page4">
+				<img data-src="img/page_4_1.png" class="screen" />
+				<img data-src="img/page_4_3.png" class="banana41" />
+				<img data-src="img/page_4_11.png" class="phone" />
+				<img data-src="img/page_4_9.png" class="rabbit" />
+				<img data-src="img/page_4_4.png" class="banana42" />
+				<img data-src="img/page_4_5.png" class="banana43" />
+				<img data-src="img/page_4_6.png" class="banana44" />
+				<img data-src="img/page_4_7.png" class="banana45" />
+				<img data-src="img/page_4_10.png" class="movePoint" />
+				<img src="img/page_4_13.png" class="movePoint2" />
+				<img data-src="img/page_4_12.png" class="word_4" id="word_4" />
+			</div>
+			<div id="page5">
+				<img data-src="img/page_2_LOGO.png" class="logo2" />
+				<div id="word_5" class="word_5"></div>
+				<div class="loading5">
+					<div id="loadingIn"></div>
+					<span id="load5" class="point5">
+						loading...0%
+					</span>
+				</div>
+				<div id="point5" class="point5"></div>
+			</div>
+			<div id="page6">
+				<img data-src="img/page_2_LOGO.png" class="logo2" />
+				<img data-src="img/common_eggUp.png" class="eggUp" />
+				<img data-src="img/page_6_2.png" class="purpleOne" />
+				<img data-src="img/page6_1.png" class="ribbon6" />
+				<img data-src="img/common_eggDown.png" class="eggDown" />
+				<img data-src="img/page_6_3.png" class="word_6" />
+				<img data-src="img/page_6_4.png" class="note_6" />
+				<img data-src="img/page_6_5.png" class="again" id="again" />
+			</div>
+			<div id="page7">
+				<img data-src="img/page_2_LOGO.png" class="logo2" />
+				<img data-src="img/page_7_1.png" class="purple2" />
+				<img data-src="img/page_7_2.png" id="word_7" class="word_7" />
+				<img data-src="img/common_eggUp.png" class="eggUp" />
+				<img data-src="img/page_7_3.png" id="sweat1" class="sweat1" />
+				<img data-src="img/page_7_4.png" class="sweat2" />
+				<img data-src="img/page_7_5.png" class="sweat3" />
+				<img data-src="img/common_eggDown.png" class="eggDown" />
+				<img data-src="img/page_6_5.png" class="again" id="again2" />
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var loading = document.getElementById("loading");
+			var page1 = document.getElementById("page1");
+			var firstindex = 0;
+			var imgFirst = [];
+			var arrfirst = ["img/common_bg.jpg", "img/page_0_0.png", "img/page_0_1.png"];
+			var arr = ["img/common_bg.jpg", "img/page_1_1.png", "img/page_1_logo.png", "img/page_1_1.png", "img/page_1_2.png", "img/page_1_3.png", "img/page_1_4.png", "img/page_1_5.png", "img/page_1_6.png", "img/page_1_7.png", "img/page_1_8.png", "img/page_1_start.png", "img/page_2_LOGO.png", "img/page_2_1.png", "img/page_2_2.png", "img/page_2_3.png", "img/page_5_3.png", "img/page_5_2.png", "img/page_5_1.png"];
+						
+			var jsonGif = {
+				date:[
+					{"url":"img/banzhuan/banzhuan_","len":12},
+					{"url":"img/cao/cao","len":8},
+					{"url":"img/gutou/gutou","len":13},
+					{"url":"img/jiezhi/jiezhi","len":13},
+					{"url":"img/lajiao/lajiao_","len":13},
+					{"url":"img/qiuku/qiuku","len":12},
+					{"url":"img/shoulei/shoulei","len":12},
+					{"url":"img/xian/xian","len":10},
+					{"url":"img/zao/zao","len":11},
+					{"url":"img/pingguo/pingguo","len":12},
+					{"url":"img/rou/","len":11},
+					{"url":"img/xiang/xiang","len":13},
+				]
+			};
+			for(var k=0 ; k<jsonGif.date.length;k++){
+				loadPic(jsonGif.date[k].url,jsonGif.date[k].len)
+			}
+			
+			 //音频
+			var eggmusic = document.getElementById("eggmusic");
+			var bgmusic = document.getElementById("bgmusic");
+			for (var j = 0; j < arrfirst.length; j++) {
+				imgFirst[j] = new Image();
+				imgFirst[j].src = arrfirst[j];
+				imgFirst[j].onload = function() {
+					firstindex++;
+					if (firstindex >= arrfirst.length) {
+						// alert("前三张加载完")
+						loading.style.display = "block";
+						loadPicture();
+						callback();
+						showIMg();
+					}
+				}
+			}
+
+			function showIMg() {
+				var imgList = document.querySelectorAll("img[data-src]");
+				for (var i = 0, len = imgList.length; i < len; i++) {
+					imgList[i].src = imgList[i].getAttribute("data-src");
+				}
+			}
+
+			function loadPicture() {
+				var loadPic = document.getElementById("loadPic");
+				loadPic.index = 0;
+				var timer = null;
+				timer = setInterval(function() {
+					loadPic.index += 30;
+					loadPic.style.webkitTransform = "rotate(" + loadPic.index + "deg)";
+				}, 100)
+			}
+
+			function callback() {
+				var loadNum = document.getElementById("loadNum");
+				var loadIndex = 0;
+				for (var i = 0; i < arr.length; i++) {
+					var imgObj = new Image();
+					imgObj.src = arr[i];
+					imgObj.onload = function() {
+						loadIndex++;
+						loadNum.innerHTML = "加载" + parseInt(loadIndex / arr.length * 100) + "%";
+						if (loadIndex >= arr.length-10) {
+							//							alert("后面的加载完")
+							//图像加载完成							
+							cb();
+							pageone();
+						}
+					}
+				}
+
+				function cb() {
+					loading.style.display = "none";
+					page1.style.display = "block";
+				}
+			}
+			var banzhuan = document.getElementById("banzhuan");
+			 //address 图片地址中数字前的字符串  ，len 图片个数
+			function gif(address, len) {
+				var index = 1;
+				var timer = setInterval(function() {
+					index++;
+					if (index > len)
+						index = 1;
+					banzhuan.src = address + index + ".png";
+				}, 50)
+			}
+
+			function loadPic(address, len) {
+				for (var i = 1; i <= len; i++) {
+					arr.push(address + i + ".png")
+				}
+			}
+		</script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

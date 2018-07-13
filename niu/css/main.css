@@ -1,0 +1,345 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body,
+html {
+	width: 640px;  
+	height: 1041px;
+	margin: 0 auto;
+}
+#loading,#page1,#page2,#page3,#page4,#page5,#page6,#page7{
+	display: none;
+}
+#wrap {
+	position: relative;
+	height: 100%;
+	
+}
+#loading{
+	position: relative;
+	height: 100%;	
+	overflow: hidden;
+	background-image: url(../img/common_bg.jpg);
+	/*background-color: black;*/
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+#page1 {
+	position: relative;
+	width: 640px;
+	height: 100%;	
+	overflow: hidden;
+	background-image: url(../img/common_bg.jpg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+#page2,#page3,#page4,#page5,#page6,#page7{
+	position: relative;
+	width: 640px;
+	height: 100%;	
+	overflow: hidden;
+	background-image: url(../img/common_bg.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+/*loading begin*/
+.logo0{
+	position: absolute;
+	top: 234px;
+	left: 177px;
+}
+#loadPic{
+	position: absolute;
+	top: 589px;
+	left: 299px;
+}
+#loadNum{
+	position: absolute;
+	top: 646px;
+	left: 284px;
+	line-height: 18px;
+	width: 80px;
+	text-align: center;
+	font-size: 17px;
+	color: #fff;
+}
+/*page1 begin*/
+.house{
+	position: absolute;
+	top: 15px;
+	left: 198px;
+}
+.smoke{
+	position: absolute;
+	top: 20px;
+	left: 542px;
+}
+.brand{
+	position: absolute;
+	top: 59px;
+	left: 417px;
+}
+.logo1{
+	position: absolute;
+	top: 341px;
+	left: 72px;
+}
+.bull1{
+	position: absolute;
+	top:221px;
+	left: 131px;
+}
+.bull2{
+	position: absolute;
+	top: 290px;
+	left: 347px;
+}
+.bull3{
+	position: absolute;
+	top: 533px;
+	left: 54px;
+}
+.bull4{
+	position: absolute;
+	top: 569px;
+	left: 432px;
+}
+.bull5{
+	position: absolute;
+	top: 627px;
+	left: 264px;
+}
+#startBut{
+	position: absolute;
+	top: 840px;
+	left: 140px;
+}
+/*page2 begin*/
+.logo2{
+	position: absolute;
+	top: 28px;
+	left: 157px;
+}
+#ham{
+	position: absolute;
+	top: 191px;
+	left: 383px;
+	transform-origin: 219px 167px;	
+	-webkit-transform: rotate3d(0, 0, 1, -5deg);
+}
+#egg{
+	position: absolute;
+	top: 298px;
+	left: 147px;	
+}
+#ribbon{
+	position: absolute;
+	top: 515px;
+	left: 58px;
+}
+#smash{
+	position: absolute;
+	top: 883px;
+	left: 191px;
+}
+/*page3 begin*/
+#page3 img{
+	position: absolute;
+}
+.upEgg{	
+	top: 359px;
+	left: 136px;	
+}
+.downEgg{
+	top: 441px;
+	left: 134px;
+}
+.banana{	
+	bottom: 435px;
+	left: 138px;
+	width: 306px;		
+}
+.blueOne{
+	bottom: 52px;
+	left: 159px;
+}
+.bluewWord{
+	bottom: 150px;
+	left: 140px;
+}
+.blueNote{	
+	bottom: 95px;
+	left: 201px;
+}
+.ribbon3{
+	left: 49px;
+	top:230px;
+}
+/*page4 begin*/
+.screen{
+	position: absolute;
+	top: 0;
+	left: 30px;
+}
+.banana41{
+	position: absolute;
+	top: 507px;
+	left: 382px;
+}
+.banana42{
+	position: absolute;
+	top: 393px;
+	left: 318px;
+}
+.banana43{
+	position: absolute;
+	top: 305px;
+	left: 275px;
+}
+.banana44{
+	position: absolute;
+	top:223px;
+	left: 235px;
+}
+.banana45{
+	position: absolute;
+	top: 169px;
+	left: 212px;
+}
+.rabbit{
+	position: absolute;
+	top: 540px;
+	left: 256px;
+}
+.phone{
+	position: absolute;
+	top: 528px;
+	left: 420px;
+}
+.movePoint{
+	position: absolute;
+	top: 587px;
+	left: 298px;
+}
+.movePoint2{
+	position: absolute;
+	top: 783px;
+	left: 252px;
+}
+.word_4{
+	position: absolute;
+	top: 889px;
+	left: 80px;
+	opacity: 0;
+}
+/*page5 begin*/
+#word_5{
+	position: absolute;
+	top: 472px;
+	left: 154px;	
+	width: 0px;
+	height: 36px;
+	background: url(../img/page_5_3.png) no-repeat;
+}
+.loading5{
+	position: absolute;
+	top: 542px;
+	left: 56px;
+	width: 515px;
+	height: 50px;
+	background-image: url(../img/page_5_1.png);
+	background-repeat: no-repeat;	
+}
+#loadingIn{
+	position: absolute;
+	top: 7px;
+	left: 9px;
+	width: 375px;
+	height: 35px;
+	background: url(../img/page_5_2.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+#load5{
+	position: absolute;
+	top: 9px;
+	left: 183px;
+	width: 200px;
+	height: 27px;
+	font-family: CarterOne;
+	font-size: 28px;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0px 0px 2px #22712a,0px 0px 2px #22712a,0px 0px 2px #22712a;
+}
+#point5{
+	position: absolute;
+	top: 643px;
+	left: 219px;
+	width: 0px;
+	height: 6px;
+	background: url(../img/page_5_4.png);
+}
+/*page6*/
+.eggUp{
+	position: absolute;
+	top: 426px;
+	left: 169px;
+}
+.eggDown{
+	position: absolute;
+	top: 495px;
+	left: 172px;
+}
+.purpleOne{
+	position: absolute;
+	top: 285px;
+	left: 156px;
+}
+.ribbon6{
+	position: absolute;
+	top: 248px;
+	left: 58px;
+}
+.word_6{	
+	position: absolute;
+	top: 374px;
+	left: 204px;
+}
+.note_6{
+	position: absolute;
+	top: 710px;
+	left: 176px;
+}
+.again{
+	position: absolute;
+	top: 866px;
+	left: 168px;
+}
+/*page7*/
+.purple2{
+	position: absolute;
+	top: 224px;
+	left: 111px;
+}
+#word_7{
+	position: absolute;
+	top: 374px;
+	left: 205px;
+}
+#sweat1{
+	position: absolute;
+	top: 352px;
+	left: 213px;
+}
+.sweat2{
+	position: absolute;
+	top: 491px;
+	left: 479px;
+}
+.sweat3{
+	position: absolute;
+	top: 557px;
+	left: 351px;
+}
