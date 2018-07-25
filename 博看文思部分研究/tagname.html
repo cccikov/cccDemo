@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>	
+		<div id="di">
+			<p>Lorem ipsum dolor sit amet!</p>
+			<span><loren2></loren2></span>
+			<div>
+				<p>Lorem ipsum dolor sit amet.</p>
+			</div>
+			<<>
+			chenmeihau
+			</123>
+		</div>
+		<script type="text/javascript">
+			var div = document.getElementById("di");
+			//去掉标签
+			var str =  '<p>Lorem sdf d <> ipsum < dolor <i></i> sit amet!</p>'+
+						 '<span><loren2>Lorem <1>ipsum dolor <> <b></b>s</loren2></span>'+
+						 '<div>'+
+							 '<p>Lorem ipsum do</12cn>lor <3><8>sit <<>amet.</p>'+
+						 '</div>';
+			// var reg1 = /<.\D[^<>]*?>/g;
+			// var reg2 = /(<(?!\d).[^<>]*?>)/g;
+			var reg1 = /<.\D[^<>]*?>/g;
+			var reg2 = /(<[a-zA-Z][^<>]*?>)/g;
+			var str1 = str.replace(reg1,"");
+			var str2 = str1.replace(reg2,"");
+			// alert(str.match(reg));
+			// var reg2 = /<[a-zA-Z/][^<>]*>/g;
+			// var str2 = str.replace(reg2,"");
+			alert(str2);
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+

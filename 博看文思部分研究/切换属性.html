@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择</title>
+	<style type="text/css">
+		div{
+			width: 200px;
+			height: 200px;
+			background: green;
+		}
+	</style>
+</head>
+<body>
+	<select id="selectid">
+		<option value="color">字体颜色</option>
+		<option value="backgroundColor">背景颜色</option>
+		<option value="width">宽</option>
+		<option value="height">高</option>
+		<option value="fontSize">字体大小</option>
+	</select>
+	<input type="text" value="" id="input">
+	<button id="but">切换</button>
+	<div id="div">div</div>
+	<script type="text/javascript">
+		
+
+		but.onclick=function(){
+			var selectid = document.getElementById("selectid").value;
+			var input = document.getElementById("input").value;
+			var but = document.getElementById("but");
+			var div = document.getElementById("div");
+			div.style[selectid]=input;
+		}
+	</script>
+</body>
+</html>

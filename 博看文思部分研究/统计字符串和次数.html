@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 收集统计字符及次数
+    function calculate(str){
+        var arr = str.trim().split('');
+        var times = [];
+        var appearArr = [];
+        for(var i=0,j=0;i<arr.length;i++){
+            if(appearArr.indexOf(arr[i]) == -1){
+                var obj = {};
+                obj.a = arr[i];
+                obj.b = 0;
+                obj.b++;
+                appearArr.push(arr[i]);
+                times[j] = obj;
+                j++
+            }else{
+                times[appearArr.indexOf(arr[i])].b++;
+            }
+        }
+        console.log(times[max(times)].a + "||" + times[max(times)].b);
+        return times[max(times)];
+    }
+    // 对数组进行排序
+    function max(arr){
+        var m;
+        var a = 0;
+        m = arr[0].b;
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].b > m){
+                m = arr[i].b;
+                a = i;
+            }
+        }
+        return a;
+    }
+    calculate("a");
+    </script>
+</body>
+</html>

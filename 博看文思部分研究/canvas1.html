@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{padding: 0;margin: 0}
+	#canvas {
+		background: #eee;
+		margin: 0 auto;
+	}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	ctx.translate(250,250);
+
+	var disX = 0;
+	var disY = 0;
+	var disZ = 0;
+	var focusLen = 300;
+	var speedZ = 10;
+
+	var arr = [];
+	for (var i = 0; i < 10; i++) {
+		var obj = {
+			disX:-250+500*Math.random(),disY:-250+500*Math.random(),disZ:i*5,speedZ:10+10*Math.random()
+		}
+		arr.push(obj);	
+	}
+
+	setInterval(function(){
+		ctx.clearRect(-250,-250,750,750);
+		
+		for (var i = 0; i < arr.length; i++) {
+			ctx.save();
+			arr[i].disZ += arr[i].speedZ;
+			if (arr[i].disZ>300 || arr[i].disZ<-50) {
+				arr[i].speedZ *= -1;
+			}
+			var scaleN = focusLen/(focusLen+arr[i].disZ);
+
+			var x = arr[i].disX * scaleN;
+			var y = arr[i].disY * scaleN;
+			
+			
+			ctx.translate(x,y);
+			ctx.scale(scaleN,scaleN);
+			ctx.beginPath();
+			ctx.arc(0,0,20,0,2*Math.PI);
+			var changeColor = ctx.createRadialGradient(0,0,0,0,0,20);
+			changeColor.addColorStop(0,"white");
+			changeColor.addColorStop(1,"#000");
+			ctx.fillStyle=changeColor;
+			ctx.fill();
+			ctx.restore();
+		}
+	},20);
+	
+	</script>
+</body>
+</html>
