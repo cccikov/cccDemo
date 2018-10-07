@@ -235,7 +235,7 @@
     // $(container).css("transform", "scale(0.2)")
 
     $("#wrap").on("touchstart", function(e) {
-        e.preventDefault();
+        e.preventDefault(); // 这里禁用了，也禁用了浏览器的任何默认touch事件，如下拉刷新页面
         // e.stopPropagation();
         var that = $("#container");
         var _this = $(this);
@@ -250,11 +250,13 @@
 
         $(window).off("touchmove").on("touchmove", function(e) { //要注意添加事件的对象
             console.log(canvasTouch);
+            if(e.target.id == "wrap" && !!canvas && !!canvas.discardActiveObject){ // 如果target不是canvas，那么就取消canvas里面对象的选定状态。
+                canvas.discardActiveObject();
+                canvas.requestRenderAll();
+            }
             if (canvasTouch) {
                 return
             }
-            e.preventDefault();
-            e.stopPropagation();
 
             /////////////////////
             // 获取 transform 属性 //
