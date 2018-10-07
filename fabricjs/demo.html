@@ -17,7 +17,8 @@
         display: block;
         max-width: 100%;
         max-height: 100%;
-        opacity: 1;
+        opacity: 0.1;
+        pointer-events: none;
     }
 
     #test {
@@ -111,8 +112,8 @@
         // }
 
 
-        $("#canvas")[0].width = containerW / 4;
-        $("#canvas")[0].height = containerH / 4;
+        $("#canvas")[0].width = containerW / 2;
+        $("#canvas")[0].height = containerH / 2;
 
         container.appendChild(img);
 
@@ -133,17 +134,23 @@
         window.canvas = canvas;
 
         fabric.Image.fromURL("./huxing.png", function(img) {
-            img.set({ width: canvas.width / 4, height: canvas.height / 4, originX: '0', originY: '0' });
+            img.scale(canvas.width / img.width);
+            img.set({
+                originX: "center",
+                originY: "center",
+                top: canvas.height / 2,
+                left: canvas.width / 2,
+            });
             canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
         });
 
         fabric.Image.fromURL('../niu/img/page_3_3.png', function(img) {
-            img.scale(0.3); //图片缩小倍数
+            // img.scale(0.3); //图片缩小倍数
             img.set({
-                cornerSize: 30,
+                cornerSize: 40 * canvas.width / window.innerWidth,
                 cornerStyle: "circle",
                 // cornerColor:"#fff",
-                rotatingPointOffset: 15,
+                rotatingPointOffset: 15 * canvas.width / window.innerWidth,
                 hasBorders: false,
                 transparentCorners: false,
                 originX: "center",
