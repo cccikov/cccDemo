@@ -181,7 +181,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') {
 
 if (typeof(eventjs) === "undefined") var eventjs = {};
 
-(function(root) { 
+(function(root) {
 // Add custom *EventListener commands to HTMLElements (set false to prevent funkiness).
 root.modifyEventListener = false;
 
@@ -1528,7 +1528,7 @@ root.gesture = function(conf) {
 			var dx = touch.move.x - self.x;
 			var dy = touch.move.y - self.y;
 			var distance = Math.sqrt(dx * dx + dy * dy);
-			scale += distance / start.distance;
+			scale += 1;
 			// Calculate rotation.
 			var angle = Math.atan2(dx, dy) / RAD_DEG;
 			var rotate = (start.angle - angle + 360) % 360 - 180;
@@ -8033,7 +8033,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
 })(typeof exports !== 'undefined' ? exports : this);
 (function() {
 
-  
+
 
   var clone = fabric.util.object.clone;
 
@@ -8128,7 +8128,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       return object;
     },
 
-    
+
 
     /**
      * Returns an instance of CanvasGradient
@@ -8168,7 +8168,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
 
   fabric.util.object.extend(fabric.Gradient, {
 
-    
+
 
     /**
      * Returns {@link fabric.Gradient} instance from its object representation
@@ -8350,7 +8350,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       return object;
     },
 
-    
+
 
     setOptions: function(options) {
       for (var prop in options) {
@@ -8490,7 +8490,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       return [this.offsetX, this.offsetY, this.blur, this.color].join('px ');
     },
 
-    
+
 
     /**
      * Returns object representation of a shadow
@@ -9758,7 +9758,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
       return data;
     },
 
-    
+
 
     /**
      * Moves an object or the objects of a multiple selection
@@ -18108,10 +18108,10 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       };
     },
 
-    
+
   });
 
-  
+
 
   /**
    * Returns fabric.Line instance from an object representation
@@ -18235,7 +18235,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       return this.callSuper('toObject', ['radius', 'startAngle', 'endAngle'].concat(propertiesToInclude));
     },
 
-    
+
 
     /**
      * @private
@@ -18278,7 +18278,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     },
   });
 
-  
+
 
   /**
    * Returns {@link fabric.Circle} instance from an object representation
@@ -18366,7 +18366,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       ctx.closePath();
     },
 
-    
+
   });
 
   /**
@@ -18485,7 +18485,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       return this.callSuper('toObject', ['rx', 'ry'].concat(propertiesToInclude));
     },
 
-    
+
 
     /**
      * @private
@@ -18507,7 +18507,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     },
   });
 
-  
+
 
   /**
    * Returns {@link fabric.Ellipse} instance from an object representation
@@ -18665,10 +18665,10 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       return this.callSuper('toObject', ['rx', 'ry'].concat(propertiesToInclude));
     },
 
-    
+
   });
 
-  
+
 
   /**
    * Returns {@link fabric.Rect} instance from an object representation
@@ -18798,7 +18798,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       });
     },
 
-    
+
 
 
     /**
@@ -18859,7 +18859,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     }
   });
 
-  
+
 
   /**
    * Returns fabric.Polyline instance from an object representation
@@ -18922,7 +18922,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     },
   });
 
-  
+
 
   /**
    * Returns fabric.Polygon instance from an object representation
@@ -19401,7 +19401,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       return o;
     },
 
-    
+
 
     /**
      * Returns number representation of an instance complexity
@@ -19806,7 +19806,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     }
   };
 
-  
+
 
 })(typeof exports !== 'undefined' ? exports : this);
 (function(global) {
@@ -20323,7 +20323,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       }
     },
 
-    
+
   });
 
   /**
@@ -20786,7 +20786,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       return this.cropX || this.cropY || this.width < this._element.width || this.height < this._element.height;
     },
 
-    
+
 
     /**
      * Returns source of an image
@@ -21134,7 +21134,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     }, null, imgOptions && imgOptions.crossOrigin);
   };
 
-  
+
 
 })(typeof exports !== 'undefined' ? exports : this);
 fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prototype */ {
@@ -26544,7 +26544,7 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
     }
   });
 
-  
+
 
   /**
    * Returns fabric.Text instance from an object representation
