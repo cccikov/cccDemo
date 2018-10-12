@@ -98,22 +98,22 @@
     }
     imgPromise("./huxing.png").then((img) => {
         container = document.getElementById("container");
-        var containerW = img.width;
-        var containerH = img.height;
+        var imgW = img.width;
+        var imgH = img.height;
 
         // 窗口尺寸
         // var winW = window.innerWidth;
         // var winH = window.innerHeight;
 
-        // if (containerW / containerH > winW / winH) { // 即系相同大小下，图片更宽
-        //     var rate = winW / containerW;
+        // if (imgW / imgH > winW / winH) { // 即系相同大小下，图片更宽
+        //     var rate = winW / imgW;
         // } else { // 即系相同大小下，图片更高
-        //     var rate = winH / containerH;
+        //     var rate = winH / imgH;
         // }
 
 
-        $("#canvas")[0].width = containerW / 2;
-        $("#canvas")[0].height = containerH / 2;
+        $("#canvas")[0].width = imgW / 2;
+        $("#canvas")[0].height = imgH / 2;
 
         container.appendChild(img);
 
@@ -125,9 +125,10 @@
         });
 
         $(".canvas-container").css({
+            position: "absolute",
+        }).add("canvas,#container").css({
             width: containerW + "px",
             height: containerH + "px",
-            position: "absolute"
         });
 
 
@@ -172,6 +173,34 @@
             canvas.add(img);
         });
 
+        fabric.Image.fromURL('../niu/img/page_3_3.png', function(img) {
+            // img.scale(0.3); //图片缩小倍数
+            img.set({
+                cornerSize: 40 * canvas.width / window.innerWidth,
+                cornerStyle: "circle",
+                // cornerColor:"#fff",
+                rotatingPointOffset: 15 * canvas.width / window.innerWidth,
+                hasBorders: false,
+                transparentCorners: false,
+                originX: "center",
+                originY: "center",
+                top: canvas.height / 2,
+                left: canvas.width / 2,
+                _controlsVisibility: {
+                    'tl': false,
+                    'tr': false,
+                    'br': false,
+                    'bl': false,
+                    'ml': false,
+                    'mt': false,
+                    'mr': false,
+                    'mb': false,
+                    'mtr': true
+                }
+            })
+            canvas.add(img);
+        });
+
         // fabric.Image.fromURL('./img/chrome_512.png', function(img) {
         //     img.scale(0.3); //图片缩小倍数
         //     canvas.add(img);
@@ -184,14 +213,35 @@
         canvas.on({
             "selection:created": function(e) {
                 canvasTouch = true;
-                var event = e.e;
-                console.log("created", event.currentTarget)
+                // var event = e.e;
+                // console.log("created", event.currentTarget)
+            },
+            "selection:updated": function(e) {
+                // canvasTouch = true;
+                // var event = e.e;
+                // console.log("updated", event.currentTarget)
             },
             "selection:cleared": function(e) {
                 canvasTouch = false;
-                var event = e.e;
-                console.log("cleared", event.currentTarget)
+                // var event = e.e;
+                // console.log("cleared", event.currentTarget)
             },
+            "object:moving": function(e) {
+                var w = canvas.width;
+                var h = canvas.height;
+                if (e.target.left < 0) {
+                    e.target.left = 0;
+                }
+                if (e.target.top < 0) {
+                    e.target.top = 0;
+                }
+                if (e.target.left > w) {
+                    e.target.left = w;
+                }
+                if (e.target.top > h) {
+                    e.target.top = h;
+                }
+            }
             // 'object:moving': function(e) {
             //     e.target.opacity = 0.5;
             //     var event = e.e
@@ -250,7 +300,7 @@
 
         $(window).off("touchmove").on("touchmove", function(e) { //要注意添加事件的对象
             console.log(canvasTouch);
-            if(e.target.id == "wrap" && !!canvas && !!canvas.discardActiveObject){ // 如果target不是canvas，那么就取消canvas里面对象的选定状态。
+            if (e.target.id == "wrap" && !!canvas && !!canvas.discardActiveObject) { // 如果target不是canvas，那么就取消canvas里面对象的选定状态。
                 canvas.discardActiveObject();
                 canvas.requestRenderAll();
             }
