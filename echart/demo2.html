@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>echart demo2</title>
+    <script type="text/javascript" src="./echarts.js"></script>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+    // 指定图表的配置项和数据
+    var option = {
+        color: ['#5793f3', '#d14a61', '#675bba'],
+        /**
+         * 这是标题
+         */
+        title: {
+            text: '这是标题',
+            show: true,
+            left: "center",
+            top: "top",
+            padding: 20
+        },
+        /**
+         * 图例组件
+         */
+        legend: {
+            show: true,
+            data: ["柱状图", '折线图'],
+            left: "right",
+            orient: "vertical", // horizontal
+            align: "right",
+            selectedMode: "single",
+            selected: {
+                '折线图': true,
+                '柱状图': false
+            },
+            tooltip: {
+                show: true
+            }
+        },
+        /**
+         * 提示框组件
+         */
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross', // line shadow
+                label: {
+                    formatter: '{value}',
+                    backgroundColor: '#6a7985'
+                },
+            },
+            showContent: false
+        },
+        xAxis: {
+            position: 'bottom',
+            axisLine: {
+                lineStyle: {
+                    color: "#5793f3"
+                }
+            },
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: [{
+            type: 'value',
+            name: '价格',
+            // min: 0,
+            // max: 250,
+            position: 'left',
+            axisLine: {
+                lineStyle: {
+                    color: "#5793f3"
+                }
+            },
+            axisLabel: {
+                formatter: '{value} 亿元'
+            }
+        }],
+        series: [{
+                name: '柱状图',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20],
+                color: "red"
+            },
+            {
+                name: '折线图',
+                type: 'line',
+                data: [5, 20, 36, 10, 10, 20],
+                color: "yellow"
+            },
+
+        ]
+    };
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.setOption(option);
+
+    myChart.on('legendselectchanged', function(params) {
+        console.log(params);
+    });
+    </script>
+</body>
+
+</html>
