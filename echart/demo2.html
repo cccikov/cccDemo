@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>echart demo2</title>
     <script type="text/javascript" src="./echarts.js"></script>
+    <style type="text/css">
+    body {
+        color: #ff0;
+    }
+    </style>
 </head>
 
 <body>
@@ -52,46 +57,84 @@
                 type: 'cross', // line shadow
                 label: {
                     formatter: '{value}',
-                    backgroundColor: '#6a7985'
+                    backgroundColor: '#f44336'
                 },
             },
-            showContent: false
+            showContent: true
         },
         xAxis: {
             position: 'bottom',
+            name: '类型',
+            nameTextStyle: {
+                color: "#795548",
+                fontStyle: "normal",
+                fontWeight: 'lighter'
+            },
             axisLine: {
                 lineStyle: {
-                    color: "#5793f3"
+                    color: "#e91e63",
                 }
             },
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: "#e91e63",
+                    type: "dotted" // dashed dotted solid
+                }
+            },
+            data: [{
+                value: '衬衫',
+                textStyle: {
+                    fontSize: 20,
+                    color: 'red',
+                    fontStyle: "italic",
+                    fontWeight: 'bolder'
+                }
+            }, "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+            axisTick:{
+                show:true,
+                // alignWithLabel:true // 只有在boundaryGap:true 有效
+            },
+            // boundaryGap:false,
         },
         yAxis: [{
             type: 'value',
             name: '价格',
+            nameTextStyle: {
+                color: "#00BCD4",
+                fontStyle: "italic",
+                fontWeight: 'bolder'
+            },
+            axisLabel: {
+                formatter: '{value} 什么鬼'
+            },
             // min: 0,
             // max: 250,
             position: 'left',
             axisLine: {
                 lineStyle: {
-                    color: "#5793f3"
+                    color: "#FFC107"
                 }
             },
-            axisLabel: {
-                formatter: '{value} 亿元'
-            }
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: "#4CAF50",
+                    type: "dashed" // dashed dotted solid
+                }
+            },
         }],
         series: [{
                 name: '柱状图',
                 type: 'bar',
                 data: [5, 20, 36, 10, 10, 20],
-                color: "red"
+                color: "#673AB7"
             },
             {
                 name: '折线图',
                 type: 'line',
                 data: [5, 20, 36, 10, 10, 20],
-                color: "yellow"
+                color: "#009688"
             },
 
         ]
