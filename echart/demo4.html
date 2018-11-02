@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>echart demo4</title>
+    <script type="text/javascript" src="./echarts.js"></script>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 800px;height:400px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    let myChart = echarts.init(document.getElementById('main'));
+
+
+    let base = +new Date(2018, 0, 1); // + 转化为时间戳
+    let oneDay = 24 * 3600 * 1000;
+    let date = []; // 日期
+    let data = []; // 数据
+
+    for (let i = 0; i < 90; i++) {
+        // 添加日期
+        let now = new Date(base + oneDay * i);
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+
+        // 添加数据
+        data.push(parseInt(Math.random() * (1000 - 10 + 1) + 10));
+    }
+
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross', // line shadow
+            },
+            showContent: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: date
+        },
+        yAxis: {},
+        series: [{
+            name: '成交',
+            type: 'bar',
+            data: data
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+
+    /**
+     * 实时添加数据
+     */
+
+    function addData() {
+        let yesterday = +new Date(date[date.length - 1]);
+        let now = new Date(yesterday + oneDay);
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+
+        // 添加数据
+        data.push(parseInt(Math.random() * (1000 - 10 + 1) + 10));
+
+        date.shift();
+        data.shift();
+    }
+
+    setInterval(function() {
+        addData();
+        myChart.setOption({
+            xAxis: {
+                data: date
+            },
+            series: [{
+                name: '成交',
+                data: data
+            }]
+        });
+    }, 1000);
+    </script>
+</body>
+
+</html>
