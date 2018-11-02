@@ -41,8 +41,8 @@
             align: "right",
             selectedMode: "single",
             selected: {
-                '折线图': true,
-                '柱状图': false
+                '折线图': false,
+                '柱状图': true
             },
             tooltip: {
                 show: true
@@ -135,7 +135,11 @@
                 name: '柱状图',
                 type: 'bar',
                 data: [5, 20, 36, 10, 10, 20],
-                color: "#673AB7"
+                color: "#673AB7",
+                animationDelay: function (idx) {
+                    console.log(idx)
+                    return idx * 300;
+                }
             },
             {
                 name: '折线图',
