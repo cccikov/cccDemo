@@ -15,7 +15,7 @@
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 600px;height:400px;"></div>
+    <div id="main" style="width: 80%;height:400px;"></div>
     <script type="text/javascript">
     // 指定图表的配置项和数据
     var option = {
@@ -47,10 +47,10 @@
             tooltip: {
                 show: true
             },
-            textStyle:{
-                color:"#673ab7"
+            textStyle: {
+                color: "#673ab7"
             },
-            formatter(name){
+            formatter(name) {
                 console.log(name);
                 return "asd" + name
             }
@@ -67,24 +67,43 @@
                     backgroundColor: '#f44336'
                 },
             },
-            showContent: true
+            showContent: true,
+            formatter: "shabi-{a}: {c}"
         },
         xAxis: {
             position: 'bottom',
             name: '类型',
-            nameLocation:"center",
-            nameGap:30,
+            nameLocation: "center",
+            nameGap: 30,
             nameTextStyle: {
                 color: "#795548",
                 fontStyle: "normal",
                 fontWeight: 'lighter',
-                fontSize:30
+                fontSize: 30
             },
+            // 坐标轴 x轴
             axisLine: {
                 lineStyle: {
-                    color: "#e91e63",
+                    color: "#607d8b",
                 }
             },
+            // 坐标轴 刻度
+            axisTick: {
+                show: true,
+                // alignWithLabel: true, // 只有在boundaryGap:true 有效
+                lineStyle: {
+                    color: "#795548",
+                }
+            },
+            // boundaryGap: false,
+            // 坐标轴文字
+            axisLabel: {
+                show: true,
+                fontSize: 10,
+                fontStyle: "normal",
+                color: "#ff9800"
+            },
+            // 图表中的分割线
             splitLine: {
                 show: true,
                 lineStyle: {
@@ -101,11 +120,7 @@
                     fontWeight: 'bolder'
                 }
             }, "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-            axisTick:{
-                show:true,
-                // alignWithLabel:true // 只有在boundaryGap:true 有效
-            },
-            // boundaryGap:false,
+
         },
         yAxis: [{
             type: 'value',
@@ -138,8 +153,9 @@
                 name: '柱状图',
                 type: 'bar',
                 data: [5, 20, 36, 10, 10, 20],
+                barMaxWidth: 100,
                 color: "#673AB7",
-                animationDelay: function (idx) {
+                animationDelay: function(idx) {
                     console.log(idx)
                     return idx * 300;
                 }
@@ -161,6 +177,8 @@
     myChart.on('legendselectchanged', function(params) {
         console.log(params);
     });
+
+    window.addEventListener("resize", myChart.resize, false);
     </script>
 </body>
 
