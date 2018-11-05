@@ -73,16 +73,16 @@
 
     setInterval(function() {
         addData();
+
         myChart.setOption({
             xAxis: {
                 data: date
             },
             series: [{
-                name: '成交',
                 data: data
             }]
         });
-    }, 1000);
+    }, 500);
     </script>
 </body>
 
