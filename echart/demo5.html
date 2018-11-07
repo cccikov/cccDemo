@@ -19,7 +19,17 @@
     // 指定图表的配置项和数据
     option = {
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter(params) {
+                console.log(params);
+                var arr = params.map(function(val) {
+                    if (val.data <= 1) {
+                        return val.marker + " " + val.seriesName + "：" + val.data * 100 + "%";
+                    }
+                    return val.marker + " " + val.seriesName + "：" + val.data;
+                });
+                return params[0].axisValue + "<br>" + arr.join("<br>")
+            }
         },
         legend: {
             data: ['邮件营销', '联盟广告', '视频广告', '直接访问', 'av占比']
@@ -36,7 +46,12 @@
                 type: 'value',
                 name: "百分比",
                 position: "right",
-                max:1
+                max: 1,
+                axisLabel: {
+                    formatter(val) {
+                        return val * 100 + "%"
+                    }
+                }
             }
         ],
         series: [{
@@ -68,18 +83,20 @@
                 type: 'line',
                 yAxisIndex: 1,
                 data: [0.4, 0.2, 0.3, 0.4, 0.7, 0.6, 0.3],
-                // label: {
-                //     show: true,
-                //     formatter(arg) {
-                //         return arg.value * 100 + "%"
-                //     }
-                // },
+                label: {
+                    show: true,
+                    formatter(arg) {
+                        return arg.value * 100 + "%"
+                    }
+                },
                 symbolSize: 8,
                 symbol: "circle",
-                lineStyle:{
-                    width:5
+                lineStyle: {
+                    width: 5
                 },
-                // areaStyle: {}
+                tooltip: {
+
+                }
             }
         ]
     };
