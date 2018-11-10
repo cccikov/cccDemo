@@ -37,6 +37,8 @@
             facingMode: { exact: "environment" }
         } //调用前置摄像头 { 'facingMode': "user" }，后置摄像头使用video: { facingMode: { exact: "environment" } }
     };
+
+    // ！！！ 注意，仅能在https环境下打开
     navigator.mediaDevices.getUserMedia(option).then(function(stream) {
         var video = document.querySelector('video');
         if ("srcObject" in video) {
