@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>mediaDevices</title>
+    <link rel="shortcut icon" href="img/ccc.ico" />
+    <link rel="icon" href="img/ccc.ico" />
+</head>
+
+<body>
+    <script type="text/javascript">
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("设备不支持navigator.mediaDevices.getUserMedia")
+    }
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(){
+
+    }).catch(function(err){
+        console.error(err);
+        alert(err);
+    });
+    </script>
+</body>
+
+</html>
