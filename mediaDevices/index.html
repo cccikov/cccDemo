@@ -32,6 +32,10 @@
         alert("设备不支持navigator.mediaDevices.getUserMedia")
     }
 
+    if (!navigator.getUserMedia) {
+        alert("navigator.getUserMedia")
+    }
+
     let option = {
         'video': {
             facingMode: { exact: "environment" }
@@ -49,7 +53,8 @@
         video.play();
     }).catch(function(err) {
         console.error(err);
-        alert(err);
+        console.error(err.message);
+        alert(err.message);
     });
     </script>
 </body>
