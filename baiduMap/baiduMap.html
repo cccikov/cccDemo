@@ -23,9 +23,7 @@
     </style>
     <!-- CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e -->
     <!-- 由于Chrome、iOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。 -->
-    <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script> -->
-
-
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script>
     <!-- 4、JavaScript API是否支持HTTPS请求？
     JavaScript API V2.0 及以上版本支持HTTPS。
     如果想使用HTTPS协议调用JavaScript API，直接将脚本引用的协议修改为HTTPS即可。 -->
@@ -39,16 +37,44 @@
     var point = new BMap.Point(113.098571, 22.961829);
     map.centerAndZoom(point, 12);
 
-    var geolocation = new BMap.Geolocation();
-    geolocation.getCurrentPosition(function(r) {
-        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            var mk = new BMap.Marker(r.point);
-            map.addOverlay(mk);
-            map.panTo(r.point);
-            alert('您的位置：' + r.point.lng + ',' + r.point.lat);
-        } else {
-            alert('failed' + this.getStatus());
-        }
+    // var geolocation = new BMap.Geolocation();
+    // geolocation.getCurrentPosition(function(r) {
+    //     console.log(r);
+    //     if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+    //         var mk = new BMap.Marker(r.point);
+    //         map.addOverlay(mk);
+    //         map.panTo(r.point);
+    //         alert('您的位置：' + r.point.lng + ',' + r.point.lat);
+    //         alert(r.address.province + "," + r.address.city)
+    //     } else {
+    //         alert('failed' + this.getStatus());
+    //     }
+    // });
+
+
+    function getPosi() {
+        return new Promise(function(resolve, reject) {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    resolve(r);
+                    console.log('您的位置：' + r.point.lng + ',' + r.point.lat);
+                    console.log(r.address.province + "," + r.address.city)
+                } else {
+                    reject(this.getStatus());
+                }
+            });
+        });
+    }
+
+    getPosi().then(res => {
+        var mk = new BMap.Marker(res.point);
+        map.addOverlay(mk);
+        map.panTo(res.point);
+        alert('您的位置：' + res.point.lng + ',' + res.point.lat);
+        alert(res.address.province + "," + res.address.city)
+    }).catch(err => {
+        console.error(err);
     });
     </script>
 </body>
