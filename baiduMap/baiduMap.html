@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>百度地图</title>
+    <link rel="shortcut icon" href="img/ccc.ico" />
+    <link rel="icon" href="img/ccc.ico" />
+    <style>
+        #allmap{
+            width: 100%;
+            height:100vw
+        }
+    </style>
+    <!-- CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e -->
+    <!-- 由于Chrome、iOS10等已不再支持非安全域的浏览器定位请求，为保证定位成功率和精度，请尽快升级您的站点到HTTPS。 -->
+    <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script> -->
+    <!-- 4、JavaScript API是否支持HTTPS请求？
+    JavaScript API V2.0 版本支持HTTPS。
+    如果想使用HTTPS协议调用JavaScript API，直接将脚本引用的协议修改为HTTPS即可。 -->
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script>
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <script>
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(113.098571, 22.961829);
+    map.centerAndZoom(point, 12);
+
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            alert('您的位置：' + r.point.lng + ',' + r.point.lat);
+        } else {
+            alert('failed' + this.getStatus());
+        }
+    });
+    </script>
+</body>
+
+</html>
