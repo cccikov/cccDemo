@@ -178,7 +178,9 @@
         console.log(params);
     });
 
-    window.addEventListener("resize", myChart.resize, false);
+    window.addEventListener("resize", function(){
+        myChart.resize();
+    }, false);
     </script>
 </body>
 
