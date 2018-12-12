@@ -27,7 +27,7 @@
     <!-- 4、JavaScript API是否支持HTTPS请求？
     JavaScript API V2.0 及以上版本支持HTTPS。
     如果想使用HTTPS协议调用JavaScript API，直接将脚本引用的协议修改为HTTPS即可。 -->
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script>
 </head>
 
 <body>
@@ -86,9 +86,9 @@
 
     function originFn() {
         console.log("原生");
-        navigator.geolocation.getCurrentPosition(function(posi) {
-            console.log(posi);
-        })
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position.coords.latitude, position.coords.longitude);
+        });
     }
     </script>
 </body>
