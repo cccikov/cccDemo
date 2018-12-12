@@ -32,8 +32,10 @@
 
 <body>
     <div id="allmap"></div>
+    <p>pc端可能不支持gps定位，所以请使用ip定位</p>
     <button onclick="originFn()">原生定位</button>
     <button onclick="baidu()">baidu定位</button>
+    <button onclick="ip()">ip定位</button>
     <script>
     var map = new BMap.Map("allmap");
     var point = new BMap.Point(113.098571, 22.961829);
@@ -55,7 +57,8 @@
 
 
 
-    var geolocation = new BMap.Geolocation();
+    var geolocation = new BMap.Geolocation(); // 百度定位api
+    var myCity = new BMap.LocalCity(); // 百度ip定位api
 
     function getPosi() {
         return new Promise(function(resolve, reject) {
@@ -68,6 +71,14 @@
                     reject(this.getStatus());
                 }
             });
+        });
+    }
+
+    function getIpPosi(){
+        return new Promise(function(resolve){
+            myCity.get(function(result){
+                resolve(result);
+            })
         });
     }
 
@@ -89,6 +100,13 @@
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log(position.coords.latitude, position.coords.longitude);
             alert(position.coords.latitude, position.coords.longitude);
+        });
+    }
+
+    function ip(){
+        console.log("ip");
+        getIpPosi().then(val=>{
+            console.log(val);
         });
     }
     </script>
