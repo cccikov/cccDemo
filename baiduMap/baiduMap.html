@@ -74,9 +74,9 @@
         });
     }
 
-    function getIpPosi(){
-        return new Promise(function(resolve){
-            myCity.get(function(result){
+    function getIpPosi() {
+        return new Promise(function(resolve) {
+            myCity.get(function(result) {
                 resolve(result);
             })
         });
@@ -99,14 +99,15 @@
         console.log("原生");
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log(position.coords.latitude, position.coords.longitude);
-            alert(position.coords.latitude, position.coords.longitude);
+            alert(position.coords.latitude + "," + position.coords.longitude);
         });
     }
 
-    function ip(){
+    function ip() {
         console.log("ip");
-        getIpPosi().then(val=>{
+        getIpPosi().then(val => {
             console.log(val);
+            alert(val.name + "," + val.center.lng + "," + val.center.lat);
         });
     }
     </script>
