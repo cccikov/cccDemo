@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>中国地图手机版</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+    </style>
+    <script type="text/javascript" src="./echarts.js"></script>
+    <script type="text/javascript" src="./china.js"></script>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 100%;height:80vw;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var tipsData = [{
+            name: '广东',
+            value: [{
+                    name: "店铺量",
+                    value: 101230
+                },
+                {
+                    name: "交易",
+                    value: 213
+                }
+            ]
+        }];
+
+        var echartData = tipsData.map(val => {
+            var [data] = val.value.filter(val => {
+                return val.name == "店铺量"
+            });
+            return {
+                name: val.name,
+                value: data.value
+            }
+        });
+
+
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                show: false
+            },
+            grid: {
+                left: "left",
+                right: "right"
+            },
+            tooltip: {
+                trigger: 'item',
+                showDelay: 0,
+                transitionDuration: 0.2,
+                formatter: function (params) {
+                    if (params.data) {
+                        var province = params.data.name;
+                        var [data] = tipsData.filter(val => {
+                            return val.name == province
+                        });
+
+                        var str = data.name;
+                        data.value.forEach(val => {
+                            // 逢千有逗号
+                            var value = (val.value + '').split('.');
+                            value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+
+                            str += "<br>" + val.name + "：" + value; //拼接字符串
+                        })
+                        return str
+                    } else {
+                        return "暂无数据"
+                    }
+
+                }
+            },
+            visualMap: {
+                left: 'right',
+                show: false,
+                inRange: {
+                    color: ['#ffffbf', '#fee090', '#fdae61',
+                        '#f46d43', '#d73027', '#a50026'
+                    ]
+                },
+                text: ['High', 'Low'], // 文本，默认为数值文本
+                calculable: false
+            },
+            series: [{
+                name: "店铺量",
+                type: 'map',
+                roam: false,
+                map: 'china',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                itemStyle: {
+                    emphasis: {
+                        label: {
+                            show: true
+                        }
+                    }
+                },
+                data: echartData
+            }]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

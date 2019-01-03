@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>折线图手机版</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+    </style>
+    <script type="text/javascript" src="./echarts.js"></script>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 100%;height:60vw;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            /**
+             * 标题
+             */
+            title: {
+                show: false
+            },
+            // 全局文字
+            textStyle: {
+                fontSize: 10,
+                fontStyle: "normal",
+                color: "#999",
+            },
+            /**
+             * 网格
+             */
+            grid: {
+                left: "12%",
+                top: "20px",
+                bottom: "20px",
+                right: "5px"
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter(params) {
+                    console.log(params);
+                    var arr = params.map(function (val) {
+                        if (val.data <= 1 && val.data != 0) {
+                            return val.data * 100 + "%";
+                        }
+                        return val.data;
+                    });
+                    return params[0].axisValue + "：" + arr.join("<br>")
+                }
+            },
+            /**
+             * 图例组件
+             */
+            legend: {
+                show: false
+            },
+            xAxis: {
+                data: ["1", "2", "3", "4", "5", "6"],
+                axisLine: {
+                    lineStyle: {
+                        color: "#ccc",
+                    }
+                },
+                axisTick: {
+                    show: false,
+                },
+                boundaryGap: false,
+                axisLabel: {
+                    // 文字
+                    show: true,
+                    interval: "auto", // 0 强制显示全部标签
+                },
+            },
+            yAxis: {
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    // 文字
+                    show: true,
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "#ccc",
+                        type: "dotted" // dashed dotted solid
+                    }
+                },
+            },
+            series: [{
+                name: '销量',
+                type: 'line',
+                color: "#f00", // 柱颜色
+                data: [5, 20, 40, 0, 10, 20],
+                symbol: "none",
+                lineStyle: {
+                    width: 3
+                },
+                smooth: true, // 平滑显示
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>
