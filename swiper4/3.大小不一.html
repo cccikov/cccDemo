@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3.大小不一</title>
+    <link rel="stylesheet" type="text/css" href="../swiper_demo_mobile_fresh/css/swiper.min.css">
+    <script type="text/javascript" src="../swiper_demo_mobile_fresh/js/swiper.min.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #wrap {
+        width: 800px;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .swiper-wrapper {
+        height: 600px;
+        text-align: center;
+    }
+
+    .swiper-slide:nth-of-type(3n+1) {
+        background: #f44336;
+    }
+
+    .swiper-slide:nth-of-type(3n+2) {
+        background: #2196f3;
+    }
+
+    .swiper-slide:nth-of-type(3n+3) {
+        background: #4caf50;
+    }
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="wrap">
+        <div class="swiper-container swiper1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">slider1</div>
+                <div class="swiper-slide">slider2</div>
+                <div class="swiper-slide">slider3</div>
+                <div class="swiper-slide">slider4</div>
+                <div class="swiper-slide">slider5</div>
+                <div class="swiper-slide">slider6</div>
+                <div class="swiper-slide">slider7</div>
+                <div class="swiper-slide">slider8</div>
+                <div class="swiper-slide">slider9</div>
+                <div class="swiper-slide">slider10</div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var mySwiper1 = new Swiper('.swiper1', {
+        slidesPerView: 2
+    });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="wrap">
+        <div class="swiper-container swiper2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">slider1</div>
+                <div class="swiper-slide">slider2</div>
+                <div class="swiper-slide">slider3</div>
+                <div class="swiper-slide">slider4</div>
+                <div class="swiper-slide">slider5</div>
+                <div class="swiper-slide">slider6</div>
+                <div class="swiper-slide">slider7</div>
+                <div class="swiper-slide">slider8</div>
+                <div class="swiper-slide">slider9</div>
+                <div class="swiper-slide">slider10</div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var mySwiper2 = new Swiper('.swiper2', {
+        slidesPerView: "auto"
+    });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style type="text/css">
+        .swiper3 .swiper-slide:last-of-type{
+            height: 100px;
+        }
+    </style>
+    <div id="wrap">
+        <div class="swiper-container swiper3">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">slider1</div>
+                <div class="swiper-slide">slider2</div>
+                <div class="swiper-slide">slider3</div>
+                <div class="swiper-slide">slider4</div>
+                <div class="swiper-slide">slider5</div>
+                <div class="swiper-slide">slider6</div>
+                <div class="swiper-slide">slider7</div>
+                <div class="swiper-slide">slider8</div>
+                <div class="swiper-slide">slider9</div>
+                <div class="swiper-slide">slider10</div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var mySwiper3 = new Swiper('.swiper3', {
+        slidesPerView: "auto",
+        direction: 'vertical'
+    });
+    </script>
+</body>
+
+</html>

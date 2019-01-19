@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>水平</title>
+    <link rel="stylesheet" type="text/css" href="../swiper_demo_mobile_fresh/css/swiper.min.css">
+    <script type="text/javascript" src="../swiper_demo_mobile_fresh/js/swiper.min.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #wrap {
+        width: 800px;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .swiper-wrapper {
+        height: 600px;
+        text-align: center;
+    }
+
+    .swiper-slide:nth-of-type(1) {
+        background: #f44336;
+    }
+
+    .swiper-slide:nth-of-type(2) {
+        background: #2196f3;
+    }
+
+    .swiper-slide:nth-of-type(3) {
+        background: #4caf50;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">slider1</div>
+                <div class="swiper-slide">slider2</div>
+                <div class="swiper-slide">slider3</div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: true, //可选选项，自动滑动
+    })
+    </script>
+</body>
+
+</html>
