@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>tinymce</title>
+    <link rel="shortcut icon" href="img/ccc.ico" />
+    <link rel="icon" href="img/ccc.ico" />
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script>
+    tinymce.init({
+        selector: '#mytextarea',
+        branding: false,
+        elementpath: false,
+        height: 500,
+        menubar: 'edit insert view format table tools',
+        plugins: `advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools
+            searchreplace visualblocks visualchars code fullpage
+            insertdatetime media nonbreaking save table contextmenu directionality
+            emoticons paste textcolor colorpicker textpattern imagetools codesample`,
+        toolbar1: 'undo redo | preview  | insert | link image emoticons media |  alignleft aligncenter alignright alignjustify   bullist numlist outdent indent ',
+        toolbar2: 'styleselect | fontsizeselect forecolor backcolor bold italic ',
+        autosave_interval: '20s',
+        image_advtab: true,
+        // CONFIG: Font
+        fontsize_formats: '10px 11px 12px 14px 16px 18px 20px 24px',
+        // CONFIG: StyleSelect
+        style_formats: [{
+                title: '行间距',
+                items: [
+                    { title: '1', styles: { 'line-height': '1' }, inline: 'span' },
+                    { title: '1.5', styles: { 'line-height': '1.5' }, inline: 'span' },
+                    { title: '2', styles: { 'line-height': '2' }, inline: 'span' },
+                    { title: '2.5', styles: { 'line-height': '2.5' }, inline: 'span' },
+                    { title: '3', styles: { 'line-height': '3' }, inline: 'span' }
+                ]
+            },
+            {
+                title: '字间距',
+                items: [
+                    { title: '无', styles: { 'letter-spacing': '0px' }, inline: 'span' },
+                    { title: '1px', styles: { 'letter-spacing': '1px' }, inline: 'span' },
+                    { title: '2px', styles: { 'letter-spacing': '2px' }, inline: 'span' },
+                    { title: '3px', styles: { 'letter-spacing': '3px' }, inline: 'span' },
+                    { title: '4px', styles: { 'letter-spacing': '4px' }, inline: 'span' },
+                    { title: '5px', styles: { 'letter-spacing': '5px' }, inline: 'span' }
+                ]
+            },
+            {
+                title: '首行缩进',
+                block: 'p',
+                styles: { 'text-indent': '2em' }
+            },
+        ],
+        table_default_styles: {
+            width: '100%',
+            borderCollapse: 'collapse'
+        },
+        setup: function(editor) {
+            editor.on('init', function(e) {
+                console.log("init");
+            });
+            editor.on('keydown', function(e) {
+                console.log("keydown");
+            });
+        }
+    });
+    </script>
+</head>
+
+<body>
+    <h1>TinyMCE Quick Start Guide</h1>
+    <form method="post">
+        <textarea id="mytextarea">Hello, World!</textarea>
+    </form>
+</body>
+
+</html>
