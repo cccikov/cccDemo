@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browser-sync start --server --files \"**/*.html,**/*.css,**/*.js\""
+    "start": "browser-sync start --server --files \"**/*.html,**/*.css,**/*.js\"",
+    "https": "browser-sync start --server --https --files \"**/*.html,**/*.css,**/*.js\""
   },
   "repository": {
     "type": "git",
