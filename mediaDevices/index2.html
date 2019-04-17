@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>mediaDevices</title>
+    <link rel="shortcut icon" href="img/ccc.ico" />
+    <link rel="icon" href="img/ccc.ico" />
+    <style type="text/css">
+    #wrap {
+        width: 320px;
+        height: 240px;
+        margin: 0 auto;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    #wrap video {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <p>video 获取视频流</p>
+    <button id="btn">button</button>
+    <div id="wrap">
+        <video></video>
+    </div>
+    <script type="text/javascript">
+    /*  */
+    /*  */
+
+    var id;
+    var enumeratorPromise = navigator.mediaDevices.enumerateDevices();
+    enumeratorPromise.then(devices => {
+
+        devices.forEach(function(device) {
+            console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+            if (device.kind === "videoinput") {
+                id = device.deviceId;
+            }
+        });
+
+
+        let option = {
+            audio: false,
+            'video': {
+                deviceId: { exact: id }
+            }
+        };
+
+        // ！！！ 注意，仅能在https环境下打开
+        navigator.mediaDevices.getUserMedia(option).then(function(stream) {
+            var video = document.querySelector('video');
+            if ("srcObject" in video) {
+                video.srcObject = stream;
+            }
+
+            function fn() {
+                video.play();
+            }
+            btn.addEventListener("click", fn, false);
+
+
+        }).catch(function(err) {
+            console.error(err);
+            console.error(err.message);
+            alert(err.message);
+        });
+
+
+
+    }).catch(err => {
+        console.error(err)
+    })
+
+
+
+
+    /*  */
+    /*  */
+    </script>
+</body>
+
+</html>
