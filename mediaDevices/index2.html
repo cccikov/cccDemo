@@ -44,6 +44,10 @@
                 devices.forEach(function (device) {
                     console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
                     if (device.kind === "videoinput") {
+                        if (device.label.includes("back")) {
+                            // 如果有back的相关字符串，可能是后置摄像头，设置index为这个id在数组中的下标，由于这个id还没加入ids，所以这个id的未来的下标就是现在的数组长度
+                            index = ids.length;
+                        }
                         ids.push(device.deviceId);
                     }
                 });
@@ -57,7 +61,7 @@
         }
         getIds();
 
-        function openCamera(index) {
+        function openCamera() {
             if (ids.length === 0) {
                 return false;
             }
@@ -86,7 +90,7 @@
             if (index > ids.length - 1) {
                 index = 0;
             }
-            openCamera(index);
+            openCamera();
         }
 
         /*  */
