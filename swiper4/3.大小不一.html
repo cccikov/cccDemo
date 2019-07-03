@@ -58,7 +58,6 @@
 
 
 
-
     <div id="wrap">
         <div class="swiper-container swiper1">
             <div class="swiper-wrapper">
@@ -95,6 +94,18 @@
 
 
 
+    <style type="text/css">
+        .swiper2{
+            overflow: visible;
+        }
+        .swiper2 .swiper-wrapper{
+            overflow: visible;
+        }
+        .swiper2 .swiper-slide-active{
+            transform: scale(1.5,1.5);
+            z-index: 100;
+        }
+    </style>
 
 
 
@@ -160,6 +171,7 @@
             </div>
         </div>
     </div>
+    <!-- 只能是固定高度，不能是auto，否则会出问题；可能是因为 Swiper 初始化的时候需要知道高度，计算总高度 -->
     <script>
     var mySwiper3 = new Swiper('.swiper3', {
         slidesPerView: "auto",
