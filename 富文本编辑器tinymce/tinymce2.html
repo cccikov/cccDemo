@@ -3,36 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>tinymce</title>
     <link rel="shortcut icon" href="img/ccc.ico" />
     <link rel="icon" href="img/ccc.ico" />
     <style type="text/css">
-    #mceu_45 {
-        display: none;
-    }
+        #mceu_45 {
+            display: none;
+        }
     </style>
-    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src='./js/tinymce/tinymce.min.js'></script>
+    <script src="./uploadimage/plugin.js"></script>
     <script>
-    tinymce.init({
-        selector: '#mytextarea',
-        branding: false,
-        elementpath: false,
-        height: 500,
-        content_css: "./edit.css",
-        menubar: 'edit insert view format table tools',
-        plugins: `advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools
+        tinymce.init({
+            upload_image_url: '/upload/cloud', //配置的上传图片的路由
+            selector: '#mytextarea',
+            branding: false,
+            elementpath: false,
+            height: 500,
+            content_css: "./edit.css",
+            menubar: 'edit insert view format table tools',
+            plugins: `advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools
             searchreplace visualblocks visualchars code fullpage
-            insertdatetime media nonbreaking save table contextmenu directionality
+            insertdatetime media nonbreaking save table contextmenu directionality uploadimage
             emoticons paste textcolor colorpicker textpattern imagetools codesample`,
-        toolbar1: 'undo redo | preview  | insert | link image emoticons media |  alignleft aligncenter alignright alignjustify  bullist numlist outdent indent ',
-        toolbar2: 'styleselect | fontsizeselect forecolor backcolor | bold italic underline strikethrough',
-        autosave_interval: '20s',
-        image_advtab: true,
-        // CONFIG: Font
-        fontsize_formats: '12px 13px 14px 15px 16px 18px 20px 24px',
-        // CONFIG: StyleSelect
-        style_formats: [{
+            toolbar1: 'uploadimage | undo  redo | preview  | insert | link image emoticons media |  alignleft aligncenter alignright alignjustify  bullist numlist outdent indent ',
+            toolbar2: 'styleselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | uploadimage ',
+            autosave_interval: '20s',
+            image_advtab: true,
+            // CONFIG: Font
+            fontsize_formats: '12px 13px 14px 15px 16px 18px 20px 24px',
+            // CONFIG: StyleSelect
+            style_formats: [{
                 title: '行间距',
                 items: [
                     { title: '默认', styles: { 'line-height': 'normal' }, inline: 'span' },
@@ -59,27 +63,28 @@
                 block: 'p',
                 styles: { 'text-indent': '2em' }
             },
-        ],
-        table_default_styles: {
-            width: '100%',
-            borderCollapse: 'collapse'
-        },
-        setup: function(editor) {
-            editor.on('init', function(e) {
-                console.log("init");
-            });
-            editor.on('keydown', function(e) {
-                console.log("keydown");
-            });
-        }
-    });
+            ],
+            table_default_styles: {
+                width: '100%',
+                borderCollapse: 'collapse'
+            },
+            setup: function (editor) {
+                editor.on('init', function (e) {
+                    console.log("init");
+                });
+                editor.on('keydown', function (e) {
+                    console.log("keydown");
+                });
+            }
+        });
     </script>
 </head>
 
 <body>
-    <h1>TinyMCE Quick Start Guide</h1>
+    <h1>test</h1>
     <form method="post">
-        <textarea id="mytextarea">中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看Hello, World!</textarea>
+        <textarea
+            id="mytextarea">中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看中文测试爱上了的卡就是领导看见啊速度来看Hello, World!</textarea>
     </form>
 </body>
 

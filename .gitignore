@@ -1,3 +1,4 @@
 node_modules/
 /*.project
 *.project
+富文本编辑器tinymce/js/
