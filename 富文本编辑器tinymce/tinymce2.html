@@ -18,13 +18,14 @@
     <script src="./uploadimage/plugin.js"></script>
     <script>
         tinymce.init({
-            upload_image_url: '/upload/cloud', //配置的上传图片的路由
+            upload_image_url: '/multiple', //配置的上传图片的路由
             selector: '#mytextarea',
             branding: false,
             elementpath: false,
             height: 500,
             content_css: "./edit.css",
-            menubar: 'edit insert view format table tools',
+            // menubar: 'edit insert view format table tools',
+            menubar: false,
             plugins: `advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools
             searchreplace visualblocks visualchars code fullpage
             insertdatetime media nonbreaking save table contextmenu directionality uploadimage
@@ -72,9 +73,9 @@
                 editor.on('init', function (e) {
                     console.log("init");
                 });
-                editor.on('keydown', function (e) {
-                    console.log("keydown");
-                });
+                // editor.on('keydown', function (e) {
+                //     console.log("keydown");
+                // });
             }
         });
     </script>
