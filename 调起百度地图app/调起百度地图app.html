@@ -3,23 +3,216 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>调起百度地图app</title>
     <link rel="shortcut icon" href="img/ccc.ico" />
     <link rel="icon" href="img/ccc.ico" />
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=3.0&ak=CnNuuFA5PTnFRvQqjG7rMMYnmjueqK3e"></script>
     <style>
         a {
-            display: block;
+            display: none;
             margin: 10px;
+        }
+
+        p a {
+            display: block;
         }
     </style>
 </head>
 
 <body>
+    <!-- API 位置 http://lbsyun.baidu.com/index.php?title=uri/uri-download -->
     <a href="http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=webapp.baidu.openAPIdemo">调起百度PC或Web地图，展示"西安市"从（lat:34.264642646862,lng:108.95108518068 ）"我家"到"大雁塔"的驾车路线。</a>
-    <a href="bdapp://map/newsassistant?src=andr.baidu.openAPIdemo">调起出行早晚报页面</a>
-    <a href="baidumap://map/show?zoom=18&center=39.989956,116.323066&src=ios.baidu.openAPIdemo">地图主图区</a>
+    <a href="bdapp://map/newsassistant?src=andr.baidu.openAPIdemo">调起android百度地图App，出行早晚报页面</a>
+    <a href="baidumap://map/show?zoom=18&center=39.989956,116.323066&src=ios.baidu.openAPIdemo">调起ios百度地图App（但是android也可以调起，可能android做了兼容处理），地图主图区</a>
     <a href="bdapp://map/direction?origin=name:对外经贸大学|latlng: 39.98871,116.43234&destination=西直门&coord_type=bd09ll&mode=transit&sy=3 &index=0&target=1&src=andr.小云科技.maijju">公交路线规划</a>
+
+    <p id="web"></p>
+    <p id="android">
+        <span>android</span>
+    </p>
+
+    <script>
+        /* 改写浏览器 confirm 都返回true */
+        window.confirm = function (str) {
+            console.log("%c" + str, "font-size:30px;color:red");
+            return true;
+        }
+        // 通过百度api定位 https 才可以调用h5的Geolocation 所以要https定位才准
+        function getPosition() {
+            return new Promise(function (resolve, reject) {
+                if (typeof BMap != "undefined") {
+                    var geolocation = new BMap.Geolocation();
+                    geolocation.getCurrentPosition(function (r) {
+                        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                            var obj = {
+                                lng: r.point.lng,
+                                lat: r.point.lat,
+                                city: r.address.city,
+                            }
+                            console.log("%c定位信息" + JSON.stringify(obj), "font-size:20px;color:#123972");
+                            resolve(obj);
+                        } else {
+                            console.warn("gps定位错误改用ip定位")
+                            var myCity = new BMap.LocalCity();
+                            myCity.get(function (result) {
+                                obj = {
+                                    lng: result.center.lng,
+                                    lat: result.center.lat,
+                                    city: result.name,
+                                }
+                                console.log("%c定位信息" + JSON.stringify(obj), "font-size:20px;color:#123972");
+                                resolve(obj);
+                            })
+                        }
+                    });
+                } else {
+                    var obj = {
+                        lng: "113.098",
+                        lat: "22.961",
+                        city: "佛山市",
+                        ps: "这是假数据，没有用百度api"
+                    }
+                    console.log("%c定位信息" + JSON.stringify(obj), "font-size:20px;color:#123972");
+                    resolve(obj);
+                }
+            });
+        }
+    </script>
+    <script>
+        /**
+         * scheme://hostname/service?parameters
+         */
+        /* 必选 */
+        let web_lat_lng = "22.991318,113.116467"; // 纬经度
+        let web_title = "ccc的旧屋"; // 标题
+        let web_content = "ccc大厦，澜石二马路二巷9号" + ";" + web_lat_lng // 内容
+        let web_ouput = "html"; // 表示输出类型，web 上必须指定为 html 才能展现地图产品结果
+        let web_src = "cccDemo"; // 调用来源，规则：companyName|appName。
+        /* 可选 */
+        let web_zoom = 11; // zoom 放大级别类型
+        let web_coord_type = "bd09"// coord_type 默认为 bd09 经纬度坐标。允许的值为 bd09ll、 gcj02、wgs84。bd09ll 表示百度经纬度坐标， gcj02 表示经过国测局坐标，wgs84 表示 gps 获 取的坐标。
+
+
+        /* 地图标点功能 */
+        // 网页版
+        let webURI_marker = `http://api.map.baidu.com/
+        marker?
+        location=${web_lat_lng}&
+        title=${web_title}&
+        content=${web_content}&
+        output=${web_ouput}&
+        src=${web_src}&
+        zoom=${web_zoom}
+        `.replace(/\s|\n|\r/g, "");
+        web.innerHTML += `<a target="_blank" href="${webURI_marker}">我家 地图标点功能</a>`
+
+
+        // android app
+        let androidURI_marker = `bdapp://map/
+        marker?
+        location=${web_lat_lng}&
+        title=${web_title}&
+        content=${web_content}&
+        output=${web_ouput}&
+        src=${web_src}&
+        zoom=${web_zoom}
+        `.replace(/\s|\n|\r/g, "");
+        android.innerHTML += `<a target="_blank" href="${androidURI_marker}">我家 地图标点功能</a>`
+
+
+        /* 反向地址解析 */
+        // 网页版
+        let webURI_geocoder = `http://api.map.baidu.com/
+        geocoder?
+        location=${web_lat_lng}&
+        output=${web_ouput}&
+        src=${web_src}
+        `.replace(/\s|\n|\r/g, "");
+        web.innerHTML += `<a target="_blank" href="${webURI_geocoder}">我家 反向地址解析</a>`
+
+
+        /* 你的位置 标注 */
+        function yourPoint(res) {
+            let web_lat_lng = res.lat + "," + res.lng;
+            let web_title = "你的位置"; // 标题
+            let web_content = "你的位置" // 内容
+
+            // 网页版
+            let webURI_marker = `http://api.map.baidu.com/
+            marker?
+            location=${web_lat_lng}&
+            title=${web_title}&
+            content=${web_content}&
+            output=${web_ouput}&
+            src=${web_src}
+            `.replace(/\s|\n|\r/g, "");
+            web.innerHTML += `<a target="_blank" href="${webURI_marker}">你的位置</a>`
+
+            // android app
+            let androidURI_marker = `bdapp://map/
+            marker?
+            location=${web_lat_lng}&
+            title=${web_title}&
+            content=${web_content}&
+            output=${web_ouput}&
+            src=${web_src}
+            `.replace(/\s|\n|\r/g, "");
+            android.innerHTML += `<a target="_blank" href="${androidURI_marker}">你的位置</a>`
+        }
+
+
+        /* 导航 */
+        function nav(res){
+            /* 必选 */
+            let from = res.lat + "," + res.lng;
+            let to="name: 拉拉的位置|latlng:22.991318,113.116467";
+            let region = "佛山市"; // 当给定 region 时，认为起点和终点都在同一城市;如果不传 region ，那就一定要传 origin_region destination_region
+            let origin_region = res.city; // 起点城市
+            let destination_region = "佛山市"; // 终点城市
+            let mode = "driving";// transit driving walking
+
+            // 网页版
+            let webURI_direction = `http://api.map.baidu.com/
+            direction?
+            origin=${from}&
+            destination=${to}&
+            origin_region=${origin_region}&
+            destination_region=${destination_region}&
+            mode=${mode}&
+            output=${web_ouput}&
+            src=${web_src}
+            `.replace(/\s|\n|\r/g, "");
+            web.innerHTML += `<a target="_blank" href="${webURI_direction}">导航到我家</a>`
+
+
+            // android app
+            let androidURI_direction = `bdapp://map/
+            direction?
+            origin=${from}&
+            destination=${to}&
+            origin_region=${origin_region}&
+            destination_region=${destination_region}&
+            mode=${mode}&
+            output=${web_ouput}&
+            src=${web_src}
+            `.replace(/\s|\n|\r/g, "");
+            android.innerHTML += `<a target="_blank" href="${androidURI_direction}">导航到我家</a>`
+        }
+
+        getPosition().then(res => {
+            yourPoint(res);
+            nav(res);
+        }).catch(err => {
+            console.error(err);
+        });
+
+
+    </script>
+
+
 </body>
 
 </html>
