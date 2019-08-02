@@ -22,3 +22,6 @@
     - 内容格式
         + `style_formats`
     
+
+* [自定义插件](https://www.tiny.cloud/docs/advanced/creating-a-plugin/)
+* [API 文档](https://www.tiny.cloud/docs/api/tinymce/root_tinymce/)
