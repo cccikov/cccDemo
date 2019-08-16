@@ -4,9 +4,7 @@
   "description": "cccDemo",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {
-    "bankcardinfo": "^2.0.3"
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "browser-sync start --server --files \"**/*.html,**/*.css,**/*.js\"",
