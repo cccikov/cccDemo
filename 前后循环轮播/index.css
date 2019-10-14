@@ -1,0 +1,86 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.wrap {
+  overflow: hidden;
+  perspective: 2000px;
+  -webkit-perspective: 2000px;
+}
+.img-wrap {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+.img-wrap .img {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  transition: transform 300ms;
+}
+.img-wrap .img:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 300ms;
+}
+.img-wrap .img:nth-of-type(1) {
+  background: #ff8000 url(../img/01bg.png) center / cover no-repeat;
+}
+.img-wrap .img:nth-of-type(2) {
+  background: #ffff00 url(../img/02bg.png) center / cover no-repeat;
+}
+.img-wrap .img:nth-of-type(3) {
+  background: #80ff00 url(../img/04bg.png) center / cover no-repeat;
+}
+.img-wrap .img:nth-of-type(4) {
+  background: #00ff00 url(../img/05bg.png) center / cover no-repeat;
+}
+.img-wrap .img:nth-of-type(5) {
+  background: #00ff80 url(../img/test06.jpg) center / cover no-repeat;
+}
+.img-wrap .img:nth-of-type(6) {
+  background: #00ffff url(../img/screen/screen-xhdpi-landscape.png) center / cover no-repeat;
+}
+.img-wrap .img.img1 {
+  transform: translateZ(-750px) translate3d(600px, 0, 0);
+}
+.img-wrap .img.img1:after {
+  background: rgba(0, 0, 0, 0.8);
+}
+.img-wrap .img.img2 {
+  transform: translateZ(-250px) translate3d(300px, 0, 0);
+}
+.img-wrap .img.img2:after {
+  background: rgba(0, 0, 0, 0.4);
+}
+.img-wrap .img.img3 {
+  transform: translateZ(250px) translate3d(0, 0, 0px);
+}
+.img-wrap .img.img3:after {
+  background: rgba(0, 0, 0, 0);
+}
+.img-wrap .img.img4 {
+  transform: translateZ(-250px) translate3d(-300px, 0, 0);
+}
+.img-wrap .img.img4:after {
+  background: rgba(0, 0, 0, 0.4);
+}
+.img-wrap .img.img5 {
+  transform: translateZ(-750px) translate3d(-600px, 0, 0);
+}
+.img-wrap .img.img5:after {
+  background: rgba(0, 0, 0, 0.8);
+}
+.img-wrap .img.img6 {
+  transform: translateZ(-1250px) translate3d(0, 0, 0);
+}
+.img-wrap .img.img6:after {
+  background: #000000;
+}

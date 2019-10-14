@@ -1,0 +1,109 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.wrap {
+    overflow: hidden;
+    perspective: 2000px;
+    -webkit-perspective: 2000px;
+}
+
+.img-wrap {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    .img {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 25%;
+        left: 25%;
+        transition: transform 300ms;
+
+        &:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            transition: background 300ms;
+        }
+
+        &:nth-of-type(1) {
+            background: hsl(30*1, 100%, 50%) url(../img/01bg.png) center/cover no-repeat;
+        }
+
+        &:nth-of-type(2) {
+            background: hsl(30*2, 100%, 50%) url(../img/02bg.png) center/cover no-repeat;
+        }
+
+        &:nth-of-type(3) {
+            background: hsl(30*3, 100%, 50%) url(../img/04bg.png) center/cover no-repeat
+        }
+
+        &:nth-of-type(4) {
+            background: hsl(30*4, 100%, 50%) url(../img/05bg.png) center/cover no-repeat
+        }
+
+        &:nth-of-type(5) {
+            background: hsl(30*5, 100%, 50%) url(../img/test06.jpg) center/cover no-repeat
+        }
+
+        &:nth-of-type(6) {
+            background: hsl(30*6, 100%, 50%) url(../img/screen/screen-xhdpi-landscape.png) center/cover no-repeat
+        }
+
+        &.img1 {
+            transform: translateZ(-750px) translate3d(600px, 0, 0);
+
+            &:after {
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        &.img2 {
+            transform: translateZ(-250px) translate3d(300px, 0, 0);
+
+            &:after {
+                background: rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        &.img3 {
+            transform: translateZ(250px) translate3d(0, 0, 0px);
+
+            &:after {
+                background: rgba(0, 0, 0, 0);
+            }
+        }
+
+        &.img4 {
+            transform: translateZ(-250px) translate3d(-300px, 0, 0);
+
+            &:after {
+                background: rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        &.img5 {
+            transform: translateZ(-750px) translate3d(-600px, 0, 0);
+
+            &:after {
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        &.img6 {
+            transform: translateZ(-1250px) translate3d(0, 0, 0);
+
+            &:after {
+                background: rgba(0, 0, 0, 1);
+            }
+        }
+    }
+}
