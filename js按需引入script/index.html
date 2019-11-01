@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>js按需引入script</title>
+    <style type="text/css">
+        a{
+            display: block;
+            width: 250px;
+            text-align: center;
+            font-size: 20px;
+            margin: 30px 0;
+        }
+    </style>
+    <script>
+        function adda() {
+            var dom = document.createElement("script");
+            var olddom = document.getElementById("scriptAdd");
+            if (olddom) {
+                document.body.removeChild(olddom);
+            }
+            dom.id = "scriptAdd"
+            dom.src = "./a.js";
+            document.body.append(dom)
+        }
+        function addb() {
+            var dom = document.createElement("script");
+            var olddom = document.getElementById("scriptAdd");
+            if (olddom) {
+                document.body.removeChild(olddom);
+            }
+            dom.id = "scriptAdd"
+            dom.src = "./b.js";
+            document.body.append(dom)
+        }
+    </script>
+</head>
+
+<body>
+    <a href="javascript:clicka()">a点击</a>
+    <a href="javascript:clickb()">b点击</a>
+    <a href="javascript:adda()">添加a.js</a>
+    <a href="javascript:addb()">添加b.js</a>
+</body>
+
+</html>

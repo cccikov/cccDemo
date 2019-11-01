@@ -1,0 +1,3 @@
+function clicka(){
+    alert("a")
+}
