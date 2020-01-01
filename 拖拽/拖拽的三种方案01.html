@@ -80,13 +80,13 @@
             var left = _this.offset().left;
             var top = _this.offset().top;
 
-            // 鼠标离块边缘距离
+            // 鼠标离视口区域距离
             var mouseX = e.clientX;
             var mouseY = e.clientY;
 
             $(window).on("mousemove", function(e) {
                 e.preventDefault();
-                // 鼠标离块边缘距离的变化量
+                // 鼠标离视口区域距离距离的变化量
                 var deltaX = e.clientX - mouseX;
                 var deltaY = e.clientY - mouseY;
 

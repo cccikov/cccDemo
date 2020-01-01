@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖拽两种方式简单示例</title>
+  <style>
+    #box {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 50px;
+      height: 50px;
+      background: #ccc;
+      cursor: pointer;
+    }
+
+    #box2 {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 50px;
+      height: 50px;
+      background: #ccc;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box"></div>
+  <div id="box2"></div>
+  <script>
+    box.onmousedown = function (e) {
+      var originX = e.clientX;
+      var originY = e.clientY;
+
+      var originLeft = box.getBoundingClientRect().left; // 最初的位置，也可以使用offsetLeft
+      var originTop = box.getBoundingClientRect().top; // 最初的位置，也可以使用offsetTop
+
+      document.onmousemove = function (e) {
+        var newX = e.clientX;
+        var newY = e.clientY;
+
+        var moveX = newX - originX; // 总位移
+        var moveY = newY - originY; // 总位移
+
+        var newLeft = originLeft + moveX;
+        var newTop = originTop + moveY;
+
+        box.style.left = newLeft + "px";
+        box.style.top = newTop + "px";
+      }
+
+      document.onmouseup = function (e) {
+        document.onmousemove = null
+        document.onmouseup = null
+      }
+    }
+
+
+
+    box2.onmousedown = function (e) {
+      var agoX = e.clientX; // 旧位置
+      var agoY = e.clientY; // 旧位置
+
+      document.onmousemove = function (e) {
+        var newX = e.clientX;// 新位置
+        var newY = e.clientY;// 新位置
+
+        var perMoveX = newX - agoX; // 每次移动距离 delta
+        var perMoveY = newY - agoY; // 每次移动距离 delta
+
+        var agoLeft = box2.getBoundingClientRect().left; // 上一次的位置，也可以使用offsetLeft
+        var agoTop = box2.getBoundingClientRect().top; // 上一次的位置，也可以使用offsetTop
+
+        var newLeft = agoLeft + perMoveX;
+        var newTop = agoTop + perMoveY;
+
+        box2.style.left = newLeft + "px";
+        box2.style.top = newTop + "px";
+
+        // 这次的新位置，就是下一次的旧位置
+        agoX = newX;
+        agoY = newY;
+      }
+
+      document.onmouseup = function (e) {
+        document.onmousemove = null
+        document.onmouseup = null
+      }
+    }
+  </script>
+</body>
+
+</html>
